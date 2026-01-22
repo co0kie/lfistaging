@@ -1,0 +1,25 @@
+---
+import { Search } from "lucide-react";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<div class="search-widget">
+	<form action="/search" method="get" class="flex items-center">
+		<label for="search" class="sr-only">Search</label>
+		<input
+			type="text"
+			id="search"
+			name="q"
+			placeholder="Search posts..."
+			class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-md border border-gray-300 px-4 py-2 pr-13"
+		/>
+		<button type="submit" class="search-button -ml-10" aria-label="Search">
+			<Search name="search" />
+		</button>
+	</form>
+</div>

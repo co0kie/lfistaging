@@ -1,0 +1,67 @@
+---
+export const prerender = true;
+import siteData from "@/config/siteData.json";
+import Pagination from "@components/Pagination/Pagination.astro";
+// components
+import PostCard from "@components/PostCard/PostCard.astro";
+// utils
+import { getAllPosts } from "@js/blogUtils";
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { type Page } from "astro";
+import PageHeader from "@components/PageHeader/PageHeader.astro";
+
+export async function getStaticPaths({ paginate }: any) {
+	const posts = await getAllPosts();
+
+	return paginate(posts, {
+		pageSize: 6,
+	});
+}
+
+const { page } = Astro.props as { page: Page };
+const blogPosts = await getAllPosts();
+
+const schemaData = {
+	name: "Recent Blog Posts",
+	description: siteData.description,
+	url: Astro.url.href,
+	blogPostings: blogPosts.map((post) => ({
+		"@type": "BlogPosting",
+		headline: post.data.title,
+		publishedDate: post.data.pubDate?.toISOString() || post.data.date?.toISOString(),
+		url: new URL(`/blog/${post.id}/`, Astro.site || Astro.url.origin).toString(),
+		keywords: post.data.tags,
+	})),
+};
+---
+
+<BaseLayout
+	title="Firearm Training Blog | CCW, Safety & Shooting Tips"
+	description="Firearm training articles covering safety, Virginia CCW, gear, and shooting fundamentals for new and experienced shooters."
+	schemaType="blog"
+	schemaData={schemaData}
+>
+	<PageHeader title="Firearm Training Tips, Safety & CCW Education">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<section class="site-container py-12">
+		<!-- <div class="mx-auto max-w-2xl text-center">
+			<h1 class="font-headline text-4xl font-bold md:text-5xl">Our Blog</h1>
+		</div> -->
+
+		<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+			{page.data.map((post) => <PostCard post={post} showDescription={true} />)}
+		</div>
+
+		<!-- Pagination -->
+		<div class="mt-8 flex justify-center">
+			<Pagination
+				prevUrl={page.url.prev}
+				currPage={page.currentPage}
+				nextUrl={page.url.next}
+				lastPage={page.size}
+			/>
+		</div>
+	</section>
+</BaseLayout>

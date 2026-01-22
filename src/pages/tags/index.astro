@@ -1,0 +1,17 @@
+---
+// layout
+// components
+import BlogTags from "@components/BlogTags.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Tags" description="Tags Description">
+	<div class="mx-auto max-w-3xl px-4 pt-24 md:pt-36">
+		<h1 class="h1 text-center">Tags</h1>
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+		<!-- display categories -->
+		<div class="mt-10 flex justify-center">
+			<BlogTags showCount={true} />
+		</div>
+	</div>
+</BaseLayout>

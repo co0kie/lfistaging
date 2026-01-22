@@ -1,0 +1,63 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { ArrowRight } from "lucide-react";
+
+const course = (await getCollection("trainings")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const featuredCourse = course.filter((post) => post.data.featured);
+const domain = Astro.url.origin;
+---
+
+<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+	{
+		featuredCourse &&
+			featuredCourse.map((post) => (
+				<Card className="flex flex-col overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300 pt-0 pb-0">
+					<div class="img-overlay relative flex h-56 w-full items-end before:absolute before:z-10 before:h-50 before:w-full">
+						{post.data.leftColumnImage && (
+							<Image
+								width={720}
+								height={360}
+								src={post.data.leftColumnImage}
+								alt=""
+								class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+							/>
+						)}
+						<CardHeader className="z-11 relative w-full pb-6">
+							<CardTitle className="font-headline text-xl leading-tight">
+								<a
+									href={`${domain}/${post.data.slug}`}
+									transition:name={`blog-${post.id}`}
+									class="hover:text-primary-600 text-white transition-colors"
+								>
+									{post.data.title}
+								</a>
+							</CardTitle>
+						</CardHeader>
+					</div>
+					<CardContent className="grow">
+						<p class="text-muted-foreground line-clamp-5">{post.data.description}</p>
+					</CardContent>
+					<div class="p-6 pt-0">
+						<a
+							href={`${domain}/${post.data.slug}`}
+							class="text-primary inline-flex items-center gap-2 font-semibold transition-all duration-300 group-hover:gap-3"
+						>
+							View course <ArrowRight className="h-4 w-4" />
+						</a>
+					</div>
+				</Card>
+			))
+	}
+</div>
+
+<style>
+	.img-overlay::before {
+		content: "";
+		background-image: linear-gradient(transparent, #1d2530);
+		bottom: -5px;
+	}
+</style>

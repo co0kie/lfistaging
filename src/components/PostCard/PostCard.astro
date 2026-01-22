@@ -1,0 +1,68 @@
+---
+import { categorify, formatDate } from "@js/textUtils";
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
+import imagePlaholder from "../../assets/images/3.jpg";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	showDescription?: boolean;
+	class?: string;
+	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { post, showDescription = false, class: className } = Astro.props as Props;
+const { title, description, pubDate, categories } = post.data;
+---
+
+<Card
+	className="group flex flex-col overflow-hidden py-0 pt-0 pb-0 shadow-md transition-shadow duration-300 hover:shadow-xl"
+>
+	{
+		post.data.heroImage && (
+			<a
+				href={`/blog/${post.id}`}
+				class="relative block h-48 w-full"
+				title={post.data.title}
+				transition:name={`blog-${post.id}`}
+			>
+				<Image
+					width={720}
+					height={360}
+					src={post.data.heroImage}
+					alt={title}
+					loading="eager"
+					class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+				/>
+			</a>
+		)
+	}
+	<CardHeader>
+		<div class="text-muted-foreground mb-2 text-sm">
+			<time datetime={pubDate?.toISOString()}
+				>{formatDate(pubDate ?? new Date())} {post.data.date}</time
+			>
+		</div>
+		<CardTitle className="font-headline text-xl leading-tight">
+			<a href={`/blog/${post.id}`} class="hover:text-primary transition-colors">
+				{title}
+			</a>
+		</CardTitle>
+	</CardHeader>
+	<CardContent className="grow">
+		<p class="text-muted-foreground line-clamp-5">
+			{showDescription && description}
+		</p>
+	</CardContent>
+	<div class="flex flex-wrap gap-2 p-6 pt-0">
+		{
+			categories.map((category) => (
+				<Badge className="bg-secondary text-secondary-foreground text-xs rounded-full">
+					{categorify(category)}
+				</Badge>
+			))
+		}
+	</div>
+</Card>

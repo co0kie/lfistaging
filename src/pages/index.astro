@@ -1,0 +1,77 @@
+---
+// components
+import Hero from "@components/Hero/Hero.astro";
+import CourseCard from "@components/CourseCard/CourseCard.astro";
+import LiveSchedule from "@components/LiveSchedule/LiveSchedule.astro";
+// data
+import siteData from "@config/siteData.json";
+// utils
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { MoveRight } from "lucide-react";
+import IframeComponent from "@/components/IframeComponent/IframeComponent.astro";
+
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+import CTASection from "@/components/CTASection/CTASection.astro";
+
+const reader = getKeystaticReader();
+const homepage = await reader.singletons.homepage.read();
+
+const heroTitle = homepage?.heroTitle || "Developing Safe And Responsible Shooters";
+const heroSubtitle =
+	homepage?.heroSubtitle ||
+	"Live Fire Instruction is the leading expert in teaching first-time firearm users and Virginia Permit / CCW Courses.";
+const heroCtaText = homepage?.heroCtaText || "Find your course";
+const heroCtaLink = homepage?.heroCtaUrl || "/firearm-training";
+const heroSecondaryCtaText = homepage?.heroSecondaryCtaText || "Read the blog";
+const heroSecondaryCtaLink = homepage?.heroSecondaryCtaUrl || "/blog/";
+
+const cardSectionTitle =
+	homepage?.cardSectionTitle || "Virginia Carry Permit & Basic Course Every Thursday & Saturday";
+const iframeUrl =
+	homepage?.iframeUrl || "https://instructorsdash.com/lisa-chau/categories/all?view=iframe";
+const iframeHeight = homepage?.iframeHeight || 900;
+const iframeWidth = homepage?.iframeWidth || "1200";
+
+const schemaData = {
+	name: siteData.title,
+	description: siteData.description,
+	url: siteData.website,
+	telephone: siteData.author.telephone,
+	email: siteData.author.email,
+	address: siteData.address,
+};
+---
+
+<BaseLayout
+	title="Live Fire Instruction | Firearm Safety & Virginia CCW Training"
+	description="Expert firearm training in Fairfax & Northern Virginia. NRA certified courses, concealed carry classes, and personal instruction for all skill levels."
+	schemaType="home"
+	schemaData={schemaData}
+>
+	<Hero
+		title={heroTitle}
+		subtitle={heroSubtitle}
+		ctaText={heroCtaText}
+		ctaLink={heroCtaLink}
+		secondaryCtaText={heroSecondaryCtaText}
+		secondaryCtaLink={heroSecondaryCtaLink}
+	/>
+	<section class="py-14 md:py-22">
+		<div class="site-container mx-auto">
+			<a href="/calendar" class="text-center">
+				<h2
+					class="font-headline text-blue mb-16 flex flex-col items-center justify-center gap-6 text-center text-2xl font-medium hover:underline md:text-3xl lg:flex-row"
+				>
+					{cardSectionTitle}
+					<MoveRight size={32} className="text-primary" />
+				</h2>
+			</a>
+			<CourseCard />
+		</div>
+	</section>
+
+	<LiveSchedule />
+
+	<CTASection />
+</BaseLayout>

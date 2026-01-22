@@ -1,0 +1,90 @@
+---
+import Button from "@/components/Button/Button.astro";
+import GoogleTagmanagerNoscript from "@/components/GoogleTagmanagerNoscript/GoogleTagmanagerNoscript.astro";
+import Schema from "@/components/Schema/Schema.astro";
+const { schemaType = "WebPage", schemaData = {} } = Astro.props;
+import "@/styles/global.css";
+
+import Footer from "@components/Footer/Footer.astro";
+import Nav from "@components/Nav/Nav.astro";
+import BaseHead from "@layouts/BaseHead.astro";
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import { MoveLeft } from "lucide-react";
+
+// heroImage and authorData are defined on blog posts
+// authorData could also be defined on the about author page
+interface Props {
+	type?: "blog" | "general";
+	title: string;
+	description: string;
+	heroImage?: ImageMetadata;
+	authorsData?: CollectionEntry<"authors">[];
+	postFrontmatter?: CollectionEntry<"blog">["data"];
+	noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
+	slug?: string;
+	schemaType?: string;
+	schemaData?: any;
+}
+
+const {
+	type = "general",
+	title,
+	description,
+	heroImage,
+	authorsData,
+	postFrontmatter,
+	noindex = false,
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en" transition:animate="fade">
+	<head>
+		<BaseHead
+			type={type}
+			title={title}
+			description={description}
+			image={heroImage ? heroImage : undefined}
+			authors={authorsData ? authorsData : undefined}
+			postFrontmatter={postFrontmatter ? postFrontmatter : undefined}
+			noindex={noindex}
+		/>
+		<Schema type={schemaType} data={schemaData} />
+	</head>
+	<body id="body">
+		<GoogleTagmanagerNoscript id="GTM-TK2S4T62" />
+		<main>
+			<Button
+				variant="ghost"
+				href="/"
+				class="fixed top-[12px] z-3 mx-auto hidden gap-4 px-5 py-4 text-base text-white lg:flex"
+			>
+				<MoveLeft />
+				Home
+			</Button>
+			{
+				heroImage && (
+					<Image
+						src={heroImage}
+						alt="Developing Safe And Responsible Shooters"
+						class="object-cover"
+						priority
+						style={{
+							position: "fixed",
+							height: "100vh",
+							width: "100%",
+							left: 0,
+							top: 0,
+							right: 0,
+							bottom: 0,
+							color: "transparent",
+							pointerEvents: "none",
+						}}
+					/>
+				)
+			}
+			<slot />
+		</main>
+	</body>
+</html>

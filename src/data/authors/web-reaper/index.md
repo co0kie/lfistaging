@@ -1,0 +1,8 @@
+---
+name: Web Reaper
+avatar: ./web-reaper.jpg
+about: >-
+  Helping you level up your web development and engineering skills.
+email: me@webreaper.dev
+authorLink: https://webreaper.dev
+---

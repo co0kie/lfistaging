@@ -1,0 +1,38 @@
+---
+import siteData from "@/config/siteData.json";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PartnersCard from "@/components/PartnersCard/PartnersCard.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import { getCollection } from "astro:content";
+import { schemaGenerators, schemaTypes } from "@/utils/schema";
+
+const partners = await getCollection("partners");
+
+const schemaData = {
+	name: "Partners",
+	description: siteData.description,
+	url: Astro.url.href,
+	partnersList: partners.map((partner) => ({
+		"@type": "ListItem",
+		name: partner.data.title,
+		url: partner.data.link || "",
+		description: partner.data.description,
+		image: partner.data.heroImage?.src,
+		telephone: partner.data.phone,
+	})),
+};
+---
+
+<BaseLayout
+	title={"Firearm Training Partners | Northern Virginia Ranges"}
+	description={siteData.description}
+	schemaType="partners"
+	schemaData={schemaData}
+>
+	<PageHeader title="Firearm Training Partners">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<div class="site-container mx-auto px-4 py-16">
+		<PartnersCard />
+	</div>
+</BaseLayout>

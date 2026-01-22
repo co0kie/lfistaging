@@ -1,0 +1,76 @@
+---
+interface Props {
+	src?: string;
+	height?: number;
+	width?: string;
+}
+
+const { src = "", height = 800, width = "1200" } = Astro.props;
+---
+
+<div class="iframe-container relative mt-8 flex w-full justify-center">
+	<div
+		class="before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:z-[0] before:m-auto before:block before:h-[400px] before:w-full before:max-w-[600px] before:animate-pulse before:text-center before:opacity-0 before:transition-opacity before:duration-300 before:content-['Loading...']"
+	>
+	</div>
+	<iframe
+		src={src}
+		height={height}
+		width={width}
+		class="iframe-content border-0"
+		style={`max-width: ${width}px; width: 100%; opacity: 1; transition: opacity 0.3s ease-in-out;z-index:2`}
+		allowfullscreen
+		loading="lazy"
+		title="InstructorsDash"></iframe>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const containers = document.querySelectorAll(".iframe-container");
+
+		containers.forEach((container) => {
+			const iframe = container.querySelector(".iframe-content") as HTMLIFrameElement;
+
+			if (iframe) {
+				const handleLoad = () => {
+					iframe.style.opacity = "1";
+				};
+
+				iframe.addEventListener("load", handleLoad);
+				iframe.addEventListener("error", handleLoad);
+
+				const observer = new MutationObserver((mutations) => {
+					mutations.forEach((mutation) => {
+						if (mutation.type === "attributes" && mutation.attributeName === "src") {
+							iframe.style.opacity = "1";
+						}
+					});
+				});
+
+				observer.observe(iframe, { attributes: true });
+			}
+		});
+	});
+</script>
+
+<style>
+	.iframe-container {
+		position: relative;
+	}
+
+	.loading-skeleton {
+		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+	}
+
+	@keyframes pulse {
+		0% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+</style>

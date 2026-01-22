@@ -1,0 +1,149 @@
+---
+import { Quote } from "lucide-react";
+// let testimonials = [
+// 	{
+// 		text: "Thanks for the class today. Feel that I now have the skills to self diagnose so when I get to the range between now and my deployment date I have the tools needed to make adjustments.",
+// 		author: "Will J.",
+// 	},
+// 	{
+// 		text: "“Lisa was an excellent help! From the moment I signed up to the last second of instruction, she showed a tremendous amount of care and professional attitude towards me. The safety class she went through with me helped me freshen up my knowledge of a fire arm as well as taught me a few new things I had not previously learned. I thoroughly enjoyed the range section of her class as well. I got a chance to be taught professionally by Lisa and picked up a few tips to further improve my marksmanship. I would HIGHLY recommend this course for any new comers to fire arms or anyone who would just like a little refresher. Beginner to professional, there’s always something new you can learn and I say you learn from Lisa!",
+// 		author: "Bobby J.",
+// 	},
+// 	{
+// 		text: "I would like to thank you very much for your instruction and teaching. I enjoyed learning through your expertise and experience. It gave me a whole lot of confidence in handling and shooting.",
+// 		author: "Aniq R.",
+// 	},
+// 	{
+// 		text: "The beginner’s training course that I received was well-designed, well-organized, and enacted in an efficient manner. Ms. Lisa Chau was clear in her didactic presentation, and provided the appropriate written, and video materials. In the practical part of the session, Ms. Chau demonstrated  expertise and appropriate guidance. Overall, she was patient and supportive, in addition to being definite with regard to her instructions about performance and safety.",
+// 		author: "Fairfax, VA",
+// 	},
+// 	{
+// 		text: "Really enjoyed and learned a lot with my one-on-one lesson with Lisa. Great instructor! I’d ever shot that tight of a grouping before, thanks a lot. Will definitely take another lesson.",
+// 		author: "L. Garcia",
+// 	},
+// ];
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+const reader = getKeystaticReader();
+const contact = await reader.singletons.contact.read();
+const testimonials = contact?.testimonials;
+---
+
+<div class="site-container relative mx-auto w-full px-4 py-12">
+	<div
+		class="relative overflow-hidden transition-[height] duration-500 ease-in-out"
+		id="testimonial-wrapper"
+	>
+		<div
+			class="flex items-start transition-transform duration-500 ease-in-out"
+			id="testimonial-track"
+		>
+			{
+				testimonials?.map((testimonial, index) => (
+					<div class="w-full flex-shrink-0 px-8 text-center">
+						<div class="bg-blue-dark border-base-200 rounded-lg border p-8 shadow-lg">
+							<Quote className="text-primary-500 mx-auto mb-4 h-10 w-10" />
+							<p class="mb-6 text-lg text-white italic md:text-xl">"{testimonial.testimonial}"</p>
+							<p class="text-primary-600 font-bold">{testimonial.name}</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="mt-6 flex justify-center gap-2">
+		{
+			testimonials?.map((_, index) => (
+				<button
+					class="bg-base-300 hover:bg-primary-500 testimonial-dot h-3 w-3 rounded-full transition-colors duration-300"
+					aria-label={`Go to slide ${index + 1}`}
+					data-index={index}
+				/>
+			))
+		}
+	</div>
+</div>
+
+<script>
+	let intervalId: number | undefined;
+	let resizeHandler: (() => void) | undefined;
+
+	function initSlider() {
+		const track = document.getElementById("testimonial-track");
+		const wrapper = document.getElementById("testimonial-wrapper");
+		const dots = document.querySelectorAll(".testimonial-dot");
+
+		if (!track || !wrapper || dots.length === 0) return;
+
+		let currentIndex = 0;
+
+		function updateSlider(index: number) {
+			if (!track || !wrapper) return;
+			currentIndex = index;
+			const translateX = -currentIndex * 100;
+			track.style.transform = `translateX(${translateX}%)`;
+
+			// Update height
+			const slides = track.children;
+			if (slides[currentIndex]) {
+				const slideHeight = (slides[currentIndex] as HTMLElement).offsetHeight;
+				wrapper.style.height = `${slideHeight}px`;
+			}
+
+			dots.forEach((dot, i) => {
+				if (i === currentIndex) {
+					dot.classList.add("bg-primary-500");
+					dot.classList.remove("bg-base-300");
+				} else {
+					dot.classList.remove("bg-primary-500");
+					dot.classList.add("bg-base-300");
+				}
+			});
+		}
+
+		dots.forEach((dot) => {
+			// Clone node to remove old event listeners if any (though astro:page-load usually means fresh DOM)
+			// But since we are in a module script, we need to be careful.
+			// Actually, standard addEventListener is fine if we are sure elements are fresh.
+			dot.addEventListener("click", (e) => {
+				const index = parseInt((e.target as HTMLElement).dataset.index || "0");
+				updateSlider(index);
+				// Reset interval on manual interaction
+				if (intervalId) window.clearInterval(intervalId);
+				intervalId = window.setInterval(() => {
+					const nextIndex = (currentIndex + 1) % dots.length;
+					updateSlider(nextIndex);
+				}, 5000);
+			});
+		});
+
+		// Auto-advance
+		if (intervalId) window.clearInterval(intervalId);
+		intervalId = window.setInterval(() => {
+			const nextIndex = (currentIndex + 1) % dots.length;
+			updateSlider(nextIndex);
+		}, 5000);
+
+		// Update height on resize
+		if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+		resizeHandler = () => {
+			updateSlider(currentIndex);
+		};
+		window.addEventListener("resize", resizeHandler);
+
+		// Initialize first dot
+		// Use setTimeout to ensure DOM is fully rendered for height calculation
+		window.setTimeout(() => {
+			updateSlider(0);
+		}, 100);
+	}
+
+	// Run on initial load and subsequent navigations
+	document.addEventListener("astro:page-load", initSlider);
+
+	// Cleanup on navigation
+	document.addEventListener("astro:before-swap", () => {
+		if (intervalId) window.clearInterval(intervalId);
+		if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+	});
+</script>

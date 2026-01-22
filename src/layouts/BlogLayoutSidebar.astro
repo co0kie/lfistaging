@@ -1,0 +1,191 @@
+---
+import Button from "@components/Button/Button.astro";
+import Category from "@components/Category/Category.astro";
+import BlogSearch from "@components/BlogSearch.astro";
+import BlogSidebarCard from "@components/BlogSidebarCard.astro";
+import { getAllAuthorsData } from "@js/blogUtils";
+import { formatDate } from "@js/textUtils";
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+import BlogPostRelatedPosts from "@components/BlogPostRelatedPosts.astro";
+
+import BaseLayout from "./BaseLayout.astro";
+import Comment from "@/components/Comment/Comment.astro";
+import CommentsList from "@/components/CommentsList/CommentsList.astro";
+import CommentForm from "@/components/CommentForm/CommentForm.astro";
+import Comments from "@/components/Comment/Comments.astro";
+import siteData from "@/config/siteData.json";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	schemaType?: string;
+	schemaData?: any;
+}
+
+const { post } = Astro.props as Props;
+const { title, description, authors, pubDate, updatedDate, heroImage, categories, tags } =
+	post.data;
+
+const authorsData = await getAllAuthorsData(authors);
+const schemaData = {
+	headline: post.data.title,
+	url: Astro.url.href,
+	publishedDate: post.data.pubDate?.toISOString() || post.data.date?.toISOString(),
+	keywords: post.data.tags,
+	author: authorsData.map((author) => ({
+		"@type": "Person",
+		name: author.data.name,
+		url: author.data.authorLink,
+	})),
+	image: post.data.heroImage?.src,
+	articleSection: post.data.categories,
+};
+---
+
+<BaseLayout
+	type="blog"
+	title={title + " | " + siteData.title}
+	heroImage={heroImage}
+	description={description.slice(0, 150) + "..."}
+	authorsData={authorsData}
+	postFrontmatter={post.data}
+	schemaData={schemaData}
+	schemaType="blogpost"
+>
+	<article class="site-container pt-10 md:pt-24">
+		<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+			<!-- Main Content -->
+			<div class="lg:col-span-2">
+				<!-- Blog post info -->
+				<div class="flex flex-col">
+					<div class="flex w-full border-b border-gray-300 pb-5">
+						<div class="text-left">
+							<!-- title -->
+							<h1 class="h1">{title}</h1>
+
+							<div class="mt-4 flex flex-wrap text-sm md:text-base">
+								<!-- author info -->
+								{
+									authorsData.map((authorData) => (
+										<div class="mb-auto flex flex-col gap-2 sm:flex-row">
+											<div>
+												<p>Published by</p>
+											</div>
+											<div class="my-auto">
+												<a
+													class="hover:text-primary-700 text-base-900 font-bold opacity-80 transition"
+													href={authorData.data.authorLink}
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													{authorData.data.name}
+												</a>
+											</div>
+											<span>On</span>
+											<div class="flex items-center opacity-80">
+												<time datetime={pubDate?.toISOString() ?? new Date().toISOString()}>
+													{formatDate(pubDate ?? new Date())}
+												</time>
+											</div>
+											<span class="text-base-900 mx-1 opacity-80">/</span>
+											<div>
+												{categories.map((category, index) => (
+													<>
+														<Category category={category} class:list="text-base-900" />
+														{index < categories.length - 1 && (
+															<span class="text-base-900 mr-1">,</span>
+														)}
+													</>
+												))}
+											</div>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</div>
+
+					<!-- blog post main image -->
+					<div class="mt-6 overflow-hidden">
+						{
+							post.data.heroImage &&
+								typeof post.data.heroImage === "object" &&
+								post.data.heroImage.src && (
+									<Image
+										src={post.data.heroImage}
+										alt={`cover for ${title}`}
+										width={1600}
+										height={900}
+										format="webp"
+										class="w-full rounded-lg object-cover"
+									/>
+								)
+						}
+					</div>
+				</div>
+
+				<!-- article content -->
+				<div class="mt-10 w-full">
+					<div class="text-base-content pb-8 text-base">
+						{
+							updatedDate && (
+								<div class="mb-6 italic">
+									<time datetime={updatedDate?.toISOString() ?? new Date().toISOString()}>
+										Updated: {formatDate(updatedDate ?? new Date())}
+									</time>
+								</div>
+							)
+						}
+						<section id="blog-post-content" class="markdown-content md:text-lg">
+							<slot />
+						</section>
+
+						<!-- end of post, extra stuff (like share buttons) here -->
+						<hr class="border-accent my-4 w-full border-t-2" />
+
+						<Comments postSlug={post.id} />
+
+						<!-- button to go back to all posts -->
+						<div class="flex">
+							<Button variant="outline" href="/blog/" arrow="left" class="">
+								Back to all posts
+							</Button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="mb-6 lg:col-span-1 lg:mt-40">
+				<div class="sticky top-24 space-y-8">
+					<BlogSearch />
+					<BlogSidebarCard />
+					<BlogPostRelatedPosts
+						relatedPosts={post.data.relatedPosts}
+						categories={categories}
+						id={post.id}
+					/>
+					<!-- Tags -->
+					{
+						tags && tags.length > 0 && (
+							<div class="mt-8">
+								<h3 class="mb-2 text-lg font-semibold">Tags:</h3>
+								<div class="flex flex-wrap gap-2">
+									{tags.map((tag) => (
+										<a
+											href={`/tags/${tag.replace(" ", "-")}`}
+											class="inline-block rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 transition hover:bg-gray-200"
+										>
+											#{tag}
+										</a>
+									))}
+								</div>
+							</div>
+						)
+					}
+				</div>
+			</div>
+		</div>
+	</article>
+</BaseLayout>

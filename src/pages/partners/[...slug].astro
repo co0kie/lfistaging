@@ -1,0 +1,38 @@
+---
+export const prerender = true;
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import { CardTitle } from "@/components/ui/card";
+import siteData from "@/config/siteData.json";
+import CourseLayout from "@layouts/CourseLayout.astro";
+import { Image } from "astro:assets";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("partners");
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<"partners">;
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<CourseLayout title={siteData.title + " - " + post.data.title} description={post.data.title}>
+	<PageHeader title={post.data.title}>
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<div class="site-container mx-auto px-4 pt-16">
+		<div class="text-base-content markdown-content max-w-none py-6 text-sm md:px-8 md:text-base">
+			<Content />
+		</div>
+	</div>
+</CourseLayout>
+
+<style is:inline>
+	.markdown-content img {
+		width: auto;
+	}
+</style>

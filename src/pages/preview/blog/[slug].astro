@@ -1,0 +1,84 @@
+---
+export const prerender = false;
+
+import BlogLayout from "@layouts/BlogLayoutSidebar.astro";
+import { createGitHubReader } from "@keystatic/core/reader/github";
+import keystaticConfig from "../../../../keystatic.config";
+import Markdoc from "@markdoc/markdoc";
+
+// Get slug from params
+const { slug } = Astro.params;
+
+if (!slug) {
+	return new Response("Slug is required", { status: 404 });
+}
+
+// Check for preview cookie
+const branch = Astro.cookies.get("keystatic-preview-mode")?.value;
+
+if (!branch) {
+	return new Response("Preview mode not active", { status: 401 });
+}
+
+// Create GitHub reader for the specific branch
+const reader = createGitHubReader(keystaticConfig, {
+	repo: "j3rech0/livefireinstruction", // Hardcoded for now based on config, or import from config if possible
+	ref: branch,
+	token: import.meta.env.KEYSTATIC_GITHUB_TOKEN, // Ensure this env var exists
+});
+
+// Fetch post data
+const post = await reader.collections.posts.read(slug);
+
+if (!post) {
+	return new Response("Post not found", { status: 404 });
+}
+
+// Manual Markdoc rendering
+// Keystatic stores Markdoc as an AST / JSON structure. We need to convert it to HTML or use a renderer.
+// However, since we are in Astro, we want to use components if possible.
+// This part is tricky because `astro:content` does the heavy lifting usually.
+// For a simple preview, we might just render it to HTML or try to interpret it.
+// Let's try to minimal render first.
+
+const contentData = await post.content();
+const ast = contentData.node;
+const content = Markdoc.transform(ast /* config */);
+const html = Markdoc.renderers.html(content);
+
+// Construct a mock CollectionEntry to pass to the layout
+// We need to match the Shape of CollectionEntry<'blog'>
+const mockPost = {
+	id: slug,
+	slug: slug,
+	body: "", // Not used directly usually if we pass data
+	collection: "blog",
+	data: {
+		title: post.title,
+		description: post.description,
+		authors: post.authors,
+		pubDate: post.pubDate ? new Date(post.pubDate) : new Date(),
+		updatedDate: post.updatedDate ? new Date(post.updatedDate) : undefined,
+		heroImage: post.heroImage,
+		categories: post.categories,
+		tags: post.tags,
+		relatedPosts: post.relatedPosts,
+	},
+};
+---
+
+<BlogLayout post={mockPost as any}>
+	<!-- Injecting raw HTML for preview purposes. 
+         Note: deeper component integration (like Image, custom components) won't work perfectly 
+         without a full Markdoc Ast-to-Component mapper here. -->
+	<div class="prose mx-auto max-w-4xl px-4 py-10">
+		<h1>Preview: {post.title}</h1>
+		<div set:html={html} />
+	</div>
+
+	<div
+		class="fixed right-4 bottom-4 z-50 animate-pulse rounded-full bg-orange-600 px-4 py-2 text-white shadow-lg"
+	>
+		Preview Mode ({branch}) <a href="/api/preview/end" class="ml-2 font-bold underline">Exit</a>
+	</div>
+</BlogLayout>

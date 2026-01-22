@@ -1,0 +1,61 @@
+---
+export const prerender = true;
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { type InferGetStaticPropsType } from "astro";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+	const pages: CollectionEntry<"pages">[] = await getCollection("pages", ({ data }) => {
+		// filter out draft pages
+		return data.draft !== true;
+	});
+	return pages.map((page) => ({
+		params: { page: page.id },
+		props: page,
+	}));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const page = Astro.props as Props;
+
+// convert markdown to html
+const { Content } = await render(page);
+const { title, description, landing, heroImage } = page.data;
+import siteData from "@/config/siteData.json";
+import CTASection from "@/components/CTASection/CTASection.astro";
+---
+
+{
+	landing ? (
+		<LandingLayout title={title} description={description} heroImage={heroImage}>
+			<Content />
+		</LandingLayout>
+	) : (
+		<BaseLayout title={title + " - " + siteData.title} description={description}>
+			<PageHeader title={title}>
+				<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+			</PageHeader>
+			<section class="mx-auto py-16 md:py-14">
+				<div class="site-container text-base-content markdown-content py-6 text-sm md:px-8 md:text-base">
+					<Content />
+					{page.data.youtubeUrl && (
+						<iframe
+							width="760"
+							height="515"
+							src={page.data.youtubeUrl}
+							title="NRA All Access | Refuse To Be A Victim"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							referrerpolicy="strict-origin-when-cross-origin"
+							allowfullscreen
+							style="aspect-ratio: 16 / 9;height: 515px; max-width:760px;width: 100%; margin: 40px auto;"
+						/>
+					)}
+				</div>
+			</section>
+			<CTASection />
+		</BaseLayout>
+	)
+}

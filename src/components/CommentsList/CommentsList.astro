@@ -1,0 +1,103 @@
+---
+import { supabase } from "@/lib/supabase";
+
+interface Props {
+	postSlug: string;
+}
+
+const { postSlug } = Astro.props;
+
+const { data: allComments, error } = await supabase
+	.from("comments")
+	.select("*")
+	.eq("post_slug", postSlug)
+	.eq("is_approved", true)
+	.order("created_at", { ascending: false });
+
+if (error) {
+	console.error("Supabase error fetching comments:", error);
+}
+
+const comments = (allComments || []).map((comment) => ({
+	id: comment.id,
+	name: comment.name,
+	email: comment.email,
+	postSlug: comment.post_slug,
+	parentId: comment.parent_id,
+	isApproved: comment.is_approved,
+	createdAt: comment.created_at,
+	message: comment.message,
+}));
+
+// Organize comments into threads
+const topLevelComments = comments
+	.filter((c) => !c.parentId)
+	.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+const replies = comments.filter((c) => c.parentId);
+---
+
+<div class="mb-5 space-y-6">
+	{
+		topLevelComments.map((comment) => (
+			<div class="space-y-4">
+				<div class="relative rounded bg-gray-50 p-4 shadow-sm">
+					<div class="flex items-start justify-between">
+						<div class="flex w-full items-center justify-between">
+							<div class="font-bold text-gray-900">{comment.name}</div>
+							<div class="text-xs text-gray-500">{new Date(comment.createdAt).toDateString()}</div>
+						</div>
+						<button
+							class="reply-button absolute right-3.5 bottom-3.5 text-sm font-medium text-blue-600 hover:underline"
+							data-comment-id={comment.id}
+							data-comment-name={comment.name}
+						>
+							Reply
+						</button>
+					</div>
+					<div class="mt-2 whitespace-pre-wrap text-gray-700">{comment.message}</div>
+				</div>
+
+				{/* Replies */}
+				{replies
+					.filter((r) => r.parentId === comment.id)
+					.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+					.map((reply) => (
+						<div class="relative ml-8 rounded border-l-2 border-blue-200 bg-blue-50/50 p-4 shadow-sm">
+							<div class="flex items-start justify-between">
+								<div class="flex w-full items-center justify-between">
+									<div class="font-bold text-gray-900">{reply.name}</div>
+									<div class="text-xs text-gray-500">
+										{new Date(reply.createdAt).toDateString()}
+									</div>
+								</div>
+								<button
+									class="reply-button absolute right-3.5 bottom-3.5 text-sm font-medium text-blue-600 hover:underline"
+									data-comment-id={comment.id}
+									data-comment-name={reply.name}
+								>
+									Reply
+								</button>
+							</div>
+							<div class="mt-2 whitespace-pre-wrap text-gray-700">{reply.message}</div>
+						</div>
+					))}
+			</div>
+		))
+	}
+</div>
+
+<script>
+	const replyButtons = document.querySelectorAll(".reply-button");
+	replyButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const id = button.getAttribute("data-comment-id");
+			const name = button.getAttribute("data-comment-name");
+
+			const event = new CustomEvent("set-reply", {
+				detail: { id, name },
+			});
+			window.dispatchEvent(event);
+		});
+	});
+</script>

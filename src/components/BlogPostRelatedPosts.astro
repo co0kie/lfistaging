@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+	relatedPosts?: string[];
+	categories?: string[];
+	id: string;
+}
+
+const { relatedPosts, categories, id } = Astro.props;
+
+const allPosts = await getCollection("blog");
+
+const posts = allPosts
+	.filter((post) => post.id !== id) // Exclude current post
+	.filter((post) => {
+		// 1. Check manual relation
+		if (relatedPosts && relatedPosts.includes(post.id)) {
+			return true;
+		}
+
+		// 2. Check category match
+		if (categories && post.data.categories) {
+			return categories.some((cat) => post.data.categories.includes(cat));
+		}
+
+		return false;
+	})
+	.sort((a, b) => {
+		// Prioritize manual relations
+		const aIsManual = relatedPosts?.includes(a.id);
+		const bIsManual = relatedPosts?.includes(b.id);
+		if (aIsManual && !bIsManual) return -1;
+		if (!aIsManual && bIsManual) return 1;
+
+		// Then sort by date (newest first)
+		return b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+	})
+	.slice(0, 3); // Limit to 3 posts
+---
+
+{
+	posts.length > 0 && (
+		<div class="bg-card text-card-foreground flex flex-col overflow-hidden rounded-xl border p-5 py-6 shadow-sm transition-shadow duration-300 hover:shadow-xl">
+			<h3 class="mb-4 text-xl font-bold text-gray-800">Related Posts</h3>
+			<ul class="space-y-3">
+				{posts.map((post) => (
+					<li>
+						<a
+							href={`/blog/${post.id}/`}
+							class="text-primary-600 hover:text-primary-800 block leading-tight font-medium transition-colors hover:underline"
+						>
+							{post.data.title}
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	)
+}

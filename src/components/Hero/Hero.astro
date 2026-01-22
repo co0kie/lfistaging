@@ -1,0 +1,103 @@
+---
+import Admonition from "@components/Admonition/Admonition.astro";
+import Button from "@components/Button/Button.astro";
+import Category from "@components/Category/Category.astro";
+import { Image } from "astro:assets";
+import { Radar } from "lucide-react";
+import Feeds from "@components/Hero/Feeds.astro";
+import FeedsSkeleton from "@components/Hero/FeedsSkeleton.astro";
+import Homepage from "@images/Homepage.png";
+
+interface Props {
+	title: string;
+	subtitle: string;
+	ctaText: string;
+	ctaLink: string;
+	secondaryCtaText: string;
+	secondaryCtaLink: string;
+}
+
+const { title, subtitle, ctaText, ctaLink, secondaryCtaText, secondaryCtaLink } = Astro.props;
+---
+
+<section
+	id="hero"
+	class="relative flex w-full items-center justify-center pb-14 text-white lg:h-[85vh]"
+>
+	<Image
+		src={Homepage}
+		alt={title}
+		class="object-cover"
+		priority
+		style={{
+			position: "absolute",
+			height: "100%",
+			width: "100%",
+			left: 0,
+			top: 0,
+			right: 0,
+			bottom: 0,
+			color: "transparent",
+		}}
+	/>
+
+	<div class="bg-blue/70 absolute inset-0"></div>
+	<div class="site-container flex w-full flex-col items-center justify-between gap-14 md:flex-row">
+		<div class="relative z-10 mx-auto mt-12 max-w-4xl space-y-6 text-center md:w-3/5 md:text-left">
+			<h1
+				class="font-headline animate-fade-in-up mb-6 text-4xl font-bold tracking-wide opacity-0 md:mb-10 md:text-6xl md:leading-[1.2] lg:text-7xl"
+			>
+				{title}
+			</h1>
+			<p
+				class="animate-fade-in-up animation-delay-300 mb-8 text-lg text-blue-100 opacity-0 md:mb-10 md:text-xl"
+			>
+				{subtitle}
+			</p>
+			<div
+				class="animate-fade-in-up animation-delay-600 mx-auto flex max-w-max flex-col gap-4 opacity-0 sm:flex-row md:mx-0"
+			>
+				<Button variant="primary" href={ctaLink} class="mx-auto gap-4 px-5 py-4 text-base">
+					<Radar />
+					{ctaText}
+				</Button>
+
+				<Button
+					variant="ghost"
+					href={secondaryCtaLink}
+					arrow="right"
+					class="gap-2 text-base text-white">{secondaryCtaText}</Button
+				>
+			</div>
+		</div>
+		<!-- Next -->
+		<Feeds server:defer>
+			<FeedsSkeleton slot="fallback" />
+		</Feeds>
+	</div>
+
+	<style>
+		@keyframes fade-in-up {
+			0% {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		.animate-fade-in-up {
+			animation: fade-in-up 0.6s ease-out forwards;
+		}
+		.animation-delay-300 {
+			animation-delay: 300ms;
+		}
+		.animation-delay-600 {
+			animation-delay: 600ms;
+		}
+		.animation-fill-forwards {
+			animation-fill-mode: forwards;
+		}
+	</style>
+</section>

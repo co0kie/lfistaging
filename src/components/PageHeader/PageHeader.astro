@@ -1,0 +1,24 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props as Props;
+---
+
+<div class="bg-blue-dark relative overflow-hidden py-16 md:py-24">
+	<div
+		aria-hidden="true"
+		class="pointer-events-none absolute inset-x-0 top-0 bottom-0 -left-1/4 m-auto -translate-x-1/4 translate-y-1/4 scale-75 transform-gpu blur-3xl"
+	>
+		<div
+			class="relative -z-10 h-[400px] w-[75%] origin-center will-change-auto"
+			style="clip-path: polygon(99.2% 42%, 0% 79.3%, 0% 0%, 74.6% 12%, 31% 33.3%, 22.2% 100%); background: radial-gradient(circle, rgb(22, 239, 215) 0%, rgb(194, 140, 110) 100%); transform: rotate(-360deg); opacity: 0.75;"
+		>
+		</div>
+	</div>
+	<header class="site-container relative z-10">
+		<h1 class="h1 text-center text-3xl text-white lg:text-4xl">{title}</h1>
+		<slot />
+	</header>
+</div>

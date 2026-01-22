@@ -1,0 +1,95 @@
+---
+import { Mail, Phone, ThumbsUp } from "lucide-react";
+import FooterLogo from "@images/footer-logo.png";
+import { Image } from "astro:assets";
+---
+
+<footer class="bg-blue">
+	<div class="site-container py-12">
+		<div class="grid grid-cols-1 gap-20 wrap-break-word md:grid-cols-3 lg:gap-28">
+			<div class="space-y-4 md:col-span-1">
+				<a href="/" class="mb-6 block">
+					<Image
+						src={FooterLogo}
+						alt="LiveFireInstruction"
+						width={131}
+						height={36}
+						class="object-cover"
+						priority
+						loading="eager"
+					/>
+				</a>
+				<p class="font-headline max-w-md text-sm font-normal text-white/80">
+					© 2025 Live Fire Instruction. All rights reserved.
+				</p>
+			</div>
+			<div>
+				<h4 class="font-headline mb-6 text-lg font-semibold text-white">Quick Links</h4>
+				<ul
+					class="grid grid-rows-3 space-y-1 gap-x-2 gap-y-2 align-baseline text-sm lg:grid-flow-col"
+				>
+					<li>
+						<a href="/" class="hover:text-primary text-white/80"> Home </a>
+					</li>
+					<li>
+						<a href="/blog" class="hover:text-primary text-white/80"> Blog </a>
+					</li>
+					<li>
+						<a href="/firearm-training" class="hover:text-primary text-white/80"> Training </a>
+					</li>
+					<li>
+						<a
+							href="/3-day-bullseye-business-blueprint-course/"
+							class="hover:text-primary text-white/80"
+						>
+							Business Training
+						</a>
+					</li>
+					<li>
+						<a href="/calendar/" class="hover:text-primary text-white/80"> Course Calendar </a>
+					</li>
+					<li>
+						<a href="/partners/" class="hover:text-primary text-white/80"> Partners </a>
+					</li>
+					<li>
+						<a href="/contact/" class="hover:text-primary text-white/80"> Contact </a>
+					</li>
+					<li>
+						<a href="/privacy-policy/" class="hover:text-primary text-white/80"> Privacy Policy </a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<h4 class="font-headline mb-6 text-lg font-semibold text-white">Contact</h4>
+				<ul class="grid grid-flow-col grid-rows-3 space-y-1 gap-x-4 gap-y-2 align-baseline text-sm">
+					<li>
+						<a
+							href="mailto:class@livefireinstruction.com"
+							class="hover:text-primary flex items-center gap-3 text-white/80"
+						>
+							<Mail size={16} />
+							class@livefireinstruction.com
+						</a>
+					</li>
+					<li>
+						<a
+							href="tel:1-571-210-5651"
+							class="hover:text-primary flex items-center gap-3 text-white/80"
+						>
+							<Phone size={16} /> 1-571-210-5651
+						</a>
+					</li>
+					<li>
+						<a
+							href="https://facebook.com/livefireinstruction"
+							target="_blank"
+							class="hover:text-primary flex items-center gap-3 text-white/80"
+						>
+							<ThumbsUp size={16} /> livefireinstruction
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>

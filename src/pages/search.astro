@@ -1,0 +1,62 @@
+---
+import BlogTags from "@/components/BlogTags.astro";
+import siteData from "@/config/siteData.json";
+import PostCard from "@components/PostCard/PostCard.astro";
+import { getAllPosts } from "@js/blogUtils";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const query = Astro.url.searchParams.get("q") || "";
+const posts = await getAllPosts();
+
+const filteredPosts = query
+	? posts.filter((post) => {
+			const searchContent =
+				`${post.data.title} ${post.data.description} ${post.data.tags?.join(" ")} ${post.data.categories.join(" ")}`.toLowerCase();
+			return searchContent.includes(query.toLowerCase());
+		})
+	: [];
+---
+
+<BaseLayout
+	title={query ? `Search results for "${query}"` : "Search"}
+	description={`Search results for ${query}`}
+>
+	<section class="site-container py-12 md:py-24">
+		<div class="mx-auto max-w-2xl text-center">
+			<h1 class="font-headline text-4xl font-bold md:text-5xl">
+				{query ? `Search results for "${query}"` : "Search"}
+			</h1>
+			{
+				query && (
+					<p class="mt-4 text-lg opacity-80">
+						Found {filteredPosts.length} {filteredPosts.length === 1 ? "post" : "posts"}
+					</p>
+				)
+			}
+		</div>
+
+		{
+			query ? (
+				filteredPosts.length > 0 ? (
+					<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+						{filteredPosts.map((post) => (
+							<PostCard post={post} showDescription={true} />
+						))}
+					</div>
+				) : (
+					<div class="mt-16 text-center">
+						<p class="text-lg opacity-80">No posts found matching your search.</p>
+					</div>
+				)
+			) : (
+				<div class="mt-16 text-center">
+					<p class="text-lg opacity-80">Enter a search term to find posts.</p>
+				</div>
+			)
+		}
+
+		<div class="mt-8">
+			<BlogTags />
+		</div>
+	</section>
+</BaseLayout>

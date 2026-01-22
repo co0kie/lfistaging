@@ -1,0 +1,251 @@
+---
+import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
+
+const { category } = Astro.props;
+---
+
+<section
+	id="live-schedule"
+	class="bg-background/10 py-16 transition-opacity duration-500 md:py-24"
+	data-category={category}
+>
+	<div class="site-container mx-auto">
+		<div class="mb-12 text-center">
+			<h2 class="font-headline text-blue mb-4 text-3xl font-bold md:text-4xl">
+				Upcoming Live Classes
+			</h2>
+			<p class="text-muted-foreground mx-auto max-w-2xl text-lg">
+				Join our expert-led sessions and develop your firearm skills in a safe, professional
+				environment.
+			</p>
+		</div>
+
+		{/* Skeleton Loader - Visible while loading */}
+		<div id="schedule-skeleton" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+			{
+				[...Array(6)].map((_, i) => (
+					<div class="flex animate-pulse flex-col overflow-hidden rounded-2xl border bg-white shadow-sm">
+						<div class="aspect-video bg-gray-200" />
+						<div class="flex flex-1 flex-col space-y-4 p-6">
+							<div class="h-6 w-3/4 rounded bg-gray-200" />
+							<div class="h-4 w-full rounded bg-gray-100" />
+							<div class="mt-auto space-y-3">
+								<div class="h-4 w-1/2 rounded bg-gray-100" />
+								<div class="h-4 w-2/3 rounded bg-gray-100" />
+								<div class="h-4 w-1/3 rounded bg-gray-100" />
+							</div>
+							<div class="mt-6 h-12 w-full rounded-xl bg-gray-200" />
+						</div>
+					</div>
+				))
+			}
+		</div>
+
+		{/* Error Message - Hidden by default */}
+		<div
+			id="schedule-error"
+			class="hidden rounded-lg border border-red-200 bg-red-50 p-6 text-center text-red-700"
+		>
+			<p>Could not load upcoming classes at this time. Please check back later!</p>
+		</div>
+
+		{/* Empty Message - Hidden by default */}
+		<div
+			id="schedule-empty"
+			class="hidden rounded-lg border border-blue-100 bg-blue-50 p-6 text-center text-blue-700"
+		>
+			<p>No upcoming classes found at the moment. Please check back later!</p>
+		</div>
+
+		{/* Events Container - Hidden initially */}
+		<div id="events-grid" class="hidden grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+			{/* Content injected via JS */}
+		</div>
+
+		{/* Extra Events Container - Hidden initially */}
+		<div id="extra-events" class="mt-8 hidden grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+			{/* Content injected via JS */}
+		</div>
+
+		<div
+			id="schedule-controls"
+			class="mt-16 hidden flex-col items-center justify-center gap-6 text-center"
+		>
+			<button
+				id="show-more-button"
+				class="bg-orange hidden items-center justify-center gap-2 rounded-xl px-8 py-4 font-bold text-white shadow-lg transition-all hover:opacity-90 hover:shadow-xl active:scale-95"
+			>
+				Show More Classes
+			</button>
+
+			<a
+				href="https://instructorsdash.com/lisa-chau/categories/all"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-blue inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
+			>
+				View Full Calendar Site
+				<ArrowRight size={20} />
+			</a>
+		</div>
+	</div>
+</section>
+
+<script>
+	async function initSchedule() {
+		const section = document.getElementById("live-schedule");
+		const category = section?.dataset.category;
+
+		const skeleton = document.getElementById("schedule-skeleton");
+		const eventsGrid = document.getElementById("events-grid");
+		const extraEvents = document.getElementById("extra-events");
+		const errorEl = document.getElementById("schedule-error");
+		const emptyEl = document.getElementById("schedule-empty");
+		const controls = document.getElementById("schedule-controls");
+		const showMoreBtn = document.getElementById("show-more-button");
+
+		try {
+			const apiUrl = category ? `/api/live-schedule?category=${category}` : "/api/live-schedule";
+			const response = await fetch(apiUrl);
+			if (!response.ok) throw new Error("Fetch failed");
+
+			const data = await response.json();
+			const events = data.events?.data || [];
+
+			if (events.length === 0) {
+				skeleton?.classList.add("hidden");
+				emptyEl?.classList.remove("hidden");
+				controls?.classList.remove("hidden");
+				controls?.classList.add("flex");
+				return;
+			}
+
+			const renderEvent = (event: any) => `
+				<div class="group flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+					<div class="relative aspect-video overflow-hidden">
+						<img
+							src="https://instructorsdash.com/storage/${event.background}"
+							alt="${event.name}"
+							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+							loading="lazy"
+							onerror="this.src='/assets/placeholder-course.jpg'; this.onerror=null;"
+						/>
+						<div class="bg-orange absolute top-4 right-4 rounded-full px-3 py-1 text-sm font-semibold text-white shadow-sm">
+							$${event.ticket_items.price[0]}
+						</div>
+					</div>
+
+					<div class="flex flex-1 flex-col p-6">
+						<h3 class="text-blue group-hover:text-blue-dark mb-2 line-clamp-2 text-xl font-bold">
+							${event.name}
+						</h3>
+						<p class="text-muted-foreground mb-4 line-clamp-2 text-sm italic">${event.tagline || ""}</p>
+
+						<div class="mt-auto space-y-3 text-sm text-gray-600">
+							<div class="flex items-center gap-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+								<span>${new Date(event.start_date).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" })}</span>
+							</div>
+							<div class="flex items-start gap-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange mt-0.5 shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+								<span class="line-clamp-1">${event.address}</span>
+							</div>
+							<div class="flex items-center gap-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+								<span>${event.available_seats} seats available</span>
+							</div>
+						</div>
+
+						<a
+							href="https://livefireinstruction.instructorsdash.com/e/lisa-chau/${event.short_slug}"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
+						>
+							Register Now
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+						</a>
+					</div>
+				</div>
+			`;
+
+			const initial = events.slice(0, 6);
+			const extra = events.slice(6);
+
+			if (eventsGrid) eventsGrid.innerHTML = initial.map(renderEvent).join("");
+			if (extraEvents) extraEvents.innerHTML = extra.map(renderEvent).join("");
+
+			skeleton?.classList.add("hidden");
+			eventsGrid?.classList.remove("hidden");
+			eventsGrid?.classList.add("grid", "grid-cols-1", "gap-8", "md:grid-cols-2", "lg:grid-cols-3");
+			controls?.classList.remove("hidden");
+			controls?.classList.add(
+				"flex",
+				"flex-col",
+				"items-center",
+				"justify-center",
+				"gap-6",
+				"text-center",
+			);
+
+			if (extra.length > 0 && showMoreBtn) {
+				showMoreBtn.classList.remove("hidden");
+				showMoreBtn.classList.add("flex", "items-center", "justify-center", "gap-2");
+				showMoreBtn.addEventListener("click", () => {
+					extraEvents?.classList.remove("hidden");
+					extraEvents?.classList.add(
+						"grid",
+						"grid-cols-1",
+						"gap-8",
+						"md:grid-cols-2",
+						"lg:grid-cols-3",
+					);
+					showMoreBtn.classList.add("hidden");
+					showMoreBtn.classList.remove("flex", "items-center", "justify-center", "gap-2");
+				});
+			}
+		} catch (error) {
+			console.error("Error loading schedule:", error);
+			skeleton?.classList.add("hidden");
+			errorEl?.classList.remove("hidden");
+			controls?.classList.remove("hidden");
+			controls?.classList.add(
+				"flex",
+				"flex-col",
+				"items-center",
+				"justify-center",
+				"gap-6",
+				"text-center",
+			);
+		}
+	}
+
+	// Initialize on page load
+	document.addEventListener("DOMContentLoaded", initSchedule);
+	// Handle Astro view transitions if applicable
+	document.addEventListener("astro:after-swap", initSchedule);
+</script>
+
+<style>
+	.site-container {
+		width: 100%;
+		max-width: 1280px;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+	.hidden {
+		display: none;
+	}
+	.line-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.line-clamp-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>

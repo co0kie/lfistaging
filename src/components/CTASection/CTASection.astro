@@ -1,0 +1,28 @@
+---
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+const reader = getKeystaticReader();
+const homepage = await reader.singletons.homepage.read();
+const ctaText = homepage?.ctaSectionCtaText || "Contact Us Today";
+const ctaLink = homepage?.ctaSectionCtaUrl || "/contact";
+const title = homepage?.ctaSectionTitle || "Ready to Get Started?";
+const subtitle =
+	homepage?.ctaSectionSubtitle ||
+	"Join hundreds of instructors who trust Live Fire Instruction for their shooting range business";
+---
+
+<section class="bg-blue-dark text-primary-foreground py-16 md:py-24">
+	<div class="site-container text-center">
+		<h2 class="mb-6 text-4xl font-bold">{title}</h2><p
+			class="mx-auto mb-8 max-w-2xl text-xl opacity-90"
+		>
+			{subtitle}
+		</p>
+		<a href={ctaLink}>
+			<button
+				class="bg-primary ring-offset-background focus-visible:ring-ring text-primary-foreground hover:bg-primary/90 shadow-glow inline-flex h-11 items-center justify-center gap-2 rounded-md px-8 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+			>
+				{ctaText}
+			</button>
+		</a>
+	</div>
+</section>

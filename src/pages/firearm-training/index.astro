@@ -1,0 +1,45 @@
+---
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import siteData from "@/config/siteData.json";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import CourseCard from "@/components/CourseCard/CourseCard.astro";
+import IframeComponent from "@/components/IframeComponent/IframeComponent.astro";
+import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+const trainingItems = await getCollection("trainings");
+const schemaData = {
+	name: "Firearm Training",
+	description: "We Offer A Variety Of Training Courses As Well As One-On-One Instruction",
+	url: Astro.url.href,
+	itemListElement: trainingItems.map((item, index) => ({
+		"@type": "ListItem",
+		position: index + 1,
+		item: {
+			"@type": "Course",
+			name: item.data.title,
+			description: item.data.description,
+			provider: {
+				"@type": "Organization",
+				name: siteData.name,
+			},
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title="Firearm Training Courses | NRA Pistol, CCW & Personal Instruction"
+	description="Browse firearm training courses including NRA pistol, concealed carry, private lessons, and safety classes for all levels."
+	schemaData={schemaData}
+	schemaType="courses"
+>
+	<PageHeader title="We Offer A Variety Of Training Courses As Well As One-On-One Instruction">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<div class="site-container mx-auto px-4 pt-16">
+		<CourseCard trainingItems={trainingItems} />
+
+		<LiveSchedule />
+	</div>
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+export const prerender = true;
+import Pagination from "@components/Pagination/Pagination.astro";
+// components
+import PostCard from "@components/PostCard/PostCard.astro";
+// utils
+import { countItems, getAllPosts } from "@js/blogUtils";
+import { categorify, slugify } from "@js/textUtils";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// generate pagination for tag pages if there are a bunch of posts for a single tag
+export async function getStaticPaths({ paginate }: any) {
+	const posts = await getAllPosts();
+
+	// get all categories from the posts
+	const allTags = posts
+		.map((post) => post.data.tags)
+		.filter((tags) => tags !== undefined && tags !== null)
+		.flat()
+		.filter((tag) => tag !== undefined && tag !== null && tag !== "");
+
+	// combine categories and count how many times they appear. these are "slugified"
+	const countedTags = countItems(allTags as string[]);
+
+	// pagination returns an array of objects with params and page size
+	return Object.entries(countedTags).flatMap(([tag, val]) => {
+		// get all posts that have the tag
+		const filteredPosts = posts.filter((post) => {
+			// make sure to slugify them for comparison
+			const categorifiedTag = post.data?.tags?.map((tag) => slugify(tag));
+			return categorifiedTag?.includes(tag);
+		});
+
+		return paginate(filteredPosts, {
+			params: { tag: tag },
+			pageSize: 6,
+		});
+	});
+}
+
+const { page } = Astro.props as { page: any };
+const { tag } = Astro.params as { tag: string };
+
+const formattedTag = categorify(tag);
+---
+
+<BaseLayout
+	title={`${formattedTag} - Blog posts`}
+	description={`A collection of blog posts about ${formattedTag}`}
+>
+	<div class="mx-auto max-w-3xl pt-24 md:pt-36">
+		<h1 class="h1 text-center">
+			Blog Posts about <span class="main-text-gradient">{formattedTag.toLowerCase()}</span>
+		</h1>
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+		<div class="mt-10 grid gap-4 md:grid-cols-2">
+			{page.data.map((post: any) => <PostCard post={post} showDescription={false} />)}
+		</div>
+	</div>
+
+	<!-- Pagination -->
+	<div class="mt-8 flex justify-center">
+		<Pagination
+			prevUrl={page.url.prev}
+			currPage={page.currentPage}
+			nextUrl={page.url.next}
+			lastPage={page.size}
+		/>
+	</div>
+</BaseLayout>

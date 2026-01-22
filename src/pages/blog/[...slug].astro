@@ -1,0 +1,28 @@
+---
+// import Comments from "@/components/Comment/Comments.astro";
+import Schema from "@/components/Schema/Schema.astro";
+import BlogLayoutCentered from "@/layouts/BlogLayoutCentered.astro";
+import { getAllPosts, getAllAuthorsData } from "@js/blogUtils";
+// layout
+import BlogLayout from "@layouts/BlogLayoutSidebar.astro";
+import { getEntry, render } from "astro:content";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect("/404");
+}
+
+const post = await getEntry("blog", slug);
+
+if (!post) {
+	return Astro.redirect("/404");
+}
+
+const { Content } = await render(post);
+---
+
+<BlogLayout post={post}>
+	<Content />
+	<!-- <Comments postSlug={post.id} /> -->
+</BlogLayout>

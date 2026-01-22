@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { ArrowRight, Globe, Phone } from "lucide-react";
+
+const recentPosts = (await getCollection("partners")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3">
+	{
+		recentPosts.map((post) => (
+			<Card className="flex flex-col overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300 pt-0 pb-0">
+				<div class="img-overlay relative flex h-72 w-full items-end before:absolute before:z-10 before:h-50 before:w-full">
+					{post.data.heroImage && (
+						<Image
+							width={720}
+							height={360}
+							src={post.data.heroImage}
+							alt=""
+							class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+						/>
+					)}
+					<CardHeader className="z-11 relative w-full pb-6">
+						<CardTitle className="font-headline text-xl leading-tight">
+							<a
+								href={`${post.data.link}`}
+								transition:name={`blog-${post.id}`}
+								class="hover:text-primary-600 text-white transition-colors"
+								target="_blank"
+							>
+								{post.data.title}
+							</a>
+						</CardTitle>
+					</CardHeader>
+				</div>
+
+				<CardContent className="grid-flow-col auto-cols-fr pb-4">
+					<p class="text-muted-foreground">{post.data.description}</p>
+					<div class="space-x-4 py-6">
+						{post.data.link && (
+							<a
+								href={`${post.data.link}`}
+								class="hover:text-primary-600 *:hover:text-primary-600 mb-4 inline-flex w-full items-center gap-2 font-semibold text-gray-500"
+								target="_blank"
+								title={`${post.data.link}`}
+							>
+								<Globe size={19} />
+								<span class="w-full overflow-hidden text-base text-ellipsis whitespace-nowrap text-gray-500">
+									{post.data.domain}
+								</span>
+							</a>
+						)}
+						{post.data.phone && (
+							<a
+								href={`tel:${post.data.phone}`}
+								class="hover:text-primary-600 *:hover:text-primary-600 inline-flex items-center gap-2 font-semibold text-gray-500"
+								target="_blank"
+								title={`${post.data.phone}`}
+							>
+								<Phone size={19} />
+								<span class="text-base text-gray-500">{post.data.phone}</span>
+							</a>
+						)}
+					</div>
+				</CardContent>
+			</Card>
+		))
+	}
+</div>
+
+<style>
+	.img-overlay::before {
+		content: "";
+		background-image: linear-gradient(transparent, #1d2530);
+		bottom: -5px;
+	}
+</style>

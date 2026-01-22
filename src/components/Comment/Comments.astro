@@ -1,0 +1,18 @@
+---
+import CommentForm from "@/components/CommentForm/CommentForm.tsx";
+import CommentsList from "@/components/CommentsList/CommentsList.astro";
+
+interface Props {
+	postSlug: string;
+}
+
+const { postSlug } = Astro.props;
+---
+
+<div class="comments-section md:w-[60%]">
+	<CommentForm postSlug={postSlug} client:load />
+
+	<div>
+		<CommentsList postSlug={postSlug} />
+	</div>
+</div>

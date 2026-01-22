@@ -1,0 +1,243 @@
+---
+import siteData from "@/config/siteData.json";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/Button/Button.astro";
+import TestimonialSlider from "@components/TestimonialSlider/TestimonialSlider.astro";
+import { Calendar, Mail, Phone, Pin } from "lucide-react";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+
+// Fetch contact page data from Keystatic
+const reader = getKeystaticReader();
+const contact = await reader.singletons.contact.read();
+const pagetitle = contact?.pageTitle || "Contact";
+const formInfoTitle =
+	contact?.formInfoTitle || "Customer Feedback Is The Lifeblood Of Our Business.";
+const formInfoSubtitle =
+	contact?.formInfoSubtitle ||
+	"Tell us what's on your mind, good or bad. We respond to all customer feedback and look forward to hearing from you!";
+const formInfoEmail = contact?.formInfoEmail || "class@livefireinstruction.com";
+const formInfoPhone = contact?.formInfoPhone || "571.210.5651";
+const formNameLabel = contact?.formNameLabel || "Your Name";
+const formNamePlaceholder = contact?.formNamePlaceholder || "John Doe";
+const formEmailLabel = contact?.formEmailLabel || "Your Email";
+const formEmailPlaceholder = contact?.formEmailPlaceholder || "john@example.com";
+const formSubjectLabel = contact?.formSubjectLabel || "Subject";
+const formSubjectPlaceholder = contact?.formSubjectPlaceholder || "How can we help?";
+const formMessageLabel = contact?.formMessageLabel || "Your Message";
+const formMessagePlaceholder = contact?.formMessagePlaceholder || "Write your message here...";
+const formSubmitButtonText = contact?.formSubmitButtonText || "Send Message";
+
+const schemaData = {
+	name: pagetitle,
+	description: siteData.description,
+	url: Astro.url.href,
+	itemListElement: [
+		{
+			"@type": "ListItem",
+			item: {
+				"@type": "Organization",
+				name: "LiveFire Instruction",
+				url: "https://livefireinstruction.com",
+				email: "class@livefireinstruction.com",
+				telephone: "571.210.5651",
+			},
+		},
+	],
+};
+---
+
+<BaseLayout
+	title={pagetitle + " - " + siteData.title}
+	description={siteData.description}
+	schemaType="contact"
+	schemaData={schemaData}
+>
+	<PageHeader title="">
+		<div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
+			<a href="/firearm-training/">
+				<div
+					class="bg-blue-dark border-base-200 flex flex-col items-center rounded-xl border p-3 shadow-sm md:p-6"
+				>
+					<div
+						class="bg-primary-600 mb-4 flex h-12 w-12 items-center justify-center rounded-full text-white"
+					>
+						<Pin className="h-6 w-6" />
+					</div>
+					<h3 class="mb-2 text-xl font-bold text-white">Classes Offered</h3>
+					<p class="text-gray-300">Classes Offered in Fairfax<br />and Ashburn Virginia</p>
+				</div>
+			</a>
+			<a href="/calendar/">
+				<div
+					class="bg-blue-dark border-base-200 flex flex-col items-center rounded-xl border p-3 shadow-sm md:p-6"
+				>
+					<div
+						class="bg-primary-600 mb-4 flex h-12 w-12 items-center justify-center rounded-full text-white"
+					>
+						<Calendar className="h-6 w-6" />
+					</div>
+					<h3 class="mb-2 text-xl font-bold text-white">Courses</h3>
+					<p class="text-gray-300">Offered Weekly Can Be Tailored<br />To Fit Your Schedule</p>
+				</div>
+			</a>
+
+			<div
+				class="bg-blue-dark border-base-200 flex flex-col items-center rounded-xl border p-3 shadow-sm md:p-6"
+			>
+				<div
+					class="bg-primary-600 mb-4 flex h-12 w-12 items-center justify-center rounded-full text-white"
+				>
+					<Phone className="h-6 w-6" />
+				</div>
+				<h3 class="mb-2 text-xl font-bold text-white">Phone</h3>
+				<p class="text-gray-300">
+					<a href="tel:1-571-210-5651">1-571-210-5651</a>
+				</p>
+			</div>
+		</div>
+	</PageHeader>
+	<section class="bg-primary-600 relative">
+		<!-- Form Section -->
+		<div class="border-base-200 site-container mx-auto overflow-hidden">
+			<div class="grid grid-cols-1 md:grid-cols-2">
+				<div class="absolute right-0 z-0 h-full w-full bg-white md:w-1/2"></div>
+				<!-- Form Header / Info -->
+				<div
+					class="bg-primary-600 relative z-2 order-1 flex flex-col justify-center p-10 text-white md:order-[inherit]"
+				>
+					<h2 class="mb-6 text-3xl font-bold">
+						{contact?.formInfoTitle}
+					</h2>
+					<p class="text-primary-100 mb-8 text-lg leading-relaxed">
+						{contact?.formInfoSubtitle}
+					</p>
+					<div class="space-y-4">
+						<div class="flex items-center gap-3">
+							<Mail className="text-primary-200 h-5 w-5" />
+							<a
+								href={`mailto: "class@livefireinstruction.com"`}
+								class="text-primary-100 transition-colors hover:text-white"
+								>{contact?.formInfoEmail}</a
+							>
+						</div>
+						<div class="flex items-center gap-3">
+							<Phone className="text-primary-200 h-5 w-5" />
+							<a
+								href={`tel:${contact?.formInfoPhone}`}
+								class="text-primary-100 transition-colors hover:text-white"
+								>{contact?.formInfoPhone}</a
+							>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact Form -->
+				<div class="relative bg-white p-10">
+					<form class="space-y-6" id="contact-form">
+						<div>
+							<label for="name" class="text-base-800 mb-1 block text-sm font-medium"
+								>{formNameLabel}</label
+							>
+							<input
+								type="text"
+								id="name"
+								name="name"
+								class="border-base-300 focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border bg-white/10 px-4 py-2 text-slate-500 transition-all outline-none placeholder:text-gray-400 focus:ring-2"
+								placeholder="John Doe"
+								required
+							/>
+						</div>
+
+						<div>
+							<label for="email" class="text-base-800 mb-1 block text-sm font-medium"
+								>{formEmailLabel}</label
+							>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								class="border-base-300 focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border bg-white/10 px-4 py-2 text-slate-500 transition-all outline-none placeholder:text-gray-400 focus:ring-2"
+								placeholder={formEmailPlaceholder}
+								required
+							/>
+						</div>
+
+						<div>
+							<label for="subject" class="text-base-800 mb-1 block text-sm font-medium"
+								>{formSubjectLabel}</label
+							>
+							<input
+								type="text"
+								id="subject"
+								name="subject"
+								class="border-base-300 focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border bg-white/10 px-4 py-2 text-slate-500 transition-all outline-none placeholder:text-gray-400 focus:ring-2"
+								placeholder={formSubjectPlaceholder}
+								required
+							/>
+						</div>
+						<div>
+							<label for="message" class="text-base-800 mb-1 block text-sm font-medium"
+								>{formMessageLabel}</label
+							>
+							<textarea
+								id="message"
+								name="message"
+								rows="4"
+								class="border-base-300 focus:ring-primary-500 focus:border-primary-500 w-full resize-none rounded-lg border bg-white/10 px-4 py-2 text-slate-500 transition-all outline-none placeholder:text-gray-400 focus:ring-2"
+								placeholder={formMessagePlaceholder}
+								required></textarea>
+						</div>
+						<Button variant="primary" type="submit" class="w-full justify-center">
+							{formSubmitButtonText}
+						</Button>
+						<div id="form-status" class="hidden text-center text-sm font-medium"></div>
+					</form>
+
+					<script>
+						const form = document.getElementById("contact-form") as HTMLFormElement;
+						const statusDiv = document.getElementById("form-status");
+
+						form.addEventListener("submit", async (e) => {
+							e.preventDefault();
+							if (!statusDiv) return;
+
+							statusDiv.classList.remove("hidden");
+							statusDiv.textContent = "Sending...";
+							statusDiv.className = "text-center text-sm font-medium text-gray-500";
+
+							const formData = new FormData(form);
+
+							try {
+								const response = await fetch("/actions/send-email", {
+									method: "POST",
+									body: formData,
+								});
+
+								if (response.ok) {
+									statusDiv.textContent = "Message sent successfully!";
+									statusDiv.className = "text-center text-sm font-medium text-green-600";
+									form.reset();
+								} else {
+									const data = await response.json();
+									statusDiv.textContent = data.message || "Failed to send message.";
+									statusDiv.className = "text-center text-sm font-medium text-red-600";
+								}
+							} catch (error) {
+								statusDiv.textContent = "An error occurred. Please try again.";
+								statusDiv.className = "text-center text-sm font-medium text-red-600";
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Testimonial Slider -->
+	<section>
+		<div class="site-container mt-20">
+			<h2 class="mb-8 text-center text-3xl font-bold">What Our Students Say</h2>
+			<TestimonialSlider />
+		</div>
+	</section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import IframeComponent from "@/components/IframeComponent/IframeComponent.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import siteData from "@/config/siteData.json";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+import { schemaGenerators } from "@/utils/schema";
+import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+
+const reader = getKeystaticReader();
+const calendar = await reader.singletons.calendar.read();
+const pageTitle = "Firearm Training Schedule | Northern Virginia Classes";
+const iframeUrl = calendar?.iframeUrl;
+const iframeHeight = calendar?.iframeHeight;
+const iframeWidth = calendar?.iframeWidth;
+
+const schemaData = schemaGenerators.calendar({
+	name: pageTitle,
+	description: siteData.description,
+	url: Astro.url.href,
+});
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={siteData.description}
+	schemaType="calendar"
+	schemaData={schemaData}
+>
+	<PageHeader title="Firearm Training Schedule">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<section class="site-container px-4 py-16">
+		<LiveSchedule />
+	</section>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+// src/components/Comment.astro
+interface Props {
+	name: string;
+	date: string;
+	comment: string;
+}
+
+const { name, date, comment } = Astro.props;
+---
+
+<article class="comment">
+	<header class="comment-header">
+		<div class="comment-author">
+			<div class="avatar">{name.charAt(0).toUpperCase()}</div>
+			<div>
+				<strong>{name}</strong>
+				<time datetime={date}>{new Date(date).toLocaleDateString()}</time>
+			</div>
+		</div>
+	</header>
+
+	<div class="comment-body">
+		{comment}
+	</div>
+</article>
+
+<style>
+	.comment {
+		padding: 1.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		background: #f9fafb;
+	}
+
+	.comment-header {
+		margin-bottom: 1rem;
+	}
+
+	.comment-author {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.avatar {
+		width: 40px;
+		height: 40px;
+		background: #3b82f6;
+		color: white;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+	}
+
+	.comment-author strong {
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.comment-author time {
+		color: #6b7280;
+		font-size: 0.875rem;
+	}
+
+	.comment-body {
+		line-height: 1.6;
+		white-space: pre-wrap;
+	}
+</style>

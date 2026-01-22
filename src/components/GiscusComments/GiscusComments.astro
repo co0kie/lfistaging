@@ -1,0 +1,33 @@
+---
+const { page } = Astro.props;
+---
+
+<div class="comments-section">
+	<h2>Comments</h2>
+	<p><small>Comments powered by GitHub. Sign in with GitHub to comment.</small></p>
+
+	<script
+		is:inline
+		src="https://giscus.app/client.js"
+		data-repo="j3rech0/livefireinstruction"
+		data-repo-id="R_kgDOQRTZ-g"
+		data-category="General"
+		data-category-id="DIC_kwDOQRTZ-s4CzcIk"
+		data-mapping="pathname"
+		data-strict="0"
+		data-reactions-enabled="1"
+		data-emit-metadata="0"
+		data-input-position="bottom"
+		data-theme="preferred_color_scheme"
+		data-lang="en"
+		crossorigin="anonymous"
+		async></script>
+</div>
+
+<style>
+	.comments-section {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border-color);
+	}
+</style>
