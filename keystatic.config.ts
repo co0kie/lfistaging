@@ -1,19 +1,23 @@
 import { config, fields, collection, singleton } from "@keystatic/core";
 import React from "react";
 
+const repo = {
+	owner: "co0kie",
+	name: "lfistaging",
+};
+
 const isProd = import.meta.env.PROD || import.meta.env.MODE === "production";
 
 export default config({
 	storage: isProd
 		? {
-				kind: "cloud",
+				kind: "github",
+				repo: `${repo.owner}/${repo.name}`,
+				branchPrefix: "main/",
 			}
 		: {
 				kind: "local",
 			},
-	cloud: {
-		project: "lfigit/keystatic",
-	},
 	ui: {
 		brand: {
 			name: "Admin",
