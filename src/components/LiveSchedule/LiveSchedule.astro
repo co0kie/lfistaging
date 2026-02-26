@@ -18,6 +18,15 @@ const { category } = Astro.props;
 				Join our expert-led sessions and develop your firearm skills in a safe, professional
 				environment.
 			</p>
+			<a
+				href="https://instructorsdash.com/lisa-chau/categories/all"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
+			>
+				View Full Calendar Site
+				<ArrowRight size={20} />
+			</a>
 		</div>
 
 		{/* Skeleton Loader - Visible while loading */}
@@ -77,16 +86,6 @@ const { category } = Astro.props;
 			>
 				Show More Classes
 			</button>
-
-			<a
-				href="https://instructorsdash.com/lisa-chau/categories/all"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="text-blue inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
-			>
-				View Full Calendar Site
-				<ArrowRight size={20} />
-			</a>
 		</div>
 	</div>
 </section>
@@ -144,7 +143,26 @@ const { category } = Astro.props;
 						<div class="mt-auto space-y-3 text-sm text-gray-600">
 							<div class="flex items-center gap-3">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-								<span>${new Date(event.start_date).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" })}</span>
+								<span>${(() => {
+									const start = new Date(event.start_date);
+									const end = new Date(event.end_date);
+									const options: Intl.DateTimeFormatOptions = {
+										timeZone: "America/New_York",
+										weekday: "short",
+										month: "short",
+										day: "numeric",
+									};
+									const timeOptions: Intl.DateTimeFormatOptions = {
+										timeZone: "America/New_York",
+										hour: "numeric",
+										minute: "2-digit",
+										hour12: true,
+									};
+									const dateStr = start.toLocaleDateString("en-US", options);
+									const startTimeStr = start.toLocaleTimeString("en-US", timeOptions);
+									const endTimeStr = end.toLocaleTimeString("en-US", timeOptions);
+									return `${dateStr} | ${startTimeStr} - ${endTimeStr}`;
+								})()}</span>
 							</div>
 							<div class="flex items-start gap-3">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange mt-0.5 shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -160,8 +178,9 @@ const { category } = Astro.props;
 							href="https://livefireinstruction.instructorsdash.com/e/lisa-chau/${event.short_slug}"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
-						>
+							class="regnow bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
+							title="${event.name}"
+							>
 							Register Now
 							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
 						</a>

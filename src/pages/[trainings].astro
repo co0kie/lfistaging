@@ -6,12 +6,14 @@ import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
 import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import siteData from "@/config/siteData.json";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { isInputError } from "astro:actions";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import { type CollectionEntry, getCollection } from "astro:content";
 import {
 	CheckCheck,
 	CheckCircle,
+	ChevronRight,
 	CornerRightDown,
 	MapPin,
 	Navigation,
@@ -28,23 +30,59 @@ type Props = CollectionEntry<"trainings">;
 
 const item = Astro.props;
 const { Content } = await render(item);
+const isInstructor = item.data.isInstructor;
 
 const schemaData = {
 	name: item.data.title,
 	description: item.data.description,
-}
+};
 ---
 
-<BaseLayout title={item.data.title + " | " + siteData.title} description={item.data.description} schemaType="course" schemaData={schemaData}>
+<BaseLayout
+	title={item.data.title + " - " + siteData.title}
+	description={item.data.description}
+	schemaData={schemaData}
+	schemaType="WebPage"
+>
 	<div class="site-container mx-auto px-4">
 		<!-- subtle background gradient effect -->
 		<div
-			class="pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 scale-[.7] rounded-full bg-orange-100 opacity-40 blur-[100px]"
+			class:list={[
+				"pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 scale-[.7] rounded-full opacity-40 blur-[100px]",
+				isInstructor ? "bg-blue-200" : "bg-orange-100",
+			]}
 		>
 		</div>
 		<!-- Hero Section -->
 		<header class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32">
 			<div class="relative z-[11] mx-auto max-w-4xl px-4 text-center">
+				<nav aria-label="Breadcrumb" class="mb-6 flex justify-center">
+					<ol role="list" class="flex items-center space-x-2 text-sm text-gray-500">
+						<li>
+							<a href="/" class="hover:text-primary transition-colors hover:underline"
+								>Home</a
+							>
+						</li>
+						<li>
+							<ChevronRight className="h-4 w-4 text-gray-400" />
+						</li>
+						<li>
+							<a
+								href={isInstructor ? "#" : "/firearm-training"}
+								class="hover:text-primary transition-colors hover:underline"
+								>{isInstructor ? "Instructor Courses" : "Training"}</a
+							>
+						</li>
+						<li>
+							<ChevronRight className="h-4 w-4 text-gray-400" />
+						</li>
+						<li>
+							<span class="text-gray-900 font-medium" aria-current="page"
+								>{item.data.title}</span
+							>
+						</li>
+					</ol>
+				</nav>
 				<h1
 					class="mb-6 text-2xl leading-tight font-extrabold tracking-tight text-gray-900 lg:text-4xl"
 				>
@@ -57,16 +95,30 @@ const schemaData = {
 			</div>
 
 			<Button
-				class="bg-primary scroll-button m-auto mt-8 w-full max-w-max rounded-lg px-12 py-4 text-lg font-extrabold shadow-xl shadow-orange-200 transition-all duration-300 hover:scale-105 hover:bg-orange-400"
+				class:list={[
+					"scroll-button m-auto mt-8 w-full max-w-max rounded-lg px-12 py-4 text-lg font-extrabold shadow-xl transition-all duration-300 hover:scale-105",
+					isInstructor
+						? "bg-blue-600 text-white shadow-blue-200 hover:bg-blue-700"
+						: " shadow-orange-200 hover:bg-blue-700",
+				]}
+				variant={isInstructor ? "secondary" : "primary"}
 				href="#iframe"
 			>
 				{item.data.button}<CornerRightDown size={18} />
 			</Button>
 
 			<div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+				{
+					isInstructor && (
+						<div class="flex items-center justify-center gap-2 text-sm font-medium text-gray-500">
+							<CheckCircle className={isInstructor && "h-4 w-4 text-blue-600"} />
+							<span>Professional Instructor Course</span>
+						</div>
+					)
+				}
 				{item.data.badgeGroup?.map((badge) => (
 					<div class="flex items-center justify-center gap-2 text-sm font-medium text-gray-500">
-						<CheckCircle className="text-primary h-4 w-4" />
+					<CheckCircle className={isInstructor ? "h-4 w-4 text-blue-600":"h-4 w-4 text-primary-600"} />
 						<span>{badge}</span>
 					</div>
 				))}
@@ -74,7 +126,7 @@ const schemaData = {
 		</header>
 
 		<section class="mx-auto mb-16 max-w-6xl px-4">
-			<div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+			<div class="grid grid-cols-1 items-start gap-12" class:list={isInstructor ? "lg:grid-cols-1" : "lg:grid-cols-2"}>
 				{
 						item.data.leftColumnImage && (
 						<div class="group relative">
@@ -97,7 +149,7 @@ const schemaData = {
 				}
 				<div>
 					<h2 class="mb-6 flex items-center gap-3 text-3xl font-bold text-gray-900">
-						<span class="bg-primary h-8 w-2 rounded-full"></span>
+						<span class:list={["h-8 w-2 rounded-full", isInstructor ? "bg-blue-600" : "bg-primary"]}></span>
 						{item.data.rightColumnTitle}
 					</h2>
 					<p class="mb-6 text-gray-600">{item.data.rightColumnDescription}</p>
@@ -112,8 +164,8 @@ const schemaData = {
 										<ul class="grid grid-cols-2 space-y-2">
 											{listItem.listItem?.map((item) => (
 												<li class="flex items-start gap-3">
-													<CheckCheck className="text-primary mt-0.5 h-5 w-5 flex-shrink-0" />
-													<span class="text-gray-700" set:html={item} />
+													<CheckCheck className={isInstructor ? "mt-0.5 h-5 w-5 text-blue-600 flex-shrink-0" : "text-primary mt-0.5 h-5 w-5 flex-shrink-0"} />
+													<span class="text-gray-700">{item}</span>
 												</li>
 											))}
 										</ul>
@@ -134,14 +186,14 @@ const schemaData = {
 					<!-- Info -->
 					<div class="flex flex-col justify-center p-8 md:p-12">
 						<div class="mb-6">
-							<span class="text-primary text-sm font-bold tracking-wider uppercase">Location</span>
+							<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>Location</span>
 							<h3 class="mt-2 text-3xl font-bold text-gray-900">{item.data.hasMap.value.mapTitle}</h3>
 						</div>
 
 						<div class="space-y-6">
 							<div class="flex items-start gap-4">
-								<div class="text-primary rounded-lg bg-orange-50 p-3">
-									<MapPin className="text-primary mt-0.5 h-5 w-5 flex-shrink-0" />
+								<div class:list={["rounded-lg p-3", isInstructor ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-primary"]}>
+									<MapPin className="mt-0.5 h-5 w-5 flex-shrink-0" />
 								</div>
 								<div>
 									{item.data.hasMap.value.address && item.data.hasMap.value.address.map((address, index) => (
@@ -178,8 +230,9 @@ const schemaData = {
 		<div class="site-container mx-auto px-4 text-center">
 			<Content />
 		</div>
-		
-		<LiveSchedule category="133" />
+		<div id="iframe">
+			<LiveSchedule category={item.id === "first-step-pistol-orientation" ? "all" : "133"} />
+		</div>
 </BaseLayout>
 
 <style is:inline>

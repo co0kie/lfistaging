@@ -6,11 +6,12 @@ import TestimonialSlider from "@components/TestimonialSlider/TestimonialSlider.a
 import { Calendar, Mail, Phone, Pin } from "lucide-react";
 import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import { getKeystaticReader } from "@/lib/keystatic-reader";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
 
 // Fetch contact page data from Keystatic
 const reader = getKeystaticReader();
 const contact = await reader.singletons.contact.read();
-const pagetitle = contact?.pageTitle || "Contact";
+const pagetitle = contact?.pageTitle || "Contact Us";
 const formInfoTitle =
 	contact?.formInfoTitle || "Customer Feedback Is The Lifeblood Of Our Business.";
 const formInfoSubtitle =
@@ -234,10 +235,16 @@ const schemaData = {
 		</div>
 	</section>
 	<!-- Testimonial Slider -->
-	<section>
+	<section class="mt-8">
+		<!-- <GoogleReviews /> -->
+
+		<!-- Elfsight Google Reviews | Untitled Google Reviews -->
+
+		<div class="elfsight-app-1e4e082e-3632-46e6-b288-fb9dca905949" data-elfsight-app-lazy></div>
 		<div class="site-container mt-20">
 			<h2 class="mb-8 text-center text-3xl font-bold">What Our Students Say</h2>
 			<TestimonialSlider />
 		</div>
 	</section>
 </BaseLayout>
+<script src="https://elfsightcdn.com/platform.js" async is:inline></script>

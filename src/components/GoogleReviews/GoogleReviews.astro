@@ -1,0 +1,140 @@
+---
+import ReviewsList from "@/components/GoogleReviews/ReviewsList.astro";
+
+function getMockReviews() {
+	return [
+		{
+			author_name: "John D.",
+			rating: 5,
+			relative_time_description: "2 months ago",
+			text: "Excellent training! The instructors were knowledgeable and made complex concepts easy to understand.",
+			profile_photo_url: "https://via.placeholder.com/50",
+		},
+		{
+			author_name: "Sarah M.",
+			rating: 5,
+			relative_time_description: "1 month ago",
+			text: "Professional and thorough instruction. Highly recommend Live Fire Instruction for anyone seeking quality training.",
+			profile_photo_url: "https://via.placeholder.com/50",
+		},
+		{
+			author_name: "Mike T.",
+			rating: 4,
+			relative_time_description: "3 months ago",
+			text: "Great experience overall. The hands-on approach really helped solidify the concepts.",
+			profile_photo_url: "https://via.placeholder.com/50",
+		},
+	];
+}
+
+const reviews = getMockReviews();
+const averageRating = reviews.length
+	? reviews.reduce((sum: any, r: { rating: any }) => sum + r.rating, 0) / reviews.length
+	: 5.0;
+
+const displayRating = typeof averageRating === "number" ? averageRating.toFixed(1) : "5.0";
+---
+
+<div class="reviews-widget">
+	<div class="reviews-header">
+		<h2>Google Reviews</h2>
+		<div class="rating-summary">
+			<div class="stars">
+				{
+					[1, 2, 3, 4, 5].map((star) => (
+						<span class={`star ${star <= averageRating ? "filled" : ""}`}>★</span>
+					))
+				}
+			</div>
+			<span class="average-rating">{displayRating} out of 5</span>
+			<a
+				href="https://www.google.com/maps/place/Live+Fire+Instruction,+LLC/@38.1067296,-81.9706073,7z/data=!3m1!4b1!4m6!3m5!1s0x89b65c0e429587f7:0x325c91d4189983da!8m2!3d38.1319444!4d-79.3308385!16s%2Fg%2F11c2pwfqrx?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="view-all-link"
+			>
+				View all reviews on Google →
+			</a>
+		</div>
+	</div>
+
+	<ReviewsList reviews={reviews} />
+</div>
+
+<style>
+	.reviews-widget {
+		font-family:
+			system-ui,
+			-apple-system,
+			sans-serif;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem;
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.reviews-header {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	.reviews-header h2 {
+		color: #1a1a1a;
+		margin-bottom: 1rem;
+		font-size: 1.75rem;
+	}
+
+	.rating-summary {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.stars {
+		font-size: 2rem;
+		color: #ddd;
+		line-height: 1;
+	}
+
+	.star {
+		margin-right: 0.125rem;
+	}
+
+	.star.filled {
+		color: #ffb400;
+	}
+
+	.average-rating {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1a1a1a;
+	}
+
+	.view-all-link {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		background: #4285f4;
+		color: white;
+		text-decoration: none;
+		border-radius: 6px;
+		font-weight: 500;
+		transition: background-color 0.2s;
+	}
+
+	.view-all-link:hover {
+		background: #3367d6;
+	}
+
+	@media (max-width: 768px) {
+		.reviews-widget {
+			padding: 1.5rem;
+		}
+
+		.stars {
+			font-size: 1.75rem;
+		}
+	}
+</style>

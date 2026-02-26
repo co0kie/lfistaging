@@ -24,7 +24,6 @@ const page = Astro.props as Props;
 const { Content } = await render(page);
 const { title, description, landing, heroImage } = page.data;
 import siteData from "@/config/siteData.json";
-import CTASection from "@/components/CTASection/CTASection.astro";
 ---
 
 {
@@ -55,7 +54,6 @@ import CTASection from "@/components/CTASection/CTASection.astro";
 					)}
 				</div>
 			</section>
-			<CTASection />
 		</BaseLayout>
 	)
 }

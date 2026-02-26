@@ -1,0 +1,120 @@
+---
+interface Props {
+	reviews: Array<{
+		author_name: string;
+		rating: number;
+		relative_time_description: string;
+		text: string;
+		profile_photo_url?: string;
+	}>;
+}
+
+const { reviews } = Astro.props;
+---
+
+<div class="reviews-list">
+	{
+		reviews.slice(0, 3).map((review) => (
+			<article class="review-card">
+				<header class="review-header">
+					{review.profile_photo_url && (
+						<img
+							src={review.profile_photo_url}
+							alt={review.author_name}
+							width="40"
+							height="40"
+							class="review-avatar"
+						/>
+					)}
+					<div class="review-meta">
+						<h3 class="review-author">{review.author_name}</h3>
+						<div class="review-rating-time">
+							<div class="review-stars">
+								{[1, 2, 3, 4, 5].map((star) => (
+									<span class={`review-star ${star <= review.rating ? "filled" : ""}`}>★</span>
+								))}
+							</div>
+							<span class="review-time">{review.relative_time_description}</span>
+						</div>
+					</div>
+				</header>
+				<p class="review-text">{review.text}</p>
+			</article>
+		))
+	}
+</div>
+
+<style>
+	.reviews-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+		margin-top: 1rem;
+	}
+
+	.review-card {
+		background: #f8f9fa;
+		padding: 1.5rem;
+		border-radius: 8px;
+		border: 1px solid #e9ecef;
+	}
+
+	.review-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.review-avatar {
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.review-meta {
+		flex: 1;
+	}
+
+	.review-author {
+		margin: 0 0 0.25rem 0;
+		font-size: 1rem;
+		color: #1a1a1a;
+	}
+
+	.review-rating-time {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.review-stars {
+		font-size: 1rem;
+		color: #ddd;
+	}
+
+	.review-star {
+		margin-right: 0.125rem;
+	}
+
+	.review-star.filled {
+		color: #ffb400;
+	}
+
+	.review-time {
+		font-size: 0.875rem;
+		color: #666;
+	}
+
+	.review-text {
+		margin: 0;
+		line-height: 1.5;
+		color: #333;
+		font-size: 0.95rem;
+	}
+
+	@media (max-width: 768px) {
+		.reviews-list {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

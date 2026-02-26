@@ -1,0 +1,368 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import siteData from "@/config/siteData.json.ts";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+
+const schemaData = {
+	name: "Firearm Training",
+	description: "We Offer A Variety Of Training Courses As Well As One-On-One Instruction",
+	url: Astro.url.href,
+	itemListElement: [
+		{
+			"@type": "ListItem",
+			position: 1,
+			item: {
+				"@type": "Course",
+				name: "Firearm Training",
+				description: "We Offer A Variety Of Training Courses As Well As One-On-One Instruction",
+				provider: {
+					"@type": "Organization",
+					name: siteData.name,
+				},
+			},
+		},
+	],
+};
+---
+
+<BaseLayout
+	title="Firearm Training Courses | NRA Pistol, CCW & Personal Instruction"
+	description="Browse firearm training courses including NRA pistol, concealed carry, private lessons, and safety classes for all levels."
+	schemaData={schemaData}
+	schemaType="courses"
+>
+	<PageHeader title="Firearms Training Northern Virginia: Expert NRA Certified Instruction">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<div class="site-container page-details mx-auto px-4">
+		<!-- Breadcrumb Navigation -->
+		<nav class="breadcrumb" aria-label="Breadcrumb">
+			<a href="/">Home</a> &gt; <a href="/firearm-training">Training</a> &gt;
+			<span>Firearms Training Northern Virginia</span>
+		</nav>
+
+		<!-- Main Heading with Primary Keyword -->
+		<header>
+			<p>
+				<strong>Professional firearms training in Northern Virginia</strong> serving Fairfax, Arlington,
+				Alexandria, Loudoun County, Prince William County, and the greater NoVA area since 2016.
+			</p>
+		</header>
+
+		<!-- Hero Section -->
+		<section class="hero-section">
+			<h2>Top-Rated Firearms Training in Northern Virginia</h2>
+			<p>
+				Live Fire Instruction is Northern Virginia's premier destination for comprehensive firearms
+				training. Whether you're a first-time shooter or looking to advance your skills, our NRA
+				certified instructors provide expert guidance in a safe, professional environment.
+			</p>
+			<a href="/calendar" class="cta-button">View Course Schedule</a>
+			<a href="/contact" class="cta-button">Contact Us</a>
+		</section>
+
+		<!-- Main Content -->
+		<article>
+			<section>
+				<h2>Why Choose Live Fire Instruction for Firearms Training in Northern Virginia?</h2>
+				<p>
+					When searching for <strong>firearms training in Northern Virginia</strong>, you need an
+					experienced team that prioritizes safety, skill development, and legal compliance. Live
+					Fire Instruction has been serving the Northern Virginia community since 2016, helping
+					hundreds of students become safe, confident, and responsible firearm owners.
+				</p>
+
+				<p>
+					Our courses are taught by <strong>NRA Certified Instructors</strong> at the state-of-the-art
+					NRA Range facility in Fairfax, Virginia. We offer a comprehensive curriculum designed for all
+					experience levels, from complete beginners to advanced shooters seeking defensive training.
+				</p>
+			</section>
+
+			<section>
+				<h2>Our Firearms Training Courses in Northern Virginia</h2>
+
+				<div class="course-grid">
+					<div class="course-card">
+						<h3>NRA Basic Pistol Course & Virginia CCW Permit</h3>
+						<p>
+							Our most popular course combines fundamental pistol training with Virginia concealed
+							carry permit certification. This 6-hour comprehensive course includes classroom
+							instruction, hands-on training, and live fire practice.
+						</p>
+						<p>
+							<strong>Perfect for:</strong> First-time shooters, those seeking Virginia concealed carry
+							permits
+						</p>
+						<p><strong>Schedule:</strong> Every Thursday & Saturday</p>
+						<a href="/nra-basic-pistol-shooting-course">Learn More →</a>
+					</div>
+
+					<div class="course-card">
+						<h3>First Step Pistol Orientation</h3>
+						<p>
+							Our express 3+ hour course designed for individuals new to firearms. Get your Virginia
+							concealed carry permit certification in a relaxed, beginner-friendly environment.
+						</p>
+						<p><strong>Perfect for:</strong> Absolute beginners, busy professionals</p>
+						<a href="/first-step-pistol-orientation">Learn More →</a>
+					</div>
+
+					<div class="course-card">
+						<h3>NRA CCW Advanced Pistol Course</h3>
+						<p>
+							Take your skills to the next level with our defensive pistol course. Learn advanced
+							techniques, tactical mindset, and real-world defensive scenarios.
+						</p>
+						<p><strong>Perfect for:</strong> Experienced shooters, CCW permit holders</p>
+						<a href="/nra-defensive-pistol-course">Learn More →</a>
+					</div>
+
+					<div class="course-card">
+						<h3>One-on-One Personal Training</h3>
+						<p>
+							Customized 60-minute private instruction tailored to your specific needs and skill
+							level. Get personalized attention from our expert instructors.
+						</p>
+						<p><strong>Perfect for:</strong> Anyone wanting individualized instruction</p>
+						<a href="/one-on-one-instruction">Learn More →</a>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>What You'll Learn in Our Northern Virginia Firearms Training Programs</h2>
+				<p>
+					Our comprehensive <strong>firearms training programs in Northern Virginia</strong> cover all
+					essential aspects of safe and effective firearm use:
+				</p>
+
+				<ul>
+					<li>
+						<strong>Firearm Safety Fundamentals</strong> - The foundation of all responsible gun ownership
+					</li>
+
+					<li>
+						<strong>Proper Handling Techniques</strong> - Loading, unloading, grip, stance, and presentation
+					</li>
+					<li>
+						<strong>Marksmanship Skills</strong> - Sight alignment, trigger control, and accuracy development
+					</li>
+					<li>
+						<strong>Live Fire Practice</strong> - Hands-on range time with expert supervision
+					</li>
+					<li>
+						<strong>Defensive Tactics</strong> - Situational awareness and defensive shooting strategies
+						(advanced courses)
+					</li>
+					<li>
+						<strong>Equipment Selection</strong> - Guidance on choosing the right firearm and accessories
+					</li>
+					<li>
+						<strong>Maintenance & Storage</strong> - Proper care and secure storage practices
+					</li>
+				</ul>
+			</section>
+
+			<section class="location-section">
+				<h2>Serving All of Northern Virginia</h2>
+				<p>
+					Conveniently located in Fairfax, Virginia, Live Fire Instruction provides
+					<strong>firearms training throughout Northern Virginia</strong>, including:
+				</p>
+
+				<div
+					style="
+							display: grid;
+							grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+							gap: 15px;
+							margin-top: 20px;
+						"
+				>
+					<div>
+						<h4>Fairfax County</h4>
+						<ul style="list-style: none; padding-left: 0">
+							<li>✓ Fairfax</li>
+							<li>✓ Vienna</li>
+							<li>✓ Reston</li>
+							<li>✓ Herndon</li>
+							<li>✓ McLean</li>
+							<li>✓ Annandale</li>
+							<li>✓ Burke</li>
+							<li>✓ Springfield</li>
+						</ul>
+					</div>
+					<div>
+						<h4>Arlington County</h4>
+						<ul style="list-style: none; padding-left: 0">
+							<li>✓ Arlington</li>
+							<li>✓ Falls Church</li>
+						</ul>
+						<h4>Alexandria</h4>
+						<ul style="list-style: none; padding-left: 0">
+							<li>✓ Alexandria</li>
+						</ul>
+					</div>
+					<div>
+						<h4>Loudoun County</h4>
+						<ul style="list-style: none; padding-left: 0">
+							<li>✓ Ashburn</li>
+							<li>✓ Sterling</li>
+							<li>✓ Leesburg</li>
+						</ul>
+					</div>
+					<div>
+						<h4>Prince William County</h4>
+						<ul style="list-style: none; padding-left: 0">
+							<li>✓ Manassas</li>
+							<li>✓ Woodbridge</li>
+							<li>✓ Dale City</li>
+						</ul>
+					</div>
+				</div>
+
+				<p style="margin-top: 30px">
+					<strong>Also serving:</strong> Washington DC, Maryland, and surrounding areas
+				</p>
+
+				<p>
+					<strong>Training Location:</strong> NRA Range, Fairfax, VA - A professional, climate-controlled
+					indoor facility with the latest safety equipment.
+				</p>
+			</section>
+
+			<section>
+				<h2>About Live Fire Instruction</h2>
+				<p>
+					Since 2016, Live Fire Instruction has been Northern Virginia's trusted source for firearms
+					education. Founded on principles of safety, professionalism, and excellence, we've helped
+					countless individuals achieve their firearms training goals.
+				</p>
+
+				<p>
+					<strong>Our Mission:</strong> Developing safe and responsible shooters through comprehensive,
+					professional firearms instruction.
+				</p>
+
+				<p><strong>Why Students Choose Us:</strong></p>
+				<ul>
+					<li>NRA Certified Instructors with extensive teaching experience</li>
+					<li>Comprehensive curriculum for all skill levels</li>
+					<li>Modern training facility with professional equipment</li>
+					<li>Flexible scheduling with courses every week</li>
+					<li>Emphasis on safety, ethics, and responsibility</li>
+					<li>Small class sizes for personalized attention</li>
+					<li>Beginner-friendly, supportive learning environment</li>
+					<li>Competitive pricing with exceptional value</li>
+				</ul>
+			</section>
+
+			<!-- FAQ Section for SEO -->
+			<section>
+				<h2>Frequently Asked Questions About Firearms Training in Northern Virginia</h2>
+
+				<div class="faq-item">
+					<h3>Do I need any experience to take firearms training in Northern Virginia?</h3>
+					<p>
+						No prior experience is necessary! Our courses are designed to accommodate complete
+						beginners. We'll teach you everything you need to know, starting with basic safety and
+						handling fundamentals.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>How do I get my Virginia concealed carry permit (CCW)?</h3>
+					<p>
+						To obtain your Virginia CCW permit, you must complete an approved firearms training
+						course (which we provide), then submit your application with the completion certificate
+						to your local circuit court. We guide you through the entire process.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>Where is your firearms training facility located in Northern Virginia?</h3>
+					<p>
+						We conduct training at the NRA Range in Fairfax, Virginia - a professional, indoor
+						facility easily accessible from throughout Northern Virginia, including Arlington,
+						Alexandria, Loudoun County, and Prince William County.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>How long does firearms training take?</h3>
+					<p>
+						Course duration varies by program. Our express First Step course is 3+ hours, our
+						comprehensive NRA Basic Pistol with CCW is 6 hours, and private lessons are 60 minutes.
+						All courses can typically be completed in a single day.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>Do I need to bring my own firearm to training?</h3>
+					<p>
+						While you're welcome to bring your own firearm, it's not required. We can provide
+						guidance on equipment needs for each specific course when you register.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>What is the cost of firearms training in Northern Virginia?</h3>
+					<p>
+						Pricing varies by course. Please visit our individual course pages or contact us at
+						1-571-210-5651 for current pricing and any available promotions.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>Are your instructors certified?</h3>
+					<p>
+						Yes! All Live Fire Instruction courses are taught by NRA Certified Instructors who
+						maintain current certifications and undergo regular continuing education.
+					</p>
+				</div>
+
+				<div class="faq-item">
+					<h3>Can I take firearms training if I live in DC or Maryland?</h3>
+					<p>Absolutely! We welcome students from Washington DC, Maryland, and beyond.</p>
+				</div>
+			</section>
+
+			<!-- Call to Action -->
+			<section class="final-cta bg-blue-dark">
+				<h2>Ready to Start Your Firearms Training in Northern Virginia?</h2>
+				<p>
+					Join hundreds of satisfied students who have trained with Live Fire Instruction. Our
+					expert instructors are ready to help you develop the skills and confidence you need.
+				</p>
+				<div>
+					<a href="/calendar" class="cta-button bg-primary-600">View Course Calendar</a>
+					<a href="/contact" class="cta-button bg-primary-600">Contact Us</a>
+				</div>
+				<p style="margin-top: 30px">
+					<strong class="text-white">Phone:</strong>
+					<a href="tel:1-571-210-5651">1-571-210-5651</a><br />
+					<strong class="text-white">Email:</strong>
+					<a href="mailto:class@livefireinstruction.com">class@livefireinstruction.com</a>
+				</p>
+			</section>
+		</article>
+
+		<!-- Related Links for Internal Linking -->
+		<section class="related-links">
+			<h3>Related Training Programs:</h3>
+			<ul>
+				<li>
+					<a href="/nra-basic-pistol-shooting-course"
+						>NRA Basic Pistol Course & Virginia CCW Permit</a
+					>
+				</li>
+				<li><a href="/first-step-pistol-orientation">First Step Pistol Orientation</a></li>
+				<li><a href="/nra-defensive-pistol-course">NRA CCW Advanced Pistol Course</a></li>
+				<li><a href="/one-on-one-instruction">One-on-One Personal Training</a></li>
+				<li><a href="/refuse-to-be-a-victim">NRA Refuse To Be A Victim®</a></li>
+				<li><a href="/calendar">Course Calendar</a></li>
+			</ul>
+		</section>
+	</div>
+</BaseLayout>

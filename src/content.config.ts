@@ -1,6 +1,5 @@
 import { glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
-import sanitizeHtml from "sanitize-html";
 
 // Type-check frontmatter using a schema
 const blogCollection = defineCollection({
@@ -109,6 +108,7 @@ const trainingCollection = defineCollection({
 				.or(z.date())
 				.transform((val) => new Date(val)),
 			featured: z.boolean().optional(),
+			isInstructor: z.boolean().optional(),
 			description: z.string(),
 			button: z.string().optional(),
 			badgeGroup: z.array(z.string()).optional(),
@@ -119,18 +119,7 @@ const trainingCollection = defineCollection({
 				.array(
 					z.object({
 						listTitle: z.string().optional(),
-						listItem: z
-							.array(
-								z.string().transform((str) =>
-									sanitizeHtml(str, {
-										allowedTags: ["b", "i", "em", "strong", "a", "span", "br"],
-										allowedAttributes: {
-											a: ["href", "target", "rel"],
-										},
-									}),
-								),
-							)
-							.optional(),
+						listItem: z.array(z.string()).optional(),
 					}),
 				)
 				.optional(),
@@ -147,6 +136,7 @@ const trainingCollection = defineCollection({
 			iframeUrl: z.string().url().optional(),
 			iframeHeight: z.number().optional(),
 			iframeWidth: z.string().optional(),
+			useCategory133: z.boolean().optional(),
 		}),
 });
 

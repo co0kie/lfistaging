@@ -13,9 +13,13 @@ import IframeComponent from "@/components/IframeComponent/IframeComponent.astro"
 
 import { getKeystaticReader } from "@/lib/keystatic-reader";
 import CTASection from "@/components/CTASection/CTASection.astro";
+import WhoWeAre from "@/components/WhoWeAre/WhoWeAre.astro";
 
 const reader = getKeystaticReader();
 const homepage = await reader.singletons.homepage.read();
+
+const whoWeAreTitle = homepage?.whoWeAreTitle || "Who We Are";
+const whoWeAreContent = homepage?.whoWeAreContent || "";
 
 const heroTitle = homepage?.heroTitle || "Developing Safe And Responsible Shooters";
 const heroSubtitle =
@@ -72,6 +76,9 @@ const schemaData = {
 	</section>
 
 	<LiveSchedule />
+	<WhoWeAre title={whoWeAreTitle}>
+		{whoWeAreContent}
+	</WhoWeAre>
 
 	<CTASection />
 </BaseLayout>

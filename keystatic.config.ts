@@ -72,8 +72,7 @@ export default config({
 			path: "src/data/otherPages/homepage/",
 			format: { contentField: "emptyContent" },
 			schema: {
-				emptyContent: fields.emptyContent({ extension: "mdoc" }),
-				// Hero Section
+				emptyContent: fields.emptyContent({ extension: "mdoc" }), // Hero Section
 				heroTitle: fields.text({
 					label: "Hero Title",
 					validation: { isRequired: true },
@@ -169,6 +168,16 @@ export default config({
 					validation: { isRequired: true },
 					defaultValue: "1200",
 				}),
+
+				// Who We Are Section
+				whoWeAreTitle: fields.text({
+					label: "Who We Are Title",
+					defaultValue: "Who We Are",
+				}),
+				whoWeAreContent: fields.text({
+					label: "Who We Are Content",
+					multiline: true,
+				}),
 			},
 		}),
 		contact: singleton({
@@ -246,7 +255,6 @@ export default config({
 					label: "Submit Button Text",
 					defaultValue: "Send Message",
 				}),
-
 				// Testimonials Section
 				testimonials: fields.array(
 					fields.object({
@@ -259,26 +267,6 @@ export default config({
 						itemLabel: (props) => props.fields.name.value,
 					},
 				),
-				// blocks: fields.blocks(
-				// 	{
-				// 		testimonial: {
-				// 			label: "Testimonial1",
-
-				// 			schema: fields.array(
-				// 				fields.object({
-				// 					testimonialName: fields.text({ label: "Name" }),
-				// 					testimonial: fields.text({
-				// 						label: "Testimonial3",
-				// 						multiline: true,
-				// 					}),
-				// 				}),
-				// 			),
-				// 		},
-				// 	},
-				// 	{
-				// 		label: "Testimonials2",
-				// 	},
-				// ),
 			},
 		}),
 	},
@@ -289,7 +277,6 @@ export default config({
 			slugField: "title",
 			previewUrl: "/preview/start?branch={branch}&to=/preview/blog/{slug}",
 			columns: ["pubDate", "updatedDate"],
-			entryLayout: "content",
 			format: { contentField: "content" },
 			schema: {
 				title: fields.slug({ name: { label: "Title", validation: { isRequired: true } } }),
@@ -320,7 +307,7 @@ export default config({
 				heroImage: fields.image({
 					label: "Image",
 					directory: "src/assets/images/blog",
-					publicPath: "@assets/images/blog/",
+					publicPath: "/src/assets/images/blog/",
 				}),
 				categories: fields.array(
 					fields.text({ label: "Category", validation: { isRequired: true } }),
@@ -449,6 +436,11 @@ export default config({
 					label: "Featured",
 					description: "Check this box to feature this course on the front page.",
 				}),
+				isInstructor: fields.checkbox({
+					label: "Instructor Course",
+					description: "Check this box if this is an instructor certification course.",
+					defaultValue: false,
+				}),
 				description: fields.text({
 					label: "Description",
 					multiline: true,
@@ -535,6 +527,10 @@ export default config({
 					label: "IFrame Width (e.g., '1200' or '100%')",
 					validation: { isRequired: true },
 					defaultValue: "1200",
+				}),
+				useCategory133: fields.checkbox({
+					label: "Use Category 133 for Live Schedule",
+					defaultValue: true,
 				}),
 
 				content: fields.markdoc({

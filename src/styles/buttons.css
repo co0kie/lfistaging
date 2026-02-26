@@ -7,14 +7,14 @@
 }
 
 .button--primary {
-	@apply text-base-100 bg-gradient-to-r from-orange to-orange;
+	@apply text-base-100 from-orange to-orange bg-gradient-to-r;
 	@apply hover:opacity-90;
 	@apply focus-visible:ring-primary-700 focus-visible:ring-2 focus-visible:ring-offset-2;
 }
 
 .button--secondary {
-	@apply border-primary-600 text-primary-600 border;
-	@apply hover:ring-primary-600 hover:ring-1;
+	@apply text-primary-600 border border-blue-600;
+	@apply hover:ring-1 hover:ring-blue-600;
 	@apply focus-visible:ring-primary-700 focus-visible:ring-2 focus-visible:ring-offset-2;
 }
 

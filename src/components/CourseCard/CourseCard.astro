@@ -22,7 +22,7 @@ const domain = Astro.url.origin;
 								width={720}
 								height={360}
 								src={post.data.leftColumnImage}
-								alt=""
+								alt={post.data.title}
 								class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 							/>
 						)}

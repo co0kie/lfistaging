@@ -10,9 +10,6 @@ import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
 const reader = getKeystaticReader();
 const calendar = await reader.singletons.calendar.read();
 const pageTitle = "Firearm Training Schedule | Northern Virginia Classes";
-const iframeUrl = calendar?.iframeUrl;
-const iframeHeight = calendar?.iframeHeight;
-const iframeWidth = calendar?.iframeWidth;
 
 const schemaData = schemaGenerators.calendar({
 	name: pageTitle,

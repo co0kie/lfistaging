@@ -24,15 +24,8 @@ export default function CommentForm({ postSlug }: CommentFormProps) {
 
 		window.addEventListener("set-reply", handleReply);
 
-		// Load reCAPTCHA script
-		const script = document.createElement("script");
-		script.src = `https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`;
-		script.async = true;
-		document.head.appendChild(script);
-
 		return () => {
 			window.removeEventListener("set-reply", handleReply);
-			document.head.removeChild(script);
 		};
 	}, []);
 
@@ -45,20 +38,6 @@ export default function CommentForm({ postSlug }: CommentFormProps) {
 
 		if (replyTo) {
 			formData.append("parentId", replyTo.id);
-		}
-
-		// Handle reCAPTCHA
-		try {
-			// @ts-ignore
-			const token = await window.grecaptcha.execute(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY, {
-				action: "submit_comment",
-			});
-			formData.append("recaptchaToken", token);
-		} catch (e) {
-			console.error("reCAPTCHA Error:", e);
-			toast.error("Security check failed. Please try again.");
-			setIsSubmitting(false);
-			return;
 		}
 
 		try {

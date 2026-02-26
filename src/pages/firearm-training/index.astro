@@ -3,9 +3,7 @@ import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import siteData from "@/config/siteData.json";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
 import CourseCard from "@/components/CourseCard/CourseCard.astro";
-import IframeComponent from "@/components/IframeComponent/IframeComponent.astro";
 import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
 const trainingItems = await getCollection("trainings");
 const schemaData = {
