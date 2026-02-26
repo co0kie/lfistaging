@@ -18,7 +18,7 @@ export default defineConfig({
 		edgeMiddleware: true,
 	}),
 	output: "server",
-	site: isProd ? "https://livefireinstruction.netlify.app" : "http://localhost:4321",
+	site: isProd ? "https://livefireinstruction-staging.netlify.app" : "http://localhost:4321",
 	markdown: {
 		shikiConfig: {
 			theme: "dracula",
