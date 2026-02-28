@@ -108,7 +108,6 @@ const trainingCollection = defineCollection({
 				.or(z.date())
 				.transform((val) => new Date(val)),
 			featured: z.boolean().optional(),
-			isInstructor: z.boolean().optional(),
 			description: z.string(),
 			button: z.string().optional(),
 			badgeGroup: z.array(z.string()).optional(),
