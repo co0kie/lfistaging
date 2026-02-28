@@ -20,10 +20,9 @@
 			"@videos/*": ["./src/assets/videos/*"],
 			"@utils/*": ["./src/utils/*"]
 		},
-		"jsx": "react-jsx",
+		"jsx": "preserve",
 		"jsxImportSource": "react",
 		"verbatimModuleSyntax": true,
-		"importsNotUsedAsValues": "remove",
-		"lib": ["dom", "dom.iterable", "esnext"]
+		"importsNotUsedAsValues": "remove"
 	}
 }

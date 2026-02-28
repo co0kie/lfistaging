@@ -64,38 +64,38 @@ const navConfig: navItem[] = [
 				text: "Firearms Training Northern Virginia",
 				link: "/firearms-training-northern-virginia",
 			},
-			{
-				text: "Rules to purchase your first gun",
-				link: "/rules-to-purchase-your-first-gun-for-home-defense",
-			},
+			// {
+			// 	text: "Rules to purchase your first gun",
+			// 	link: "/rules-to-purchase-your-first-gun-for-home-defense",
+			// },
 		],
 	},
-	{
-		text: "Instructor Courses",
-		link: "#",
-		dropdown: [
-			{
-				text: "NRA Instructor Pistol Shooting Course",
-				link: "/nra-instructor-pistol-shooting-course",
-			},
-			{
-				text: "NRA Basic Range Safety Officer Course",
-				link: "/nra-basic-range-safety-officer-course",
-			},
-			{
-				text: "NRA Instructor CCW",
-				link: "/nra-instructor-ccw",
-			},
-			{
-				text: "NRA Instructor Rifle Shooting Course",
-				link: "/nra-instructor-rifle-shooting-course",
-			},
-			{
-				text: "NRA Chief Range Safety Officer Course",
-				link: "/nra-chief-range-safety-officer-course",
-			},
-		],
-	},
+	// {
+	// 	text: "Instructor Courses",
+	// 	link: "#",
+	// 	dropdown: [
+	// 		{
+	// 			text: "NRA Instructor Pistol Shooting Course",
+	// 			link: "/nra-instructor-pistol-shooting-course",
+	// 		},
+	// 		{
+	// 			text: "NRA Basic Range Safety Officer Course",
+	// 			link: "/nra-basic-range-safety-officer-course",
+	// 		},
+	// 		{
+	// 			text: "NRA Instructor CCW",
+	// 			link: "/nra-instructor-ccw",
+	// 		},
+	// 		{
+	// 			text: "NRA Instructor Rifle Shooting Course",
+	// 			link: "/nra-instructor-rifle-shooting-course",
+	// 		},
+	// 		{
+	// 			text: "NRA Chief Range Safety Officer Course",
+	// 			link: "/nra-chief-range-safety-officer-course",
+	// 		},
+	// 	],
+	// },
 	{
 		text: "Course Calendar",
 		link: "/calendar",
