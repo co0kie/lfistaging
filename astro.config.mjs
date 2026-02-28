@@ -75,6 +75,11 @@ export default defineConfig({
 		build: {
 			assetsInlineLimit: 0,
 		},
+		resolve: {
+			alias: {
+				"@": new URL("./src", import.meta.url),
+			},
+		},
 	},
 	redirects: {
 		"/contact-2": "/contact/",

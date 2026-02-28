@@ -1,0 +1,91 @@
+# LLMs.txt for Live Fire Instruction - Firearm Safety & Training
+
+This LLMs.txt file describes the content and structure of Live Fire Instruction (https://livefireinstruction.com/), a website dedicated to providing firearm safety education, Virginia CCW training, and related resources. The site aims to educate individuals on responsible gun ownership, self-defense, and relevant laws.
+
+## 1. Main Website Pages
+
+- [Live Fire Instruction | Firearm Safety & Virginia CCW Training](https://livefireinstruction.com/) - Homepage providing an overview of services.
+- [Contact Us - Live Fire Instruction](https://livefireinstruction.com/contact/) - Contact information and form.
+- [Privacy Policy for Live Fire Instruction, LLC - Live Fire Instruction](https://livefireinstruction.com/privacy-policy/) - Privacy Policy.
+- [Search](https://livefireinstruction.com/search/) - Search functionality.
+
+## 2. Training Courses
+
+- [Firearm Training Courses | NRA Pistol, CCW & Personal Instruction](https://livefireinstruction.com/firearm-training/) - Overview of available firearm training courses.
+  - [First Step Pistol Orientation with Virginia Concealed Carry Permit. - Live Fire Instruction](https://livefireinstruction.com/first-step-pistol-orientation/) - Information on the First Step Pistol Orientation course.
+  - [NRA Basic Pistol Course & Virginia Concealed Carry Permit - Live Fire Instruction](https://livefireinstruction.com/nra-basic-pistol-shooting-course/) - Details about the NRA Basic Pistol Course.
+  - [NRA CCW Advanced Pistol Course - Live Fire Instruction](https://livefireinstruction.com/nra-defensive-pistol-course/) - Information on the NRA CCW Advanced Pistol Course
+  - [One-on-One Instruction - Live Fire Instruction](https://livefireinstruction.com/one-on-one-instruction/) - Information on personalized, one-on-one firearm instruction.
+  - [Refuse To Be A Victim® - Live Fire Instruction](https://livefireinstruction.com/refuse-to-be-a-victim/) - Information on the Refuse To Be A Victim® course.
+
+## 3. Business Blueprint Course
+
+- [Join The 2-Day Bullseye Business Blueprint Course For Free - Live Fire Instruction](https://livefireinstruction.com/3-day-bullseye-business-blueprint-course/) - Information on the Bullseye Business Blueprint Course
+
+## 4. Blog
+
+The blog provides articles and resources related to firearm safety, CCW, and shooting tips. Blog content is also organized by category and tag. Pagination is used on the main blog page and category/tag archive pages.
+
+- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/) - Main blog page.
+- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/2/) - Page 2 of the blog.
+- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/3/) - Page 3 of the blog.
+
+  ### 4.1 Blog Categories
+  - [Recent Blog Posts](https://livefireinstruction.com/categories/) - Recent blog posts category archive.
+  - [CCW - Blog posts](https://livefireinstruction.com/categories/CCW/) - Blog posts categorized under CCW.
+  - [CCW - Blog posts](https://livefireinstruction.com/categories/CCW/2/) - Page 2 of CCW blog posts.
+  - [Defense - Blog posts](https://livefireinstruction.com/categories/Defense/) - Blog posts categorized under Defense.
+  - [Law - Blog posts](https://livefireinstruction.com/categories/Law/) - Blog posts categorized under Law.
+  - [Law - Blog posts](https://livefireinstruction.com/categories/Law/2/) - Page 2 of Law blog posts.
+  - [Owners - Blog posts](https://livefireinstruction.com/categories/Owners/) - Blog posts categorized under Owners.
+  - [Owners - Blog posts](https://livefireinstruction.com/categories/Owners/2/) - Page 2 of Owners blog posts.
+  - [Safety - Blog posts](https://livefireinstruction.com/categories/Safety/) - Blog posts categorized under Safety.
+  - [Training - Blog posts](https://livefireinstruction.com/categories/Training/) - Blog posts categorized under Training.
+
+  ### 4.2 Blog Tags
+  - [Tags](https://livefireinstruction.com/tags/) - Main Tags page.
+  - [Background Check - Blog posts](https://livefireinstruction.com/tags/Background-Check/) - Blog posts tagged with "Background Check".
+  - [Basic Pistol Course - Blog posts](https://livefireinstruction.com/tags/Basic-Pistol-Course/) - Blog posts tagged with "Basic Pistol Course".
+  - [Beginner Guide - Blog posts](https://livefireinstruction.com/tags/Beginner-Guide/) - Blog posts tagged with "Beginner Guide".
+  - [CCW Permit - Blog posts](https://livefireinstruction.com/tags/CCW-Permit/) - Blog posts tagged with "CCW Permit".
+  - [CCW Permit - Blog posts](https://livefireinstruction.com/tags/CCW-Permit/2/) - Page 2 of blog posts tagged with "CCW Permit".
+  - [Concealed Carry - Blog posts](https://livefireinstruction.com/tags/Concealed-Carry/) - Blog posts tagged with "Concealed Carry".
+  - [Disqualifications - Blog posts](https://livefireinstruction.com/tags/Disqualifications/) - Blog posts tagged with "Disqualifications".
+  - [Fairfax VA - Blog posts](https://livefireinstruction.com/tags/Fairfax-VA/) - Blog posts tagged with "Fairfax VA".
+  - [Firearm Laws - Blog posts](https://livefireinstruction.com/tags/Firearm-Laws/) - Blog posts tagged with "Firearm Laws".
+  - [Firearm Maintenance - Blog posts](https://livefireinstruction.com/tags/Firearm-Maintenance/) - Blog posts tagged with "Firearm Maintenance".
+  - [Firearms Training - Blog posts](https://livefireinstruction.com/tags/Firearms-Training/) - Blog posts tagged with "Firearms Training".
+  - [First Gun - Blog posts](https://livefireinstruction.com/tags/First-Gun/) - Blog posts tagged with "First Gun".
+  - [Gun Cleaning - Blog posts](https://livefireinstruction.com/tags/Gun-Cleaning/) - Blog posts tagged with "Gun Cleaning".
+  - [Gun Safety - Blog posts](https://livefireinstruction.com/tags/Gun-Safety/) - Blog posts tagged with "Gun Safety".
+  - [Gun Selection - Blog posts](https://livefireinstruction.com/tags/Gun-Selection/) - Blog posts tagged with "Gun Selection".
+  - [Home Defense - Blog posts](https://livefireinstruction.com/tags/Home-Defense/) - Blog posts tagged with "Home Defense".
+  - [In Person Training - Blog posts](https://livefireinstruction.com/tags/In-Person-Training/) - Blog posts tagged with "In Person Training".
+  - [Instructor Certification - Blog posts](https://livefireinstruction.com/tags/Instructor-Certification/) - Blog posts tagged with "Instructor Certification".
+  - [Legal Requirements - Blog posts](https://livefireinstruction.com/tags/Legal-Requirements/) - Blog posts tagged with "Legal Requirements".
+  - [New Gun Owner - Blog posts](https://livefireinstruction.com/tags/New-Gun-Owner/) - Blog posts tagged with "New Gun Owner".
+  - [New Gun Owner - Blog posts](https://livefireinstruction.com/tags/New-Gun-Owner/2/) - Page 2 of blog posts tagged with "New Gun Owner".
+  - [Northern Virginia - Blog posts](https://livefireinstruction.com/tags/Northern-Virginia/) - Blog posts tagged with "Northern Virginia".
+  - [NOVA - Blog posts](https://livefireinstruction.com/tags/NOVA/) - Blog posts tagged with "NOVA".
+  - [NRA Instructor - Blog posts](https://livefireinstruction.com/tags/NRA-Instructor/) - Blog posts tagged with "NRA Instructor".
+  - [NRA Training - Blog posts](https://livefireinstruction.com/tags/NRA-Training/) - Blog posts tagged with "NRA Training".
+  - [Online Training - Blog posts](https://livefireinstruction.com/tags/Online-Training/) - Blog posts tagged with "Online Training".
+  - [Open Carry - Blog posts](https://livefireinstruction.com/tags/Open-Carry/) - Blog posts tagged with "Open Carry".
+  - [Permit Application - Blog posts](https://livefireinstruction.com/tags/Permit-Application/) - Blog posts tagged with "Permit Application".
+  - [Personal Protection - Blog posts](https://livefireinstruction.com/tags/Personal-Protection/) - Blog posts tagged with "Personal Protection".
+  - [Reciprocity - Blog posts](https://livefireinstruction.com/tags/Reciprocity/) - Blog posts tagged with "Reciprocity".
+  - [Safe Storage - Blog posts](https://livefireinstruction.com/tags/Safe-Storage/) - Blog posts tagged with "Safe Storage".
+  - [Self Defense - Blog posts](https://livefireinstruction.com/tags/Self-Defense/) - Blog posts tagged with "Self Defense".
+  - [Virginia - Blog posts](https://livefireinstruction.com/tags/Virginia/) - Blog posts tagged with "Virginia".
+  - [Virginia - Blog posts](https://livefireinstruction.com/tags/Virginia/2/) - Page 2 of blog posts tagged with "Virginia".
+
+## 5. Other Pages
+
+- [Firearm Training Schedule | Northern Virginia Classes](https://livefireinstruction.com/calendar/) - Training schedule and calendar for Northern Virginia classes.
+- [Firearm Training Partners | Northern Virginia Ranges](https://livefireinstruction.com/partners/) - List of firearm training partners and Northern Virginia ranges.
+  - [Live Fire Instruction - Green Ops, Chantilly](https://livefireinstruction.com/partners/green-ops/) - Information on Green Ops partnership.
+  - [Live Fire Instruction - Instructors Dash](https://livefireinstruction.com/partners/instructors-dash/) - Information on Instructors Dash partnership.
+  - [Live Fire Instruction - Justified Defence Concepts, Northern Virginia](https://livefireinstruction.com/partners/justified-defence-concepts-northern-virginia/) - Information on Justified Defence Concepts partnership.
+  - [Live Fire Instruction - NRA Range, Fairfax](https://livefireinstruction.com/partners/nra-range-fairfax/) - Information on NRA Range partnership.
+  - [Live Fire Instruction - Silver Eagle Group, Ashburn](https://livefireinstruction.com/partners/silver-eagle-group-ashburn/) - Information on Silver Eagle Group partnership.
+  - [Live Fire Instruction - Trojan Arms & Tactical, Manassas](https://livefireinstruction.com/partners/trojan-arms-and-tactical-manassas/) - Information on Trojan Arms & Tactical partnership.
