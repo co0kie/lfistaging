@@ -1,7 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { supabase } from "../lib/supabase";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const server = {
 	addComment: defineAction({
@@ -78,56 +77,6 @@ export const server = {
 				message: data.message,
 				createdAt: data.created_at,
 				isApproved: data.is_approved,
-			};
-		},
-	}),
-
-	chat: defineAction({
-		accept: "json",
-		input: z.object({
-			message: z.string().min(1),
-			history: z
-				.array(
-					z.object({
-						role: z.enum(["user", "model"]),
-						parts: z.array(z.object({ text: z.string() })),
-					}),
-				)
-				.optional(),
-		}),
-		handler: async ({ message, history }) => {
-			const apiKey = import.meta.env.GEMINI_API_KEY;
-			if (!apiKey) {
-				throw new Error("GEMINI_API_KEY is not set in environment variables.");
-			}
-
-			const genAI = new GoogleGenerativeAI(apiKey);
-			const model = genAI.getGenerativeModel({
-				model: "gemini-2.5-flash-preview-09-2025",
-				systemInstruction:
-					"You are a certified firearms instructor for 'Live Fire Instruction'. Your name is 'Tactical AI'.\n" +
-					"Your capabilities:\n" +
-					"1. Recommend courses based on user experience.\n" +
-					"2. Explain the 4 universal rules of gun safety.\n" +
-					"3. Suggest simple dry-fire practice drills.\n" +
-					"4. If asked anything else, refer to website for more information.\n\n" +
-					"5. If asked about website link or email address output 'livefireinstruction.com' for website and class@livefireinstruction.com for email.\n\n" +
-					"Tone: Professional, safety-focused, encouraging, and direct. Use tactical terminology correctly but keep it accessible.\n" +
-					"Constraint: If asked about legal advice, state that you provide general information but they should consult a lawyer for specific legal counsel.\n" +
-					"Always emphasize safety.",
-			});
-
-			const chatSession = model.startChat({
-				history: history || [],
-			});
-
-			const result = await chatSession.sendMessage(message);
-			const response = await result.response;
-			const text = response.text();
-
-			return {
-				role: "model",
-				parts: [{ text }],
 			};
 		},
 	}),
