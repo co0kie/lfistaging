@@ -51,6 +51,51 @@ const {
 		/>
 		<Preloader color="#ff9200" height="3px" class="custom-loading-class" />
 		<Schema type={schemaType} data={schemaData} />
+
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "BreadcrumbList",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"position": 1,
+						"name": "Live Fire Instruction",
+						"item": "https://livefireinstruction.com/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "NRA Basic Pistol Course & Virginia Concealed Carry Permit",
+						"item": "https://livefireinstruction.com/nra-basic-pistol-shooting-course/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 3,
+						"name": "First Step Pistol Orientation with Virginia Concealed Carry Permit.",
+						"item": "https://livefireinstruction.com/first-step-pistol-orientation/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 4,
+						"name": "One-on-One Instruction",
+						"item": "https://livefireinstruction.com/one-on-one-instruction/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 5,
+						"name": "NRA CCW Advanced Pistol Course",
+						"item": "https://livefireinstruction.com/nra-defensive-pistol-course"
+					},
+					{
+						"@type": "ListItem",
+						"position": 6,
+						"name": "Firearms Training Northern Virginia",
+						"item": "https://livefireinstruction.com/firearms-training-northern-virginia"
+					}
+				]
+			}
+		</script>
 	</head>
 	<body id="body">
 		<GoogleTagmanagerNoscript id="GTM-TK2S4T62" />
