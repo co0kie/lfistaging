@@ -15,27 +15,27 @@ import { getKeystaticReader } from "@/lib/keystatic-reader";
 import CTASection from "@/components/CTASection/CTASection.astro";
 import WhoWeAre from "@/components/WhoWeAre/WhoWeAre.astro";
 
-const reader = getKeystaticReader();
-const homepage = await reader.singletons.homepage.read();
+// const reader = getKeystaticReader();
+// const homepage = await reader.singletons.homepage.read();
 
-const whoWeAreTitle = homepage?.whoWeAreTitle || "Who We Are";
-const whoWeAreContent = homepage?.whoWeAreContent || "";
+// const whoWeAreTitle = homepage?.whoWeAreTitle || "Who We Are";
+// const whoWeAreContent = homepage?.whoWeAreContent || "";
 
-const heroTitle = homepage?.heroTitle || "Developing Safe And Responsible Shooters";
-const heroSubtitle =
-	homepage?.heroSubtitle ||
-	"Live Fire Instruction is the leading expert in teaching first-time firearm users & Virginia carry permit / CCW courses. Serving Northern Virginia, Washington DC & Maryland since 2016.";
-const heroCtaText = homepage?.heroCtaText || "Find your course";
-const heroCtaLink = homepage?.heroCtaUrl || "/firearm-training";
-const heroSecondaryCtaText = homepage?.heroSecondaryCtaText || "Read the blog";
-const heroSecondaryCtaLink = homepage?.heroSecondaryCtaUrl || "/blog/";
+// const heroTitle = homepage?.heroTitle || "Developing Safe And Responsible Shooters";
+// const heroSubtitle =
+// 	homepage?.heroSubtitle ||
+// 	"Live Fire Instruction is the leading expert in teaching first-time firearm users & Virginia carry permit / CCW courses. Serving Northern Virginia, Washington DC & Maryland since 2016.";
+// const heroCtaText = homepage?.heroCtaText || "Find your course";
+// const heroCtaLink = homepage?.heroCtaUrl || "/firearm-training";
+// const heroSecondaryCtaText = homepage?.heroSecondaryCtaText || "Read the blog";
+// const heroSecondaryCtaLink = homepage?.heroSecondaryCtaUrl || "/blog/";
 
-const cardSectionTitle =
-	homepage?.cardSectionTitle || "Virginia Carry Permit & Basic Course Every Thursday & Saturday";
-const iframeUrl =
-	homepage?.iframeUrl || "https://instructorsdash.com/lisa-chau/categories/all?view=iframe";
-const iframeHeight = homepage?.iframeHeight || 900;
-const iframeWidth = homepage?.iframeWidth || "1200";
+// const cardSectionTitle =
+// 	homepage?.cardSectionTitle || "Virginia Carry Permit & Basic Course Every Thursday & Saturday";
+// const iframeUrl =
+// 	homepage?.iframeUrl || "https://instructorsdash.com/lisa-chau/categories/all?view=iframe";
+// const iframeHeight = homepage?.iframeHeight || 900;
+// const iframeWidth = homepage?.iframeWidth || "1200";
 
 const schemaData = {
 	name: siteData.title,
@@ -54,12 +54,12 @@ const schemaData = {
 	schemaData={schemaData}
 >
 	<Hero
-		title={heroTitle}
-		subtitle={heroSubtitle}
-		ctaText={heroCtaText}
-		ctaLink={heroCtaLink}
-		secondaryCtaText={heroSecondaryCtaText}
-		secondaryCtaLink={heroSecondaryCtaLink}
+		title="Developing Safe And Responsible Shooters"
+		subtitle="Live Fire Instruction is the leading expert in teaching first-time firearm users & Virginia carry permit / CCW courses. Serving Northern Virginia, Washington DC & Maryland since 2016."
+		ctaText="Find your course"
+		ctaLink="/firearm-training"
+		secondaryCtaText="Read the blog"
+		secondaryCtaLink="/blog/"
 	/>
 	<section class="py-14 md:py-22">
 		<div class="site-container mx-auto">
@@ -67,7 +67,7 @@ const schemaData = {
 				<h2
 					class="font-headline text-blue mb-16 flex flex-col items-center justify-center gap-6 text-center text-2xl font-medium hover:underline md:text-3xl lg:flex-row"
 				>
-					{cardSectionTitle}
+					Virginia Carry Permit & Basic Course Every Thursday & Saturday
 					<MoveRight size={32} className="text-primary" />
 				</h2>
 			</a>
@@ -77,7 +77,7 @@ const schemaData = {
 
 	<LiveSchedule />
 	<!-- <WhoWeAre title={whoWeAreTitle}>
-		{whoWeAreContent}
+		{whoWeAreContent} 
 	</WhoWeAre> -->
 
 	<CTASection />
