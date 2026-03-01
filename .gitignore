@@ -2,6 +2,7 @@
 dist/
 
 schema/
+!src/components/Schema/
 
 # generated types
 .astro/
