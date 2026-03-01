@@ -1,0 +1,60 @@
+---
+import siteData from "@/config/siteData.json";
+import { schemaGenerators } from "@utils/schema";
+
+const { type, data } = Astro.props;
+
+let schemaData = {};
+
+switch (type) {
+	case "home":
+		schemaData = schemaGenerators.home(data);
+		break;
+	case "blog":
+		schemaData = schemaGenerators.blog(data);
+		break;
+	case "blogpost":
+		schemaData = schemaGenerators.blogpost(data);
+		break;
+	case "courses":
+		schemaData = schemaGenerators.courses(data);
+		break;
+	case "course":
+		schemaData = schemaGenerators.course(data);
+		break;
+	case "landingpage":
+		schemaData = schemaGenerators.landingpage(data);
+		break;
+	case "calendar":
+		schemaData = schemaGenerators.calendar(data);
+		break;
+	case "partners":
+		schemaData = schemaGenerators.partners(data);
+		break;
+	case "contact":
+		schemaData = schemaGenerators.contact(data);
+		break;
+	// Add more cases as needed
+	default:
+		// Fallback to basic Organization schema
+		schemaData = {
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			name: siteData.name,
+			description: siteData.description,
+			url: siteData.website,
+			logo: siteData.defaultImage.src,
+			address: {
+				"@type": "PostalAddress",
+				...siteData.address,
+			},
+			email: siteData.author.email,
+			telephone: siteData.author.telephone,
+			sameAs: siteData.social,
+		};
+}
+
+const schemaJson = JSON.stringify(schemaData, null, 2);
+---
+
+<script is:inline type="application/ld+json" set:html={schemaJson} />
