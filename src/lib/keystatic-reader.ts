@@ -16,7 +16,7 @@ export function getKeystaticReader() {
 	} else {
 		// Production - read from GitHub
 		return createGitHubReader(keystaticConfig, {
-			repo: "j3rech0/livefireinstruction",
+			repo: "co0kie/lfistaging",
 			token: import.meta.env.GITHUB_API,
 		});
 	}

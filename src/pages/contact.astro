@@ -108,10 +108,13 @@ const schemaData = {
 					class="bg-primary-600 relative z-2 order-1 flex flex-col justify-center p-10 text-white md:order-[inherit]"
 				>
 					<h2 class="mb-6 text-3xl font-bold">
-						{contact?.formInfoTitle}
+						{contact?.formInfoTitle || "Customer Feedback Is The Lifeblood Of Our Business."}
 					</h2>
 					<p class="text-primary-100 mb-8 text-lg leading-relaxed">
-						{contact?.formInfoSubtitle}
+						{
+							contact?.formInfoSubtitle ||
+								"Tell us what's on your mind, good or bad. We respond to all customer feedback and look forward to hearing from you!"
+						}
 					</p>
 					<div class="space-y-4">
 						<div class="flex items-center gap-3">
@@ -119,15 +122,15 @@ const schemaData = {
 							<a
 								href={`mailto: "class@livefireinstruction.com"`}
 								class="text-primary-100 transition-colors hover:text-white"
-								>{contact?.formInfoEmail}</a
+								>{contact?.formInfoEmail || "class@livefireinstruction.com"}</a
 							>
 						</div>
 						<div class="flex items-center gap-3">
 							<Phone className="text-primary-200 h-5 w-5" />
 							<a
-								href={`tel:${contact?.formInfoPhone}`}
+								href={`tel:${contact?.formInfoPhone || "1-571-210-5651"}`}
 								class="text-primary-100 transition-colors hover:text-white"
-								>{contact?.formInfoPhone}</a
+								>{contact?.formInfoPhone || "1-571-210-5651"}</a
 							>
 						</div>
 					</div>
@@ -138,7 +141,7 @@ const schemaData = {
 					<form class="space-y-6" id="contact-form">
 						<div>
 							<label for="name" class="text-base-800 mb-1 block text-sm font-medium"
-								>{formNameLabel}</label
+								>{formNameLabel || "Your Name"}</label
 							>
 							<input
 								type="text"
