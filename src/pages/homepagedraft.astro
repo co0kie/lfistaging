@@ -1,0 +1,420 @@
+---
+export const prerender = true;
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero/Hero.astro";
+import CourseCard from "@components/CourseCard/CourseCard.astro";
+import LiveSchedule from "@components/LiveSchedule/LiveSchedule.astro";
+import CTASection from "@components/CTASection/CTASection.astro";
+import siteData from "@/config/siteData.json.ts";
+import {
+	BadgeCheck,
+	BookOpen,
+	Calendar,
+	Clock3,
+	Crosshair,
+	MapPin,
+	Shield,
+	Target,
+	Users,
+} from "lucide-react";
+
+const courseHighlights = [
+	{
+		title: "NRA Basic Pistol Course & Virginia CCW Permit",
+		description:
+			"Our most popular course combines fundamental pistol training with Virginia concealed carry permit certification. This 6-hour course includes classroom instruction, hands-on training, and live fire practice.",
+		details:
+			"Perfect for first-time shooters and students seeking a Virginia concealed carry permit.",
+		schedule: "Every Thursday & Saturday",
+		href: "/nra-basic-pistol-shooting-course",
+	},
+	{
+		title: "First Step Pistol Orientation",
+		description:
+			"Our express 3+ hour course is built for individuals new to firearms and delivers Virginia concealed carry permit certification in a relaxed, beginner-friendly environment.",
+		details: "Perfect for absolute beginners and busy professionals.",
+		href: "/first-step-pistol-orientation",
+	},
+	{
+		title: "NRA CCW Advanced Pistol Course",
+		description:
+			"Take your skills to the next level with defensive pistol instruction focused on advanced techniques, tactical mindset, and real-world defensive scenarios.",
+		details: "Perfect for experienced shooters and current CCW permit holders.",
+		href: "/nra-defensive-pistol-course",
+	},
+	{
+		title: "One-on-One Personal Training",
+		description:
+			"Customized 60-minute private instruction tailored to your specific goals, current skill level, and equipment needs.",
+		details: "Perfect for anyone who wants individualized instruction.",
+		href: "/one-on-one-instruction",
+	},
+];
+
+const learningPoints = [
+	"Firearm safety fundamentals",
+	"Proper handling techniques",
+	"Marksmanship skills",
+	"Live fire practice",
+	"Defensive tactics for advanced students",
+	"Equipment selection guidance",
+	"Maintenance and secure storage",
+];
+
+const serviceAreas = [
+	{
+		title: "Fairfax County",
+		locations: [
+			"Fairfax",
+			"Vienna",
+			"Reston",
+			"Herndon",
+			"McLean",
+			"Annandale",
+			"Burke",
+			"Springfield",
+		],
+	},
+	{
+		title: "Arlington & Alexandria",
+		locations: ["Arlington", "Falls Church", "Alexandria"],
+	},
+	{
+		title: "Loudoun County",
+		locations: ["Ashburn", "Sterling", "Leesburg"],
+	},
+	{
+		title: "Prince William County",
+		locations: ["Manassas", "Woodbridge", "Dale City"],
+	},
+];
+
+const reasons = [
+	"NRA Certified Instructors with extensive teaching experience",
+	"Comprehensive curriculum for all skill levels",
+	"Modern training facility with professional equipment",
+	"Flexible weekly scheduling",
+	"Small class sizes and personalized attention",
+	"Beginner-friendly, supportive learning environment",
+];
+
+const faqs = [
+	{
+		question: "Do I need any experience to take firearms training in Northern Virginia?",
+		answer:
+			"No. Our programs are designed to accommodate complete beginners. Training starts with safety and handling fundamentals before moving into skill development.",
+	},
+	{
+		question: "How do I get my Virginia concealed carry permit?",
+		answer:
+			"You complete an approved firearms training course, then submit your application and training certificate to your local circuit court. Live Fire Instruction guides students through that process.",
+	},
+	{
+		question: "Where is the training facility located?",
+		answer:
+			"Training is held at the NRA Range in Fairfax, Virginia, a professional indoor facility that is accessible from throughout Northern Virginia, Washington DC, and Maryland.",
+	},
+	{
+		question: "How long do the courses take?",
+		answer:
+			"The First Step course is 3+ hours, the NRA Basic Pistol with CCW course is 6 hours, and private lessons run 60 minutes. Most options can be completed in a single day.",
+	},
+	{
+		question: "Do I need to bring my own firearm?",
+		answer:
+			"You are welcome to bring your own firearm, but it is not required. Equipment guidance is provided based on the course you select.",
+	},
+	{
+		question: "Can students from DC or Maryland attend?",
+		answer: "Yes. Students from Washington DC, Maryland, and surrounding areas are welcome.",
+	},
+];
+
+const schemaData = {
+	name: "Firearm Training",
+	description: "We offer a variety of training courses as well as one-on-one instruction.",
+	url: new URL("/homepagedraft", siteData.website).toString(),
+	itemListElement: courseHighlights.map((course, index) => ({
+		"@type": "ListItem",
+		position: index + 1,
+		item: {
+			"@type": "Course",
+			name: course.title,
+			description: course.description,
+			provider: {
+				"@type": "Organization",
+				name: siteData.name,
+			},
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title="Homepage Draft | Firearms Training Northern Virginia"
+	description="Homepage draft combining the current homepage design with the firearms training content for Northern Virginia."
+	schemaType="courses"
+	schemaData={schemaData}
+	noindex={true}
+>
+	<Hero
+		title="Developing Safe And Responsible Shooters"
+		subtitle="Professional firearms training in Northern Virginia serving Fairfax, Arlington, Alexandria, Loudoun County, Prince William County, Washington DC, and Maryland since 2016."
+		ctaText="View Course Schedule"
+		ctaLink="/calendar"
+		secondaryCtaText="Read our blog"
+		secondaryCtaLink="/blog"
+	/>
+
+	<section class="py-14 md:py-20">
+		<div class="site-container">
+			<div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+				<div class="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+					<p
+						class="text-primary mb-3 inline-flex items-center gap-2 text-sm font-semibold tracking-[0.22em] uppercase"
+					>
+						<Shield className="h-4 w-4" />
+						Trusted Since 2016
+					</p>
+					<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+						Expert NRA-certified instruction built for beginners and advancing shooters
+					</h2>
+					<p class="mt-4 text-lg text-slate-600">
+						Live Fire Instruction is Northern Virginia&apos;s premier destination for comprehensive
+						firearms training. Our instructors prioritize safety, skill development, and legal
+						compliance in a professional environment designed to help students become safe,
+						confident, and responsible firearm owners.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+					<div class="bg-blue-dark rounded-[1.75rem] p-6 text-white shadow-sm">
+						<div class="mb-4 flex items-center gap-3">
+							<div class="bg-orange/20 text-orange rounded-xl p-3">
+								<MapPin className="h-5 w-5" />
+							</div>
+							<p class="text-sm font-semibold tracking-[0.2em] text-slate-300 uppercase">
+								Training Location
+							</p>
+						</div>
+						<h3 class="font-headline text-2xl text-white">NRA Range, Fairfax, VA</h3>
+						<p class="mt-3 text-slate-300">
+							A professional, climate-controlled indoor facility with modern safety equipment.
+						</p>
+					</div>
+
+					<div class="bg-primary-600 text-blue-dark rounded-[1.75rem] p-6 shadow-sm">
+						<div class="mb-4 flex items-center gap-3">
+							<div class="rounded-xl bg-white/35 p-3">
+								<Calendar className="h-5 w-5" />
+							</div>
+							<p class="text-sm font-semibold tracking-[0.2em] uppercase">Popular Schedule</p>
+						</div>
+						<h3 class="font-headline text-2xl">Basic Pistol & CCW Every Thursday and Saturday</h3>
+						<p class="text-blue-dark/85 mt-3">
+							Flexible weekly sessions make it easy to get started without waiting for the next
+							seasonal cohort.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- <section class="pb-14 md:pb-20">
+		<div class="site-container">
+			<div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+				<div class="max-w-3xl">
+					<p class="text-primary mb-3 text-sm font-semibold tracking-[0.22em] uppercase">Courses</p>
+					<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+						Featured courses
+					</h2>
+				</div>
+			</div>
+			<CourseCard />
+		</div>
+	</section> -->
+
+	<section class="bg-slate-50 py-14 md:py-20">
+		<div class="site-container">
+			<div class="mb-10 max-w-3xl">
+				<p class="text-primary mb-3 text-sm font-semibold tracking-[0.22em] uppercase">
+					Training Paths
+				</p>
+				<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+					Our firearms training courses in Northern Virginia
+				</h2>
+			</div>
+
+			<div class="grid gap-6 lg:grid-cols-2">
+				{
+					courseHighlights.map((course) => (
+						<article class="rounded-[1.75rem] bg-white p-7 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+							<h3 class="font-headline text-blue text-2xl font-semibold">{course.title}</h3>
+							<p class="mt-4 text-slate-600">{course.description}</p>
+							<p class="mt-4 text-slate-700">{course.details}</p>
+							{course.schedule && (
+								<div class="bg-orange/10 mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-orange-700">
+									<Clock3 className="h-4 w-4" />
+									{course.schedule}
+								</div>
+							)}
+							<div class="mt-6">
+								<a
+									href={course.href}
+									class="text-primary inline-flex items-center gap-2 font-semibold hover:underline"
+								>
+									View course
+								</a>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="py-14 md:py-20">
+		<div class="site-container">
+			<div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+				<div>
+					<p class="text-primary mb-3 text-sm font-semibold tracking-[0.22em] uppercase">
+						What You&apos;ll Learn
+					</p>
+					<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+						Comprehensive instruction for safe, effective firearm use
+					</h2>
+					<p class="mt-4 text-lg text-slate-600">
+						Our firearms training programs in Northern Virginia cover the essential skills every
+						responsible shooter needs, from foundational safety to advanced defensive concepts.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					{
+						learningPoints.map((item) => (
+							<div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+								<div class="bg-blue-dark text-orange mb-3 inline-flex rounded-xl p-3">
+									<Target className="h-5 w-5" />
+								</div>
+								<p class="text-lg font-medium text-slate-800">{item}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-slate-50">
+		<LiveSchedule />
+	</section>
+
+	<section class="py-14 md:py-20">
+		<div class="site-container">
+			<div class="bg-blue-dark rounded-[2rem] px-6 py-8 text-white md:px-10 md:py-12">
+				<div class="mb-10 max-w-3xl">
+					<p class="text-orange mb-3 text-sm font-semibold tracking-[0.22em] uppercase">
+						Serving Northern Virginia
+					</p>
+					<h2 class="font-headline text-3xl font-semibold md:text-4xl">
+						Convenient for students across NoVA, DC, and Maryland
+					</h2>
+					<p class="mt-4 text-slate-300">
+						Conveniently located in Fairfax, Live Fire Instruction serves students throughout the
+						region with expert instruction and a professional range environment.
+					</p>
+				</div>
+
+				<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+					{
+						serviceAreas.map((area) => (
+							<div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+								<h3 class="font-headline text-xl font-semibold text-white">{area.title}</h3>
+								<ul class="mt-4 space-y-2">
+									{area.locations.map((location) => (
+										<li class="flex items-center gap-2 text-slate-300">
+											<BadgeCheck className="h-4 w-4 text-orange" />
+											<span>{location}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						))
+					}
+				</div>
+
+				<p class="mt-8 text-slate-300">
+					Also serving Washington DC, Maryland, and surrounding areas.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-slate-50 py-14 md:py-20">
+		<div class="site-container">
+			<div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+				<div class="rounded-[1.75rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+					<p class="text-primary mb-3 text-sm font-semibold tracking-[0.22em] uppercase">
+						About Live Fire Instruction
+					</p>
+					<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+						Developing safe and responsible shooters
+					</h2>
+					<p class="mt-4 text-slate-600">
+						Since 2016, Live Fire Instruction has been Northern Virginia&apos;s trusted source for
+						firearms education. Our mission is to deliver comprehensive, professional instruction
+						built on safety, ethics, and responsibility.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					{
+						reasons.map((reason, index) => (
+							<div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+								<div class="bg-orange/15 text-orange mb-3 inline-flex rounded-xl p-3">
+									{index % 2 === 0 ? (
+										<Users className="h-5 w-5" />
+									) : (
+										<BookOpen className="h-5 w-5" />
+									)}
+								</div>
+								<p class="text-slate-700">{reason}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-14 md:py-20">
+		<div class="site-container">
+			<div class="mb-10 max-w-3xl">
+				<p class="text-primary mb-3 text-sm font-semibold tracking-[0.22em] uppercase">
+					Frequently Asked Questions
+				</p>
+				<h2 class="font-headline text-blue text-3xl font-semibold md:text-4xl">
+					Common questions about firearms training in Northern Virginia
+				</h2>
+			</div>
+
+			<div class="grid gap-5 lg:grid-cols-2">
+				{
+					faqs.map((faq) => (
+						<article class="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm">
+							<div class="bg-blue-dark text-orange mb-4 inline-flex rounded-xl p-3">
+								<Crosshair className="h-5 w-5" />
+							</div>
+							<h3 class="font-headline text-blue text-xl font-semibold">{faq.question}</h3>
+							<p class="mt-3 text-slate-600">{faq.answer}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<CTASection />
+</BaseLayout>

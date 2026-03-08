@@ -11,9 +11,8 @@ export const server = {
 			email: z.string().email("Valid email is required"),
 			message: z.string().min(1, "Comment cannot be empty"),
 			parentId: z.string().optional(),
-			recaptchaToken: z.string().min(1, "Security token is missing"),
 		}),
-		handler: async ({ postSlug, name, email, message, parentId, recaptchaToken }, { request }) => {
+		handler: async ({ postSlug, name, email, message, parentId }, { request }) => {
 			// Cross-Domain Checker
 			const allowedDomain = import.meta.env.ALLOWED_DOMAIN; // e.g., "livefireinstruction.com"
 			if (allowedDomain) {
@@ -27,26 +26,6 @@ export const server = {
 					console.error("Cross-Domain check failed:", { origin, referer, allowedDomain });
 					throw new Error("Unauthorized origin. Submission blocked.");
 				}
-			}
-
-			// Verify reCAPTCHA
-
-			const recaptchaSecret = import.meta.env.RECAPTCHA_SECRET_KEY;
-			if (recaptchaSecret) {
-				const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-					method: "POST",
-					headers: { "Content-Type": "application/x-www-form-urlencoded" },
-					body: `secret=${recaptchaSecret}&response=${recaptchaToken}`,
-				});
-
-				const recaptchaData = await response.json();
-
-				if (!recaptchaData.success || recaptchaData.score < 0.5) {
-					console.error("reCAPTCHA Verification Failed:", recaptchaData);
-					throw new Error("Security verification failed. Please try again.");
-				}
-			} else {
-				console.warn("RECAPTCHA_SECRET_KEY not set. Skipping verification.");
 			}
 
 			const { data, error } = await supabase
