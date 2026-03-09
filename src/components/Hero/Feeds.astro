@@ -3,12 +3,25 @@ import Button from "@components/Button/Button.astro";
 import EventCarousel from "./EventCarousel.astro";
 
 import { getKeystaticReader } from "@/lib/keystatic-reader";
+interface Props {
+	nextClassStartingSoonTitle?: string;
+	nextClassStartingSoonSubtitle?: string;
+	nextClassStartingArray?: string[];
+}
+
+const {
+	nextClassStartingSoonTitle: nextClassStartingSoonTitleProp,
+	nextClassStartingSoonSubtitle: nextClassStartingSoonSubtitleProp,
+	nextClassStartingArray: nextClassStartingArrayProp,
+} = Astro.props as Props;
+
 const reader = getKeystaticReader();
 const homepage = await reader.singletons.homepage.read();
 const nextClassStartingSoonTitle =
-	homepage?.nextClassStartingSoonTitle || "Next Class Starting Soon";
-const nextClassStartingSoonSubtitle = homepage?.nextClassStartingSoonSubtitle || "Seats Limited";
-const nextClassStartingArray = homepage?.nextClassStartingArray || [];
+	nextClassStartingSoonTitleProp || homepage?.nextClassStartingSoonTitle || "Next Class Starting Soon";
+const nextClassStartingSoonSubtitle =
+	nextClassStartingSoonSubtitleProp || homepage?.nextClassStartingSoonSubtitle || "Seats Limited";
+const nextClassStartingArray = nextClassStartingArrayProp || homepage?.nextClassStartingArray || [];
 ---
 
 <div class="relative mt-0 md:block">

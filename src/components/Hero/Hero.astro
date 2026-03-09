@@ -15,9 +15,22 @@ interface Props {
 	ctaLink: string;
 	secondaryCtaText: string;
 	secondaryCtaLink: string;
+	nextClassStartingSoonTitle?: string;
+	nextClassStartingSoonSubtitle?: string;
+	nextClassStartingArray?: string[];
 }
 
-const { title, subtitle, ctaText, ctaLink, secondaryCtaText, secondaryCtaLink } = Astro.props;
+const {
+	title,
+	subtitle,
+	ctaText,
+	ctaLink,
+	secondaryCtaText,
+	secondaryCtaLink,
+	nextClassStartingSoonTitle,
+	nextClassStartingSoonSubtitle,
+	nextClassStartingArray,
+} = Astro.props as Props;
 ---
 
 <section
@@ -121,7 +134,12 @@ const { title, subtitle, ctaText, ctaLink, secondaryCtaText, secondaryCtaLink } 
 					</div>
 				</div>
 			</a>
-			<Feeds server:defer>
+			<Feeds
+				server:defer
+				nextClassStartingSoonTitle={nextClassStartingSoonTitle}
+				nextClassStartingSoonSubtitle={nextClassStartingSoonSubtitle}
+				nextClassStartingArray={nextClassStartingArray}
+			>
 				<FeedsSkeleton slot="fallback" />
 			</Feeds>
 		</div>

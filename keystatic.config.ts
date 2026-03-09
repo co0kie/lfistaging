@@ -33,7 +33,7 @@ export default config({
 		navigation: {
 			Blog: ["posts", "---"],
 			Collections: ["trainings", "partners", "---"],
-			Singletons: ["homepage", "calendar", "contact", "---"],
+			Singletons: ["homepagedraft", "homepage", "calendar", "contact", "---"],
 			Landingpages: ["landingpage", "---"],
 			Pages: ["pages", "---"],
 		},
@@ -68,7 +68,7 @@ export default config({
 			},
 		}),
 		homepage: singleton({
-			label: "Home",
+			label: "Home Original",
 			path: "src/data/otherPages/homepage/",
 			format: { contentField: "emptyContent" },
 			schema: {
@@ -178,6 +178,264 @@ export default config({
 					label: "Who We Are Content",
 					multiline: true,
 				}),
+			},
+		}),
+		homepagedraft: singleton({
+			label: "Home",
+			path: "src/data/otherPages/homepagedraft/",
+			format: { contentField: "emptyContent" },
+			schema: {
+				emptyContent: fields.emptyContent({ extension: "mdoc" }),
+				pageMetaTitle: fields.text({
+					label: "Page Meta Title",
+					defaultValue: "Homepage Draft | Firearms Training Northern Virginia",
+				}),
+				pageMetaDescription: fields.text({
+					label: "Page Meta Description",
+					multiline: true,
+					defaultValue:
+						"Homepage draft combining the current homepage design with the firearms training content for Northern Virginia.",
+				}),
+				heroTitle: fields.text({
+					label: "Hero Title",
+					validation: { isRequired: true },
+					defaultValue: "Top-Rated Firearms Training In Northern Virginia",
+				}),
+				heroSubtitle: fields.text({
+					label: "Hero Subtitle",
+					multiline: true,
+					validation: { isRequired: true },
+					defaultValue:
+						"Professional firearms training in Northern Virginia serving Fairfax, Arlington, Alexandria, Loudoun County, Prince William County, Washington DC, and Maryland since 2016.",
+				}),
+				heroCtaText: fields.text({
+					label: "Hero Primary CTA Text",
+					defaultValue: "View Course Schedule",
+				}),
+				heroCtaUrl: fields.text({
+					label: "Hero Primary CTA URL",
+					defaultValue: "/calendar",
+				}),
+				heroSecondaryCtaText: fields.text({
+					label: "Hero Secondary CTA Text",
+					defaultValue: "Contact Us",
+				}),
+				heroSecondaryCtaUrl: fields.text({
+					label: "Hero Secondary CTA URL",
+					defaultValue: "/contact",
+				}),
+				nextClassStartingSoonTitle: fields.text({
+					label: "Next Class Starting Soon Title",
+					defaultValue: "Next Class Starting Soon",
+				}),
+				nextClassStartingSoonSubtitle: fields.text({
+					label: "Next Class Starting Soon Subtitle",
+					defaultValue: "Seats Limited",
+				}),
+				nextClassStartingArray: fields.array(fields.text({ label: "Tag" }), {
+					label: "Next Class Tags",
+					itemLabel: (props) => props.value,
+				}),
+				ctaSectionTitle: fields.text({
+					label: "CTA Section Title",
+					defaultValue: "Ready to Get Started?",
+				}),
+				ctaSectionSubtitle: fields.text({
+					label: "CTA Section Subtitle",
+					defaultValue:
+						"Join hundreds of instructors who trust Live Fire Instruction for their shooting range business",
+				}),
+				ctaSectionCtaText: fields.text({
+					label: "CTA Section CTA Text",
+					defaultValue: "Contact Us Today",
+				}),
+				ctaSectionCtaUrl: fields.text({
+					label: "CTA Section CTA URL",
+					defaultValue: "/contact",
+				}),
+				introEyebrow: fields.text({
+					label: "Intro Eyebrow",
+					defaultValue: "Trusted Since 2016",
+				}),
+				introTitle: fields.text({
+					label: "Intro Title",
+					defaultValue:
+						"Expert NRA-certified instruction built for beginners and advancing shooters",
+				}),
+				introDescription: fields.text({
+					label: "Intro Description",
+					multiline: true,
+					defaultValue:
+						"Live Fire Instruction is Northern Virginia's premier destination for comprehensive firearms training. Our instructors prioritize safety, skill development, and legal compliance in a professional environment designed to help students become safe, confident, and responsible firearm owners.",
+				}),
+				locationLabel: fields.text({
+					label: "Location Card Label",
+					defaultValue: "Training Location",
+				}),
+				locationTitle: fields.text({
+					label: "Location Card Title",
+					defaultValue: "NRA Range, Fairfax, VA",
+				}),
+				locationDescription: fields.text({
+					label: "Location Card Description",
+					multiline: true,
+					defaultValue:
+						"A professional, climate-controlled indoor facility with modern safety equipment.",
+				}),
+				scheduleLabel: fields.text({
+					label: "Schedule Card Label",
+					defaultValue: "Popular Schedule",
+				}),
+				scheduleTitle: fields.text({
+					label: "Schedule Card Title",
+					defaultValue: "Basic Pistol & CCW Every Thursday and Saturday",
+				}),
+				scheduleDescription: fields.text({
+					label: "Schedule Card Description",
+					multiline: true,
+					defaultValue:
+						"Flexible weekly sessions make it easy to get started without waiting for the next seasonal cohort.",
+				}),
+				homepageCoursesEyebrow: fields.text({
+					label: "Homepage Courses Eyebrow",
+					defaultValue: "Featured Courses",
+				}),
+				homepageCoursesTitle: fields.text({
+					label: "Homepage Courses Title",
+					defaultValue: "Featured courses from the current homepage",
+				}),
+				courseHighlightsEyebrow: fields.text({
+					label: "Course Highlights Eyebrow",
+					defaultValue: "Training Paths",
+				}),
+				courseHighlightsTitle: fields.text({
+					label: "Course Highlights Title",
+					defaultValue: "Our firearms training courses in Northern Virginia",
+				}),
+				courseHighlights: fields.array(
+					fields.object({
+						title: fields.text({
+							label: "Title",
+							validation: { isRequired: true },
+						}),
+						description: fields.text({
+							label: "Description",
+							multiline: true,
+							validation: { isRequired: true },
+						}),
+						details: fields.text({
+							label: "Details",
+							multiline: true,
+							validation: { isRequired: true },
+						}),
+						schedule: fields.text({
+							label: "Schedule",
+						}),
+						href: fields.text({
+							label: "Link URL",
+							validation: { isRequired: true },
+						}),
+					}),
+					{
+						label: "Course Highlights",
+						itemLabel: (props) => props.fields.title.value,
+					},
+				),
+				learningEyebrow: fields.text({
+					label: "Learning Section Eyebrow",
+					defaultValue: "What You'll Learn",
+				}),
+				learningTitle: fields.text({
+					label: "Learning Section Title",
+					defaultValue: "Comprehensive instruction for safe, effective firearm use",
+				}),
+				learningDescription: fields.text({
+					label: "Learning Section Description",
+					multiline: true,
+					defaultValue:
+						"Our firearms training programs in Northern Virginia cover the essential skills every responsible shooter needs, from foundational safety to advanced defensive concepts.",
+				}),
+				learningPoints: fields.array(fields.text({ label: "Learning Point" }), {
+					label: "Learning Points",
+					itemLabel: (props) => props.value,
+				}),
+				serviceEyebrow: fields.text({
+					label: "Service Areas Eyebrow",
+					defaultValue: "Serving Northern Virginia",
+				}),
+				serviceTitle: fields.text({
+					label: "Service Areas Title",
+					defaultValue: "Convenient for students across NoVA, DC, and Maryland",
+				}),
+				serviceDescription: fields.text({
+					label: "Service Areas Description",
+					multiline: true,
+					defaultValue:
+						"Conveniently located in Fairfax, Live Fire Instruction serves students throughout the region with expert instruction and a professional range environment.",
+				}),
+				serviceFooter: fields.text({
+					label: "Service Areas Footer",
+					defaultValue: "Also serving Washington DC, Maryland, and surrounding areas.",
+				}),
+				serviceAreas: fields.array(
+					fields.object({
+						title: fields.text({
+							label: "Area Title",
+							validation: { isRequired: true },
+						}),
+						locations: fields.array(fields.text({ label: "Location" }), {
+							label: "Locations",
+							itemLabel: (props) => props.value,
+						}),
+					}),
+					{
+						label: "Service Areas",
+						itemLabel: (props) => props.fields.title.value,
+					},
+				),
+				aboutEyebrow: fields.text({
+					label: "About Eyebrow",
+					defaultValue: "About Live Fire Instruction",
+				}),
+				aboutTitle: fields.text({
+					label: "About Title",
+					defaultValue: "Developing safe and responsible shooters",
+				}),
+				aboutDescription: fields.text({
+					label: "About Description",
+					multiline: true,
+					defaultValue:
+						"Since 2016, Live Fire Instruction has been Northern Virginia's trusted source for firearms education. Our mission is to deliver comprehensive, professional instruction built on safety, ethics, and responsibility.",
+				}),
+				reasons: fields.array(fields.text({ label: "Reason" }), {
+					label: "Reasons",
+					itemLabel: (props) => props.value,
+				}),
+				faqEyebrow: fields.text({
+					label: "FAQ Eyebrow",
+					defaultValue: "Frequently Asked Questions",
+				}),
+				faqTitle: fields.text({
+					label: "FAQ Title",
+					defaultValue: "Common questions about firearms training in Northern Virginia",
+				}),
+				faqs: fields.array(
+					fields.object({
+						question: fields.text({
+							label: "Question",
+							validation: { isRequired: true },
+						}),
+						answer: fields.text({
+							label: "Answer",
+							multiline: true,
+							validation: { isRequired: true },
+						}),
+					}),
+					{
+						label: "FAQs",
+						itemLabel: (props) => props.fields.question.value,
+					},
+				),
 			},
 		}),
 		contact: singleton({

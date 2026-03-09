@@ -1,11 +1,26 @@
 ---
 import { getKeystaticReader } from "@/lib/keystatic-reader";
+interface Props {
+	title?: string;
+	subtitle?: string;
+	ctaText?: string;
+	ctaLink?: string;
+}
+
+const {
+	title: titleProp,
+	subtitle: subtitleProp,
+	ctaText: ctaTextProp,
+	ctaLink: ctaLinkProp,
+} = Astro.props as Props;
+
 const reader = getKeystaticReader();
 const homepage = await reader.singletons.homepage.read();
-const ctaText = homepage?.ctaSectionCtaText || "Contact Us Today";
-const ctaLink = homepage?.ctaSectionCtaUrl || "/contact";
-const title = homepage?.ctaSectionTitle || "Ready to Get Started?";
+const ctaText = ctaTextProp || homepage?.ctaSectionCtaText || "Contact Us Today";
+const ctaLink = ctaLinkProp || homepage?.ctaSectionCtaUrl || "/contact";
+const title = titleProp || homepage?.ctaSectionTitle || "Ready to Get Started?";
 const subtitle =
+	subtitleProp ||
 	homepage?.ctaSectionSubtitle ||
 	"Join hundreds of instructors who trust Live Fire Instruction for their shooting range business";
 ---
