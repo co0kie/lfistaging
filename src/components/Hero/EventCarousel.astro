@@ -1,6 +1,4 @@
 ---
-import { ArrowRight } from "lucide-react";
-
 // Fetch next up to 3 upcoming classes for the sidebar
 let nextClasses = [];
 try {
@@ -35,33 +33,79 @@ const formatTime = (dateStr: string) => {
 
 {
 	nextClasses.length > 0 ? (
-		(() => {
-			const item = nextClasses[0];
-			return (
-				<div class="active flex h-full items-center justify-between gap-6 rounded-xl border border-slate-700 bg-slate-900/80 p-4">
-					{item.short_slug && (
-						<a
-							href={`https://livefireinstruction.instructorsdash.com/e/lisa-chau/${item.short_slug}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="regnow regnow-hero text-blue inline-flex items-center gap-2 font-semibold md:text-lg"
-							title={item.name}
-						>
-							<div class="w-3/4">
-								<div class="mb-2 text-[10px] tracking-wide text-slate-400 uppercase">Upcoming</div>
-								<div class="text-sm text-white">{item.name}</div>
-							</div>
-							<div class="w-1/4 text-right">
-								<div class="text-[10px] font-bold text-slate-400 uppercase">
-									{formatDate(item.start_date)}
+		<div
+			data-event-carousel
+			data-delay="4000"
+			class="event-carousel relative h-full"
+			aria-label="Upcoming classes"
+		>
+			{nextClasses.map((item, index) => {
+				const href = item.short_slug
+					? `https://livefireinstruction.instructorsdash.com/e/lisa-chau/${item.short_slug}`
+					: null;
+
+				return (
+					<div
+						data-event-slide
+						data-index={index}
+						data-active={index === 0 ? "true" : "false"}
+						class="event-slide flex h-full items-center justify-between gap-6 rounded-xl border border-slate-700 bg-slate-900/80 p-4"
+					>
+						{href ? (
+							<a
+								href={href}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="regnow regnow-hero inline-flex w-full items-center justify-between gap-6 font-semibold md:text-lg"
+								title={item.name}
+							>
+								<div class="w-3/4">
+									<div
+										data-stagger="label"
+										class="mb-2 text-[10px] tracking-wide text-slate-400 uppercase"
+									>
+										Upcoming
+									</div>
+									<div data-stagger="title" class="text-sm text-white">
+										{item.name}
+									</div>
 								</div>
-								<div class="text-primary-600/80 text-xs">{formatTime(item.start_date)}</div>
+								<div class="w-1/4 text-right">
+									<div data-stagger="date" class="text-[10px] font-bold text-slate-400 uppercase">
+										{formatDate(item.start_date)}
+									</div>
+									<div data-stagger="time" class="text-primary-600/80 text-xs">
+										{formatTime(item.start_date)}
+									</div>
+								</div>
+							</a>
+						) : (
+							<div class="inline-flex w-full items-center justify-between gap-6">
+								<div class="w-3/4">
+									<div
+										data-stagger="label"
+										class="mb-2 text-[10px] tracking-wide text-slate-400 uppercase"
+									>
+										Upcoming
+									</div>
+									<div data-stagger="title" class="text-sm text-white">
+										{item.name}
+									</div>
+								</div>
+								<div class="w-1/4 text-right">
+									<div data-stagger="date" class="text-[10px] font-bold text-slate-400 uppercase">
+										{formatDate(item.start_date)}
+									</div>
+									<div data-stagger="time" class="text-primary-600/80 text-xs">
+										{formatTime(item.start_date)}
+									</div>
+								</div>
 							</div>
-						</a>
-					)}
-				</div>
-			);
-		})()
+						)}
+					</div>
+				);
+			})}
+		</div>
 	) : (
 		<div class="active flex h-full items-center justify-between gap-6 rounded-xl border border-slate-700 bg-slate-900/80 p-4">
 			<div class="w-3/4">
@@ -79,3 +123,143 @@ const formatTime = (dateStr: string) => {
 		</div>
 	)
 }
+
+<style>
+	.event-carousel {
+		display: grid;
+	}
+
+	.event-carousel .event-slide {
+		grid-area: 1 / 1;
+		opacity: 0;
+		transform: translateY(6px);
+		pointer-events: none;
+		transition:
+			opacity 900ms ease,
+			transform 900ms ease;
+	}
+
+	.event-carousel .event-slide[data-active="true"] {
+		opacity: 1;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.event-carousel .event-slide [data-stagger] {
+		opacity: 0;
+		transform: translateY(6px);
+		transition:
+			opacity 750ms ease,
+			transform 750ms ease;
+	}
+
+	.event-carousel .event-slide[data-active="true"] [data-stagger] {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.event-carousel .event-slide[data-active="true"] [data-stagger="label"] {
+		transition-delay: 0ms;
+	}
+	.event-carousel .event-slide[data-active="true"] [data-stagger="title"] {
+		transition-delay: 140ms;
+	}
+	.event-carousel .event-slide[data-active="true"] [data-stagger="date"] {
+		transition-delay: 240ms;
+	}
+	.event-carousel .event-slide[data-active="true"] [data-stagger="time"] {
+		transition-delay: 340ms;
+	}
+
+	.event-carousel .event-slide:not([data-active="true"]) [data-stagger] {
+		transition-delay: 0ms !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.event-carousel .event-slide {
+			transition: none;
+			transform: none;
+		}
+
+		.event-carousel .event-slide [data-stagger] {
+			transition: none;
+			transform: none;
+		}
+
+		.event-carousel .event-slide[data-active="true"] [data-stagger] {
+			opacity: 1;
+		}
+	}
+</style>
+
+<script is:inline>
+	(() => {
+		function initCarousel(container) {
+			if (!(container instanceof HTMLElement)) return;
+			if (container.dataset.eventCarouselInited === "true") return;
+			container.dataset.eventCarouselInited = "true";
+
+			const slides = Array.from(container.querySelectorAll("[data-event-slide]"));
+			if (slides.length <= 1) return;
+
+			const delay = Number.parseInt(container.dataset.delay || "4000", 10);
+			let activeIndex = Math.max(
+				0,
+				slides.findIndex((el) => el.getAttribute("data-active") === "true"),
+			);
+
+			const setActive = (nextIndex) => {
+				slides.forEach((el, i) => {
+					const isActive = i === nextIndex;
+					el.setAttribute("data-active", isActive ? "true" : "false");
+					el.toggleAttribute("inert", !isActive);
+					el.setAttribute("aria-hidden", isActive ? "false" : "true");
+				});
+				activeIndex = nextIndex;
+			};
+
+			// Ensure initial inactive slides aren't focusable/clickable.
+			setActive(activeIndex);
+
+			const intervalMs = Number.isFinite(delay) && delay > 0 ? delay : 4000;
+			let intervalId = null;
+
+			const start = () => {
+				if (intervalId != null) return;
+				intervalId = window.setInterval(() => {
+					setActive((activeIndex + 1) % slides.length);
+				}, intervalMs);
+			};
+
+			const stop = () => {
+				if (intervalId == null) return;
+				window.clearInterval(intervalId);
+				intervalId = null;
+			};
+
+			start();
+
+			// Pause auto-rotation on hover so users can read/click.
+			container.addEventListener("mouseenter", stop);
+			container.addEventListener("mouseleave", start);
+		}
+
+		function initAll(root = document) {
+			root.querySelectorAll?.("[data-event-carousel]")?.forEach(initCarousel);
+		}
+
+		initAll();
+
+		const observer = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				for (const node of mutation.addedNodes) {
+					if (!(node instanceof HTMLElement)) continue;
+					if (node.matches?.("[data-event-carousel]")) initCarousel(node);
+					initAll(node);
+				}
+			}
+		});
+
+		observer.observe(document.documentElement, { childList: true, subtree: true });
+	})();
+</script>
