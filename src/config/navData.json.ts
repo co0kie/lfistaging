@@ -60,6 +60,7 @@ const navConfig: navItem[] = [
 				text: "NRA Refuse To Be A Victim®",
 				link: "/refuse-to-be-a-victim",
 			},
+
 			// {
 			// 	text: "Firearms Training Northern Virginia",
 			// 	link: "/firearms-training-northern-virginia",

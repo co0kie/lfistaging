@@ -4,7 +4,7 @@ import siteData from "@config/siteData.json.ts";
 const fullDomain = import.meta.env.PUBLIC_SITE_URL;
 
 export const schemaTypes = {
-	HOME: "Organization",
+	HOME: "LocalBusiness",
 	BLOG: "Blog",
 	POSTING: "BlogPosting",
 	COURSES: "ItemList",
@@ -94,6 +94,9 @@ interface CoursesSchemaData extends BaseSchemaData {
 interface CourseSchemaData extends BaseSchemaData {
 	name?: string;
 	description?: string;
+	educationalLevel?: string;
+	courseCode?: string;
+	category?: string;
 }
 
 interface LandingPageSchemaData extends BaseSchemaData {
@@ -172,8 +175,16 @@ export const schemaGenerators = {
 				streetAddress: data?.address?.streetAddress || "11250 Waples Mill Road",
 				addressLocality: data?.address?.addressLocality || "Fairfax",
 				addressRegion: data?.address?.addressRegion || "VA",
+				postalCode: "22030",
 				addressCountry: data?.address?.addressCountry || "US",
 			},
+			geo: {
+				"@id": fullDomain + "/#geo",
+				"@type": "GeoCoordinates",
+				latitude: 38.8687251,
+				longitude: -77.348398,
+			},
+			priceRange: "$$",
 		}),
 
 	// Blog schema
@@ -211,6 +222,14 @@ export const schemaGenerators = {
 		generateSchema(schemaTypes.COURSE, {
 			name: data.name,
 			description: data.description,
+			educationalLevel: data.educationalLevel || "Beginner to Intermediate",
+			courseCode: data.courseCode,
+			category: data.category || "Firearms Training",
+			offers: {
+				"@type": "Offer",
+				category: "Education",
+				availability: "https://schema.org/InStock",
+			},
 		}),
 	landingpage: (data: LandingPageSchemaData) =>
 		generateSchema(schemaTypes.LANDINGPAGE, {

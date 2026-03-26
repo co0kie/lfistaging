@@ -548,7 +548,7 @@
 		@apply bg-background text-foreground;
 	}
 	.register h2 {
-		@apply mb-6 text-3xl font-medium text-gray-900;
+		@apply mt-5 mb-6 text-3xl font-medium text-gray-900;
 	}
 
 	.register p {

@@ -294,7 +294,7 @@ export default config({
 					label: "Schedule Card Description",
 					multiline: true,
 					defaultValue:
-						"Flexible weekly sessions make it easy to get started without waiting for the next seasonal cohort.",
+						"Join our NRA-certified instructors at the premier NRA Range in Fairfax for comprehensive weekly training sessions designed for all skill levels across Northern Virginia.",
 				}),
 				homepageCoursesEyebrow: fields.text({
 					label: "Homepage Courses Eyebrow",

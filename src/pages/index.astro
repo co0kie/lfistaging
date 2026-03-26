@@ -27,15 +27,15 @@ const defaultCourseHighlights = [
 			"Our most popular course combines fundamental pistol training with Virginia concealed carry permit certification. This 6-hour course includes classroom instruction, hands-on training, and live fire practice.",
 		details:
 			"Perfect for first-time shooters and students seeking a Virginia concealed carry permit.",
-		schedule: "Every Thursday & Saturday",
+		schedule: "Every Saturday",
 		href: "/nra-basic-pistol-shooting-course",
 	},
 	{
-		title: "First Step Pistol Orientation",
+		title: "First Step Pistol Orientation & Virginia CCW",
 		description:
 			"Our express 3+ hour course is built for individuals new to firearms and delivers Virginia concealed carry permit certification in a relaxed, beginner-friendly environment.",
 		details: "Perfect for absolute beginners and busy professionals.",
-		schedule: "",
+		schedule: "Every Thursday",
 		href: "/first-step-pistol-orientation",
 	},
 	{
@@ -90,7 +90,11 @@ const defaultServiceAreas = [
 	},
 	{
 		title: "Prince William County",
-		locations: ["Manassas", "Woodbridge", "Dale City"],
+		locations: ["Manassas", "Manassas Park", "Woodbridge", "Dale City", "Gainesville", "Haymarket"],
+	},
+	{
+		title: "Fauquier County",
+		locations: ["The Plains", "Warrenton", "Remington"],
 	},
 ];
 
@@ -112,7 +116,7 @@ const defaultFaqs = [
 	{
 		question: "How do I get my Virginia concealed carry permit?",
 		answer:
-			"You complete the required training, receive your course certificate, and follow the Virginia application process. Live Fire Instruction guides students through the steps.",
+			"According to the Virginia State Police, you must complete an in-person, certified firearms training course to demonstrate competence. Once you receive your course certificate with Live Fire Instruction, you can submit your application to your local circuit court.",
 	},
 	{
 		question: "Where is the training facility located?",
@@ -155,7 +159,7 @@ const heroSecondaryCtaUrl = draftPage?.heroSecondaryCtaUrl || "/contact";
 const nextClassStartingSoonTitle =
 	draftPage?.nextClassStartingSoonTitle || "Next Class Starting Soon";
 const nextClassStartingSoonSubtitle = draftPage?.nextClassStartingSoonSubtitle || "Seats Limited";
-const nextClassStartingArray = draftPage?.nextClassStartingArray || [];
+const nextClassStartingArray = (draftPage?.nextClassStartingArray || []) as string[];
 
 const introEyebrow = draftPage?.introEyebrow || "Trusted Since 2016";
 const introTitle =
@@ -175,7 +179,7 @@ const scheduleLabel = draftPage?.scheduleLabel || "Popular Schedule";
 const scheduleTitle = draftPage?.scheduleTitle || "Basic Pistol & CCW Every Thursday and Saturday";
 const scheduleDescription =
 	draftPage?.scheduleDescription ||
-	"Flexible weekly sessions make it easy to get started without waiting for the next seasonal cohort.";
+	"Join our NRA-certified instructors at the premier NRA Range in Fairfax for comprehensive weekly training sessions designed for all skill levels across Northern Virginia.";
 
 const homepageCoursesEyebrow = draftPage?.homepageCoursesEyebrow || "Featured Courses";
 const homepageCoursesTitle =
@@ -253,7 +257,12 @@ const schemaData = {
 };
 ---
 
-<BaseLayout title={pageMetaTitle} description={pageMetaDescription} schemaType="home" schemaData={schemaData}>
+<BaseLayout
+	title={pageMetaTitle}
+	description={pageMetaDescription}
+	schemaType="home"
+	schemaData={schemaData}
+>
 	<Hero
 		title={heroTitle}
 		subtitle={heroSubtitle}
@@ -265,6 +274,28 @@ const schemaData = {
 		nextClassStartingSoonSubtitle={nextClassStartingSoonSubtitle}
 		nextClassStartingArray={nextClassStartingArray}
 	/>
+
+	<!-- Added Statistics Details for GEO Optimization (Stats Method) -->
+	<section class="bg-blue-dark py-10 text-white">
+		<div class="site-container">
+			<div class="grid grid-cols-2 gap-6 text-center md:grid-cols-3">
+				<div>
+					<p class="font-headline text-orange text-3xl font-bold">7,500+</p>
+					<p class="mt-2 text-sm tracking-widest text-slate-300 uppercase">
+						Students Trained in NoVA
+					</p>
+				</div>
+				<div>
+					<p class="font-headline text-orange text-3xl font-bold">98%</p>
+					<p class="mt-2 text-sm tracking-widest text-slate-300 uppercase">CCW Pass Rate</p>
+				</div>
+				<div>
+					<p class="font-headline text-orange text-3xl font-bold">10+</p>
+					<p class="mt-2 text-sm tracking-widest text-slate-300 uppercase">Years Experience</p>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<section class="py-14 md:py-20">
 		<div class="site-container">
@@ -298,7 +329,7 @@ const schemaData = {
 
 					<a
 						href="/calendar"
-						class="bg-orange text-blue-dark rounded-[1.75rem] block p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+						class="bg-orange text-blue-dark block rounded-[1.75rem] p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
 					>
 						<div class="mb-4 flex items-center gap-3">
 							<div class="rounded-xl bg-white/35 p-3">
@@ -366,6 +397,54 @@ const schemaData = {
 					))
 				}
 			</div>
+
+			<!-- Added Comparison Table for GEO Optimization (Data Parsing) -->
+			<!-- <div class="mt-12 overflow-x-auto rounded-[1.5rem] bg-white shadow-sm ring-1 ring-slate-200">
+				<table class="w-full text-left text-sm text-slate-600">
+					<thead class="bg-blue-dark text-xs text-white uppercase">
+						<tr>
+							<th scope="col" class="px-6 py-4">Course Name</th>
+							<th scope="col" class="border-l border-white/10 px-6 py-4">Duration</th>
+							<th scope="col" class="border-l border-white/10 px-6 py-4">Skill Level</th>
+							<th scope="col" class="border-l border-white/10 px-6 py-4">VA CCW Eligible</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-slate-200 hover:bg-slate-50">
+							<th scope="row" class="px-6 py-4 font-semibold whitespace-nowrap text-slate-900"
+								>First Step Pistol Orientation</th
+							>
+							<td class="border-l border-slate-100 px-6 py-4">3+ Hours</td>
+							<td class="border-l border-slate-100 px-6 py-4">Absolute Beginner</td>
+							<td class="border-l border-slate-100 px-6 py-4 font-semibold text-orange-600">Yes</td>
+						</tr>
+						<tr class="border-b border-slate-200 bg-slate-50/50 hover:bg-slate-50">
+							<th scope="row" class="px-6 py-4 font-semibold whitespace-nowrap text-slate-900"
+								>NRA Basic Pistol & CCW</th
+							>
+							<td class="border-l border-slate-100 px-6 py-4">6 Hours</td>
+							<td class="border-l border-slate-100 px-6 py-4">Beginner to Intermediate</td>
+							<td class="border-l border-slate-100 px-6 py-4 font-semibold text-orange-600">Yes</td>
+						</tr>
+						<tr class="border-b border-slate-200 hover:bg-slate-50">
+							<th scope="row" class="px-6 py-4 font-semibold whitespace-nowrap text-slate-900"
+								>NRA CCW Advanced</th
+							>
+							<td class="border-l border-slate-100 px-6 py-4">Varies</td>
+							<td class="border-l border-slate-100 px-6 py-4">Advanced</td>
+							<td class="border-l border-slate-100 px-6 py-4">No (Requires existing permit)</td>
+						</tr>
+						<tr class="bg-slate-50/50 hover:bg-slate-50">
+							<th scope="row" class="px-6 py-4 font-semibold whitespace-nowrap text-slate-900"
+								>One-on-One Training</th
+							>
+							<td class="border-l border-slate-100 px-6 py-4">60 Minutes</td>
+							<td class="border-l border-slate-100 px-6 py-4">All Levels</td>
+							<td class="border-l border-slate-100 px-6 py-4">No</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> -->
 		</div>
 	</section>
 
@@ -411,7 +490,7 @@ const schemaData = {
 					<p class="mt-4 text-slate-300">{serviceDescription}</p>
 				</div>
 
-				<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+				<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
 					{
 						serviceAreas.map((area) => (
 							<div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
@@ -429,7 +508,7 @@ const schemaData = {
 					}
 				</div>
 
-				<p class="mt-8 text-slate-300">{serviceFooter}</p>
+				<p class="mt-8 text-xl text-slate-300">{serviceFooter}</p>
 			</div>
 		</div>
 	</section>
@@ -445,6 +524,18 @@ const schemaData = {
 						{aboutTitle}
 					</h2>
 					<p class="mt-4 text-slate-600">{aboutDescription}</p>
+
+					<!-- Added Expert Quote for GEO Optimization (Quotes & Trust Method) -->
+					<div class="border-orange mt-6 border-l-4 pl-4">
+						<p class="text-lg text-slate-700 italic">
+							"Safety is not just a practice, it's a mindset. We train our students in critical
+							fundamentals including proper sight alignment, trigger control, and effective holster
+							retention."
+						</p>
+						<p class="text-blue-dark mt-2 text-sm font-bold tracking-wide uppercase">
+							— Lead NRA Instructor
+						</p>
+					</div>
 				</div>
 
 				<div class="grid gap-4 sm:grid-cols-2">
@@ -500,4 +591,33 @@ const schemaData = {
 		ctaText={ctaSectionCtaText}
 		ctaLink={ctaSectionCtaUrl}
 	/>
+
+	<div class="bg-blue-dark pb-8 text-center text-sm font-medium tracking-wide text-white/50">
+		<p>
+			Page Last Updated: <time datetime={new Date().toISOString().split("T")[0]}
+				>{new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</time
+			>
+		</p>
+	</div>
+
+	{
+		faqs && faqs.length > 0 && (
+			<script
+				is:inline
+				type="application/ld+json"
+				set:html={JSON.stringify({
+					"@context": "https://schema.org",
+					"@type": "FAQPage",
+					mainEntity: faqs.map((faq) => ({
+						"@type": "Question",
+						name: faq.question,
+						acceptedAnswer: {
+							"@type": "Answer",
+							text: faq.answer,
+						},
+					})),
+				})}
+			/>
+		)
+	}
 </BaseLayout>

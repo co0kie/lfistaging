@@ -9,6 +9,7 @@ import Preloader from "@/components/Preloader/Preloader.astro";
 import GoogleTagmanagerNoscript from "@/components/GoogleTagmanagerNoscript/GoogleTagmanagerNoscript.astro";
 
 import Schema from "@/components/Schema/Schema.astro";
+import BackToTop from "@/components/BackToTop/BackToTop.astro";
 import { Toaster } from "@/components/ui/sonner";
 const { schemaType = "organization", schemaData = {} } = Astro.props;
 
@@ -107,6 +108,7 @@ const {
 		</div>
 		<Footer />
 		<Toaster client:load transition:persist />
+		<BackToTop />
 		<!-- <ChatWidget client:load /> -->
 	</body>
 </html>
