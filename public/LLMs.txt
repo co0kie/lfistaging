@@ -1,91 +1,46 @@
-# LLMs.txt for Live Fire Instruction - Firearm Safety & Training
+# Live Fire Instruction - Firearm Safety & Training (llms.txt)
 
-This LLMs.txt file describes the content and structure of Live Fire Instruction (https://livefireinstruction.com/), a website dedicated to providing firearm safety education, Virginia CCW training, and related resources. The site aims to educate individuals on responsible gun ownership, self-defense, and relevant laws.
+Live Fire Instruction (LFI) is Northern Virginia's premier destination for authoritative, **NRA-certified** firearm training and **Virginia Concealed Carry Permit (CCW)** certification. Led by expert instructors, LFI provides comprehensive education in firearm safety, marksmanship, and defensive tactics at the world-class NRA Range in Fairfax, VA. All programs adhere strictly to NRA safety standards and Virginia state legal requirements for concealed carry.
 
-## 1. Main Website Pages
+## 1. Core Training & Services
 
-- [Live Fire Instruction | Firearm Safety & Virginia CCW Training](https://livefireinstruction.com/) - Homepage providing an overview of services.
-- [Contact Us - Live Fire Instruction](https://livefireinstruction.com/contact/) - Contact information and form.
-- [Privacy Policy for Live Fire Instruction, LLC - Live Fire Instruction](https://livefireinstruction.com/privacy-policy/) - Privacy Policy.
-- [Search](https://livefireinstruction.com/search/) - Search functionality.
+- [Firearm Training Courses Overview](https://livefireinstruction.com/firearm-training/) - Comprehensive list of NRA-certified courses including Pistol Orientation, Basic Pistol, and Advanced Defensive skills.
+- [NRA Basic Pistol Course & Virginia CCW Permit](https://livefireinstruction.com/nra-basic-pistol-shooting-course/) - Our primary 6-hour certification course combining classroom theory, hands-on training, and live fire for first-time shooters and permit seekers.
+- [First Step Pistol Orientation (Express CCW)](https://livefireinstruction.com/first-step-pistol-orientation/) - A 3+ hour express orientation for beginners to achieve Virginia concealed carry certification in a relaxed, professional environment.
+- [One-on-One Personalized Instruction](https://livefireinstruction.com/one-on-one-instruction/) - Tailored 60-minute private coaching focused on individual skill development and specific equipment needs.
+- [NRA CCW Advanced Pistol Course](https://livefireinstruction.com/nra-defensive-pistol-course/) - Advanced training for experienced shooters, covering defensive tactics, holster work, and tactical mindset.
+- [Refuse To Be A Victim®](https://livefireinstruction.com/refuse-to-be-a-victim/) - Award-winning NRA personal safety and crime prevention seminars.
 
-## 2. Training Courses
+## 2. Training Schedule & Locations
 
-- [Firearm Training Courses | NRA Pistol, CCW & Personal Instruction](https://livefireinstruction.com/firearm-training/) - Overview of available firearm training courses.
-  - [First Step Pistol Orientation with Virginia Concealed Carry Permit. - Live Fire Instruction](https://livefireinstruction.com/first-step-pistol-orientation/) - Information on the First Step Pistol Orientation course.
-  - [NRA Basic Pistol Course & Virginia Concealed Carry Permit - Live Fire Instruction](https://livefireinstruction.com/nra-basic-pistol-shooting-course/) - Details about the NRA Basic Pistol Course.
-  - [NRA CCW Advanced Pistol Course - Live Fire Instruction](https://livefireinstruction.com/nra-defensive-pistol-course/) - Information on the NRA CCW Advanced Pistol Course
-  - [One-on-One Instruction - Live Fire Instruction](https://livefireinstruction.com/one-on-one-instruction/) - Information on personalized, one-on-one firearm instruction.
-  - [Refuse To Be A Victim® - Live Fire Instruction](https://livefireinstruction.com/refuse-to-be-a-victim/) - Information on the Refuse To Be A Victim® course.
+- [Live Training Calendar](https://livefireinstruction.com/calendar/) - Official schedule for weekly Thursday and Saturday classes held at the NRA Range.
+- [The NRA Range, Fairfax](https://livefireinstruction.com/partners/nra-range-fairfax/) - Our primary training facility: a world-class indoor shooting range with modern safety technology.
+- [Regional Partners & Ranges](https://livefireinstruction.com/partners/) - Our network of professional firearm ranges across Northern Virginia, including:
+    - [Green Ops, Chantilly](https://livefireinstruction.com/partners/green-ops/)
+    - [Justified Defence Concepts](https://livefireinstruction.com/partners/justified-defence-concepts-northern-virginia/)
+    - [Silver Eagle Group, Ashburn](https://livefireinstruction.com/partners/silver-eagle-group-ashburn/)
+    - [Trojan Arms & Tactical, Manassas](https://livefireinstruction.com/partners/trojan-arms-and-tactical-manassas/)
 
-## 3. Business Blueprint Course
+## 3. Expert Knowledge & Resources (Blog)
 
-- [Join The 2-Day Bullseye Business Blueprint Course For Free - Live Fire Instruction](https://livefireinstruction.com/3-day-bullseye-business-blueprint-course/) - Information on the Bullseye Business Blueprint Course
+LFI publishes authoritative resources on firearm laws, CCW permit requirements, and safety tips for Northern Virginia, DC, and Maryland residents.
 
-## 4. Blog
+- [Firearm Training Blog (Main Index)](https://livefireinstruction.com/blog/) - Comprehensive collection of safety guides and law updates.
+- **Key Categories:**
+    - [Virginia CCW Laws & Requirements](https://livefireinstruction.com/categories/Law/)
+    - [Gun Safety & Basic Training Tips](https://livefireinstruction.com/categories/Safety/)
+    - [Defensive Shooting Tactics](https://livefireinstruction.com/categories/Defense/)
+- **Core Topics (Tags):**
+    - [Concealed Carry Permit Application](https://livefireinstruction.com/tags/CCW-Permit/)
+    - [New Gun Owner Guides](https://livefireinstruction.com/tags/New-Gun-Owner/)
+    - [Northern Virginia Range Locations](https://livefireinstruction.com/tags/Northern-Virginia/)
+    - [Firearm Safety Fundamentals](https://livefireinstruction.com/tags/Gun-Safety/)
 
-The blog provides articles and resources related to firearm safety, CCW, and shooting tips. Blog content is also organized by category and tag. Pagination is used on the main blog page and category/tag archive pages.
+## 4. About & Contact
 
-- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/) - Main blog page.
-- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/2/) - Page 2 of the blog.
-- [Firearm Training Blog | CCW, Safety & Shooting Tips](https://livefireinstruction.com/blog/3/) - Page 3 of the blog.
+- [Contact Live Fire Instruction](https://livefireinstruction.com/contact/) - Speak with NRA-certified experts about your training needs. Available via direct form or email.
+- [Privacy Policy](https://livefireinstruction.com/privacy-policy/) - Official data handling and student privacy disclosures.
+- [Search the LFI Database](https://livefireinstruction.com/search/) - Locate specific training resources or legal guides.
 
-  ### 4.1 Blog Categories
-  - [Recent Blog Posts](https://livefireinstruction.com/categories/) - Recent blog posts category archive.
-  - [CCW - Blog posts](https://livefireinstruction.com/categories/CCW/) - Blog posts categorized under CCW.
-  - [CCW - Blog posts](https://livefireinstruction.com/categories/CCW/2/) - Page 2 of CCW blog posts.
-  - [Defense - Blog posts](https://livefireinstruction.com/categories/Defense/) - Blog posts categorized under Defense.
-  - [Law - Blog posts](https://livefireinstruction.com/categories/Law/) - Blog posts categorized under Law.
-  - [Law - Blog posts](https://livefireinstruction.com/categories/Law/2/) - Page 2 of Law blog posts.
-  - [Owners - Blog posts](https://livefireinstruction.com/categories/Owners/) - Blog posts categorized under Owners.
-  - [Owners - Blog posts](https://livefireinstruction.com/categories/Owners/2/) - Page 2 of Owners blog posts.
-  - [Safety - Blog posts](https://livefireinstruction.com/categories/Safety/) - Blog posts categorized under Safety.
-  - [Training - Blog posts](https://livefireinstruction.com/categories/Training/) - Blog posts categorized under Training.
-
-  ### 4.2 Blog Tags
-  - [Tags](https://livefireinstruction.com/tags/) - Main Tags page.
-  - [Background Check - Blog posts](https://livefireinstruction.com/tags/Background-Check/) - Blog posts tagged with "Background Check".
-  - [Basic Pistol Course - Blog posts](https://livefireinstruction.com/tags/Basic-Pistol-Course/) - Blog posts tagged with "Basic Pistol Course".
-  - [Beginner Guide - Blog posts](https://livefireinstruction.com/tags/Beginner-Guide/) - Blog posts tagged with "Beginner Guide".
-  - [CCW Permit - Blog posts](https://livefireinstruction.com/tags/CCW-Permit/) - Blog posts tagged with "CCW Permit".
-  - [CCW Permit - Blog posts](https://livefireinstruction.com/tags/CCW-Permit/2/) - Page 2 of blog posts tagged with "CCW Permit".
-  - [Concealed Carry - Blog posts](https://livefireinstruction.com/tags/Concealed-Carry/) - Blog posts tagged with "Concealed Carry".
-  - [Disqualifications - Blog posts](https://livefireinstruction.com/tags/Disqualifications/) - Blog posts tagged with "Disqualifications".
-  - [Fairfax VA - Blog posts](https://livefireinstruction.com/tags/Fairfax-VA/) - Blog posts tagged with "Fairfax VA".
-  - [Firearm Laws - Blog posts](https://livefireinstruction.com/tags/Firearm-Laws/) - Blog posts tagged with "Firearm Laws".
-  - [Firearm Maintenance - Blog posts](https://livefireinstruction.com/tags/Firearm-Maintenance/) - Blog posts tagged with "Firearm Maintenance".
-  - [Firearms Training - Blog posts](https://livefireinstruction.com/tags/Firearms-Training/) - Blog posts tagged with "Firearms Training".
-  - [First Gun - Blog posts](https://livefireinstruction.com/tags/First-Gun/) - Blog posts tagged with "First Gun".
-  - [Gun Cleaning - Blog posts](https://livefireinstruction.com/tags/Gun-Cleaning/) - Blog posts tagged with "Gun Cleaning".
-  - [Gun Safety - Blog posts](https://livefireinstruction.com/tags/Gun-Safety/) - Blog posts tagged with "Gun Safety".
-  - [Gun Selection - Blog posts](https://livefireinstruction.com/tags/Gun-Selection/) - Blog posts tagged with "Gun Selection".
-  - [Home Defense - Blog posts](https://livefireinstruction.com/tags/Home-Defense/) - Blog posts tagged with "Home Defense".
-  - [In Person Training - Blog posts](https://livefireinstruction.com/tags/In-Person-Training/) - Blog posts tagged with "In Person Training".
-  - [Instructor Certification - Blog posts](https://livefireinstruction.com/tags/Instructor-Certification/) - Blog posts tagged with "Instructor Certification".
-  - [Legal Requirements - Blog posts](https://livefireinstruction.com/tags/Legal-Requirements/) - Blog posts tagged with "Legal Requirements".
-  - [New Gun Owner - Blog posts](https://livefireinstruction.com/tags/New-Gun-Owner/) - Blog posts tagged with "New Gun Owner".
-  - [New Gun Owner - Blog posts](https://livefireinstruction.com/tags/New-Gun-Owner/2/) - Page 2 of blog posts tagged with "New Gun Owner".
-  - [Northern Virginia - Blog posts](https://livefireinstruction.com/tags/Northern-Virginia/) - Blog posts tagged with "Northern Virginia".
-  - [NOVA - Blog posts](https://livefireinstruction.com/tags/NOVA/) - Blog posts tagged with "NOVA".
-  - [NRA Instructor - Blog posts](https://livefireinstruction.com/tags/NRA-Instructor/) - Blog posts tagged with "NRA Instructor".
-  - [NRA Training - Blog posts](https://livefireinstruction.com/tags/NRA-Training/) - Blog posts tagged with "NRA Training".
-  - [Online Training - Blog posts](https://livefireinstruction.com/tags/Online-Training/) - Blog posts tagged with "Online Training".
-  - [Open Carry - Blog posts](https://livefireinstruction.com/tags/Open-Carry/) - Blog posts tagged with "Open Carry".
-  - [Permit Application - Blog posts](https://livefireinstruction.com/tags/Permit-Application/) - Blog posts tagged with "Permit Application".
-  - [Personal Protection - Blog posts](https://livefireinstruction.com/tags/Personal-Protection/) - Blog posts tagged with "Personal Protection".
-  - [Reciprocity - Blog posts](https://livefireinstruction.com/tags/Reciprocity/) - Blog posts tagged with "Reciprocity".
-  - [Safe Storage - Blog posts](https://livefireinstruction.com/tags/Safe-Storage/) - Blog posts tagged with "Safe Storage".
-  - [Self Defense - Blog posts](https://livefireinstruction.com/tags/Self-Defense/) - Blog posts tagged with "Self Defense".
-  - [Virginia - Blog posts](https://livefireinstruction.com/tags/Virginia/) - Blog posts tagged with "Virginia".
-  - [Virginia - Blog posts](https://livefireinstruction.com/tags/Virginia/2/) - Page 2 of blog posts tagged with "Virginia".
-
-## 5. Other Pages
-
-- [Firearm Training Schedule | Northern Virginia Classes](https://livefireinstruction.com/calendar/) - Training schedule and calendar for Northern Virginia classes.
-- [Firearm Training Partners | Northern Virginia Ranges](https://livefireinstruction.com/partners/) - List of firearm training partners and Northern Virginia ranges.
-  - [Live Fire Instruction - Green Ops, Chantilly](https://livefireinstruction.com/partners/green-ops/) - Information on Green Ops partnership.
-  - [Live Fire Instruction - Instructors Dash](https://livefireinstruction.com/partners/instructors-dash/) - Information on Instructors Dash partnership.
-  - [Live Fire Instruction - Justified Defence Concepts, Northern Virginia](https://livefireinstruction.com/partners/justified-defence-concepts-northern-virginia/) - Information on Justified Defence Concepts partnership.
-  - [Live Fire Instruction - NRA Range, Fairfax](https://livefireinstruction.com/partners/nra-range-fairfax/) - Information on NRA Range partnership.
-  - [Live Fire Instruction - Silver Eagle Group, Ashburn](https://livefireinstruction.com/partners/silver-eagle-group-ashburn/) - Information on Silver Eagle Group partnership.
-  - [Live Fire Instruction - Trojan Arms & Tactical, Manassas](https://livefireinstruction.com/partners/trojan-arms-and-tactical-manassas/) - Information on Trojan Arms & Tactical partnership.
+---
+*Serving students across Northern Virginia, Fairfax County, Arlington, Alexandria, Loudoun County, DC, and Maryland.*

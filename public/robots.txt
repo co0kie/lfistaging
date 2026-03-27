@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://livefireinstruction.com/sitemap-index.xml
+llms.txt: https://livefireinstruction.com/llms.txt
