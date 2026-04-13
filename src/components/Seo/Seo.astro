@@ -7,6 +7,7 @@ import { SEO } from "astro-seo";
 interface BaseProps {
 	title: string;
 	description: string;
+	keywords?: string;
 	noindex?: boolean;
 }
 
@@ -22,7 +23,7 @@ interface BlogProps extends BaseProps {
 	postFrontmatter: CollectionEntry<"blog">["data"];
 }
 
-const { type, title, description, image, noindex = false } = Astro.props as GenProps | BlogProps;
+const { type, title, description, keywords, image, noindex = false } = Astro.props as GenProps | BlogProps;
 
 let optimizedImage;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
@@ -54,6 +55,9 @@ const imageUrl =
 	title={title}
 	description={description}
 	canonical={canonicalUrl.toString()}
+	extend={{
+		meta: keywords ? [{ name: "keywords", content: keywords }] : [],
+	}}
 	openGraph={{
 		basic: {
 			title: title,

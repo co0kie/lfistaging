@@ -1,9 +1,10 @@
 ---
 interface Props {
 	title: string;
+	textAlign?: string;
 }
 
-const { title } = Astro.props as Props;
+const { title, textAlign } = Astro.props as Props;
 ---
 
 <div class="bg-blue-dark relative overflow-hidden py-16 md:py-24">
@@ -18,7 +19,9 @@ const { title } = Astro.props as Props;
 		</div>
 	</div>
 	<header class="site-container relative z-10">
-		<h1 class="h1 text-center text-3xl text-white lg:text-4xl">{title}</h1>
+		<h1 class="h1 text-3xl text-white lg:text-4xl" class:list={textAlign || "text-center"}>
+			{title}
+		</h1>
 		<slot />
 	</header>
 </div>

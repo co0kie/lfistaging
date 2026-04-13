@@ -39,10 +39,22 @@ const formatTime = (dateStr: string) => {
 			class="event-carousel relative h-full"
 			aria-label="Upcoming classes"
 		>
-			{nextClasses.map((item, index) => {
+			{nextClasses.map((item: any, index: number) => {
+				const toSlug = (value: string) =>
+					value
+						.toLowerCase()
+						.trim()
+						.replace(/&/g, "and")
+						.replace(/[^a-z0-9]+/g, "-")
+						.replace(/^-+|-+$/g, "");
+				const nameSlug = item.name ? toSlug(item.name) : "";
 				const href = item.short_slug
-					? `https://livefireinstruction.instructorsdash.com/e/lisa-chau/${item.short_slug}`
-					: null;
+					? nameSlug
+						? `/class/${nameSlug}-${item.short_slug}`
+						: `/class/${item.short_slug}`
+					: item.name
+						? `/class/${nameSlug}`
+						: null;
 
 				return (
 					<div
@@ -54,9 +66,7 @@ const formatTime = (dateStr: string) => {
 						{href ? (
 							<a
 								href={href}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="regnow regnow-hero inline-flex w-full items-center justify-between gap-6 font-semibold md:text-lg"
+								class="regnow-hero inline-flex w-full items-center justify-between gap-6 font-semibold md:text-lg"
 								title={item.name}
 							>
 								<div class="w-3/4">

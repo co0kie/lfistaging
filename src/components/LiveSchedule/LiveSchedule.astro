@@ -175,10 +175,20 @@ const { category } = Astro.props;
 						</div>
 
 						<a
-							href="https://livefireinstruction.instructorsdash.com/e/lisa-chau/${event.short_slug}"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="regnow bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
+							href="/class/${(() => {
+								const toSlug = (value: any) =>
+									value
+										.toLowerCase()
+										.trim()
+										.replace(/&/g, "and")
+										.replace(/[^a-z0-9]+/g, "-")
+										.replace(/^-+|-+$/g, "");
+								const nameSlug = event.name ? toSlug(event.name) : "";
+								if (event.short_slug)
+									return nameSlug ? `${nameSlug}-${event.short_slug}` : event.short_slug;
+								return nameSlug || "";
+							})()}"
+							class="bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
 							title="${event.name}"
 							>
 							Register Now
