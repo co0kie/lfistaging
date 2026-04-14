@@ -1,6 +1,8 @@
 ---
 import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
 
+const siteUrl = import.meta.env.SITE;
+const isCalendarPage = Astro.url.pathname === "/calendar";
 const { category } = Astro.props;
 ---
 
@@ -18,15 +20,18 @@ const { category } = Astro.props;
 				Join our expert-led sessions and develop your firearm skills in a safe, professional
 				environment.
 			</p>
-			<a
-				href="https://instructorsdash.com/lisa-chau/categories/all"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
-			>
-				View Full Calendar Site
-				<ArrowRight size={20} />
-			</a>
+			{
+				// If not on calendar page, show link to calendar
+				!isCalendarPage && (
+					<a
+						href={`${siteUrl}/calendar`}
+						class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
+					>
+						View Full Calendar Site
+						<ArrowRight size={20} />
+					</a>
+				)
+			}
 		</div>
 
 		{/* Skeleton Loader - Visible while loading */}

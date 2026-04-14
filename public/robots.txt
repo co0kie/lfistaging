@@ -17,5 +17,5 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-Sitemap: https://livefireinstruction.com/sitemap-index.xml
-llms.txt: https://livefireinstruction.com/llms.txt
+Sitemap: https://livefireinstruction.com/sitemap.xml
+llms.txt: https://livefireinstruction.com/llms.txt
