@@ -32,6 +32,7 @@ const item = Astro.props;
 const { Content } = await render(item);
 const isInstructor = item.data.isInstructor;
 
+
 const schemaData = {
 	name: item.data.title,
 	description: item.data.description,
@@ -231,7 +232,7 @@ const schemaData = {
 			<Content />
 		</div>
 		<div id="iframe">
-			<LiveSchedule category={item.id === "first-step-pistol-orientation" ? "all" : "133"} />
+			<LiveSchedule category={item.id === "first-step-pistol-orientation" ? "607" : "all"} />
 		</div>
 </BaseLayout>
 
