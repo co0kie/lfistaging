@@ -35,6 +35,7 @@ type InstructorsDashEvent = {
 
 const rawSlug = Astro.params.slug ?? "";
 const normalizedSlug = rawSlug.trim().toLowerCase();
+const searchID = Astro.url.searchParams.get("s");
 
 const toSlug = (value: string) =>
 	value
@@ -71,8 +72,11 @@ const formatDateTimeRange = (startStr?: string | null, endStr?: string | null) =
 	return `${dateStr} | ${startTimeStr} - ${endTimeStr}`;
 };
 
-const fetchEventBySlug = async (slug: string): Promise<InstructorsDashEvent | null> => {
-	if (!slug) return null;
+const fetchEventBySlug = async (
+	slug: string,
+	shortId?: string | null,
+): Promise<InstructorsDashEvent | null> => {
+	if (!slug && !shortId) return null;
 
 	const apiBase = "https://instructorsdash.com/api/public/events/livefireinstruction";
 	let apiUrl: string | null = apiBase;
@@ -84,19 +88,25 @@ const fetchEventBySlug = async (slug: string): Promise<InstructorsDashEvent | nu
 		const data = await resp.json();
 		const events: InstructorsDashEvent[] = data?.events?.data ?? [];
 
-		const match =
-			events.find((e) => {
-				const shortSlug = (e.short_slug ?? "").toLowerCase();
-				const nameSlug = toSlug(e.name ?? "");
-				const combined = shortSlug && nameSlug ? `${nameSlug}-${shortSlug}` : shortSlug || nameSlug;
-				return combined === slug;
-			}) ??
-			events.find((e) => (e.short_slug ?? "").toLowerCase() === slug) ??
-			events.find((e) => toSlug(e.short_slug ?? "") === slug) ??
-			events.find((e) => toSlug(e.name ?? "") === slug) ??
-			events.find((e) => slug.endsWith("-" + (e.short_slug ?? "").toLowerCase()));
+		// Priority 1: Match exactly by short_slug if provided in query param
+		if (shortId) {
+			const exactMatch = events.find((e) => (e.short_slug ?? "").toLowerCase() === shortId.toLowerCase());
+			if (exactMatch) return exactMatch;
+		}
 
-		if (match) return match;
+		// Priority 2: Match combined slug (legacy)
+		const combinedMatch = events.find((e) => {
+			const shortSlug = (e.short_slug ?? "").toLowerCase();
+			const nameSlug = toSlug(e.name ?? "");
+			const combined = shortSlug && nameSlug ? `${nameSlug}-${shortSlug}` : shortSlug || nameSlug;
+			return combined === slug;
+		});
+		if (combinedMatch) return combinedMatch;
+
+		// Priority 3: Match by name slug fallback
+		const nameMatch = events.find((e) => toSlug(e.name ?? "") === slug);
+		if (nameMatch) return nameMatch;
+
 		apiUrl = data?.events?.next_page_url ?? null;
 	}
 
@@ -107,9 +117,7 @@ let event: InstructorsDashEvent | null = null;
 let fetchError = false;
 
 try {
-	// Accept both `/class/<short_slug>` and legacy `/class/<event name>` style URLs.
-	const canonicalSlug = toSlug(normalizedSlug);
-	event = (await fetchEventBySlug(normalizedSlug)) ?? (await fetchEventBySlug(canonicalSlug));
+	event = await fetchEventBySlug(normalizedSlug, searchID);
 } catch {
 	fetchError = true;
 }

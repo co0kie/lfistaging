@@ -18,4 +18,4 @@ User-agent: GPTBot
 Allow: /
 
 Sitemap: https://livefireinstruction.com/sitemap.xml
-llms.txt: https://livefireinstruction.com/llms.txt
+LLMS: https://livefireinstruction.com/llms.txt

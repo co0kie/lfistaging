@@ -48,13 +48,8 @@ const formatTime = (dateStr: string) => {
 						.replace(/[^a-z0-9]+/g, "-")
 						.replace(/^-+|-+$/g, "");
 				const nameSlug = item.name ? toSlug(item.name) : "";
-				const href = item.short_slug
-					? nameSlug
-						? `/class/${nameSlug}-${item.short_slug}`
-						: `/class/${item.short_slug}`
-					: item.name
-						? `/class/${nameSlug}`
-						: null;
+				const slug = nameSlug || item.short_slug;
+				const href = slug ? `/class/${slug}${item.short_slug ? "?s=" + item.short_slug : ""}` : null;
 
 				return (
 					<div

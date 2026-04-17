@@ -1,5 +1,5 @@
 ---
-import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const siteUrl = import.meta.env.SITE;
 const isCalendarPage = Astro.url.pathname === "/calendar";
@@ -189,9 +189,8 @@ const { category } = Astro.props;
 										.replace(/[^a-z0-9]+/g, "-")
 										.replace(/^-+|-+$/g, "");
 								const nameSlug = event.name ? toSlug(event.name) : "";
-								if (event.short_slug)
-									return nameSlug ? `${nameSlug}-${event.short_slug}` : event.short_slug;
-								return nameSlug || "";
+								const slug = nameSlug || event.short_slug || "";
+								return event.short_slug ? `${slug}?s=${event.short_slug}` : slug;
 							})()}"
 							class="bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
 							title="${event.name}"

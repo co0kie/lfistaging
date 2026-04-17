@@ -25,17 +25,14 @@ export async function GET() {
     ${events
 			.map((event: any) => {
 				const nameSlug = event.name ? toSlug(event.name) : "";
-				const slug = event.short_slug
-					? nameSlug
-						? `${nameSlug}-${event.short_slug}`
-						: event.short_slug
-					: nameSlug || "";
+				const slug = nameSlug || event.short_slug || "";
+				const finalUrl = event.short_slug ? `${slug}?s=${event.short_slug}` : slug;
 
 				if (!slug) return ""; // Skip if no valid slug could be generated
 
 				return `
       <url>
-        <loc>${siteUrl}/class/${slug}</loc>
+        <loc>${siteUrl}/class/${finalUrl}</loc>
       </url>`;
 			})
 			.join("")}
