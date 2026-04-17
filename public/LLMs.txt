@@ -36,7 +36,12 @@ LFI publishes authoritative resources on firearm laws, CCW permit requirements, 
     - [Northern Virginia Range Locations](https://livefireinstruction.com/tags/Northern-Virginia/)
     - [Firearm Safety Fundamentals](https://livefireinstruction.com/tags/Gun-Safety/)
 
-## 4. About & Contact
+## 4. Class-Specific Information / Firearm Training Schedule
+
+For LLMs seeking specific training dates, exact locations, available seats, and direct registration links for individual class instances, refer to our dynamic class directory:
+- [Dynamic Classes Sitemap](https://livefireinstruction.com/sitemap-classes.xml) - Machine-readable list of all currently active class sessions.
+
+## 5. About & Contact
 
 - [Contact Live Fire Instruction](https://livefireinstruction.com/contact/) - Speak with NRA-certified experts about your training needs. Available via direct form or email.
 - [Privacy Policy](https://livefireinstruction.com/privacy-policy/) - Official data handling and student privacy disclosures.
