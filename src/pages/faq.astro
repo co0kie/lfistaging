@@ -1,0 +1,185 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import { getKeystaticReader } from "@/lib/keystatic-reader";
+import { Crosshair, Plus, Minus } from "lucide-react";
+import siteData from "@/config/siteData.json.ts";
+
+const reader = getKeystaticReader();
+const draftPage = await reader.singletons.homepagedraft.read();
+
+const faqEyebrow = draftPage?.faqEyebrow || "Frequently Asked Questions";
+const faqTitle = draftPage?.faqTitle || "Common questions about firearms training in Northern Virginia";
+const faqs = draftPage?.faqs || [];
+
+const pagetitle = "FAQ";
+const description = "Frequently asked questions about our firearms training courses, CCW permits, and safety instruction in Northern Virginia.";
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqs.map((faq) => ({
+		"@type": "Question",
+		name: faq.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: faq.answer,
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title={pagetitle + " | " + siteData.name}
+	description={description}
+	schemaType="faq"
+	schemaData={schemaData}
+>
+	<PageHeader title={pagetitle}>
+		<p class="mx-auto mt-6 max-w-2xl text-center text-lg text-slate-300">
+			{faqTitle}
+		</p>
+	</PageHeader>
+
+	<section class="site-container py-16 md:py-24">
+		<div class="mx-auto max-w-4xl">
+			<!-- Tactical Accent -->
+			<div class="mb-12 flex items-center justify-center gap-4">
+				<div class="h-px flex-1 bg-gradient-to-r from-transparent to-slate-200"></div>
+				<span class="text-primary text-sm font-bold tracking-[0.3em] uppercase">{faqEyebrow}</span>
+				<div class="h-px flex-1 bg-gradient-to-l from-transparent to-slate-200"></div>
+			</div>
+
+			<div class="grid gap-6">
+				{
+					faqs.map((faq) => (
+						<div 
+							class="faq-item group overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
+						>
+							<button 
+								class="faq-trigger flex w-full items-start justify-between px-8 py-8 text-left outline-none"
+								aria-expanded="false"
+							>
+								<div class="flex gap-6">
+									<div class="bg-blue-dark text-orange mt-1 hidden rounded-2xl p-3 shadow-lg transition-transform duration-500 group-hover:scale-110 sm:block">
+										<Crosshair className="h-6 w-6" />
+									</div>
+									<h3 class="font-headline text-blue text-xl font-semibold leading-snug md:text-2xl">
+										{faq.question}
+									</h3>
+								</div>
+								<div class="ml-4 mt-2 flex-shrink-0 rounded-full border border-slate-200 p-2 text-slate-400 transition-colors duration-300 group-hover:border-primary group-hover:text-primary">
+									<Plus className="h-6 w-6 transition-transform duration-500 trigger-plus" />
+									<Minus className="hidden h-6 w-6 transition-transform duration-500 trigger-minus" />
+								</div>
+							</button>
+							<div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+								<div class="px-8 pb-8 text-lg leading-relaxed text-slate-600 sm:pl-[5.5rem] md:text-xl">
+									<div class="h-px w-full bg-slate-100 mb-6"></div>
+									{faq.answer}
+								</div>
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<!-- Support Section -->
+			<div class="relative mt-20 overflow-hidden rounded-[3rem] bg-blue-dark p-8 text-center text-white md:p-16">
+				<!-- Decorative Background -->
+				<div class="pointer-events-none absolute inset-0 opacity-10">
+					<div class="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary blur-[80px]"></div>
+					<div class="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-blue-500 blur-[80px]"></div>
+				</div>
+
+				<div class="relative z-10">
+					<h2 class="h1 mb-6 text-3xl font-bold md:text-4xl lg:text-5xl">Still have questions?</h2>
+					<p class="mx-auto mb-12 max-w-2xl text-lg text-slate-300 md:text-xl">
+						We're here to help you become a safe, confident, and responsible shooter. Reach out to our expert team anytime.
+					</p>
+					<div class="flex flex-wrap justify-center gap-6">
+						<a 
+							href="/contact" 
+							class="bg-primary hover:bg-orange text-blue-dark group flex items-center gap-3 rounded-full px-10 py-5 text-lg font-bold transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20"
+						>
+							Get in Touch
+							<div class="transition-transform duration-300 group-hover:translate-x-1">→</div>
+						</a>
+						<a 
+							href="tel:5712105651" 
+							class="flex items-center gap-3 rounded-full border-2 border-white/20 bg-white/5 px-10 py-5 text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10"
+						>
+							Call 571.210.5651
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<script>
+	const setupFaq = () => {
+		const faqItems = document.querySelectorAll('.faq-item');
+		
+		faqItems.forEach(item => {
+			const trigger = item.querySelector('.faq-trigger');
+			const content = item.querySelector('.faq-content') as HTMLElement;
+			const plus = item.querySelector('.trigger-plus');
+			const minus = item.querySelector('.trigger-minus');
+			
+			trigger?.addEventListener('click', () => {
+				const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+				
+				// Close all other items
+				faqItems.forEach(otherItem => {
+					if (otherItem !== item) {
+						const otherTrigger = otherItem.querySelector('.faq-trigger');
+						const otherContent = otherItem.querySelector('.faq-content') as HTMLElement;
+						const otherPlus = otherItem.querySelector('.trigger-plus');
+						const otherMinus = otherItem.querySelector('.trigger-minus');
+						
+						otherTrigger?.setAttribute('aria-expanded', 'false');
+						if (otherContent) otherContent.style.maxHeight = '0';
+						otherPlus?.classList.remove('hidden');
+						otherMinus?.classList.add('hidden');
+						otherItem.classList.remove('active-faq');
+					}
+				});
+
+				if (isExpanded) {
+					trigger.setAttribute('aria-expanded', 'false');
+					if (content) content.style.maxHeight = '0';
+					plus?.classList.remove('hidden');
+					minus?.classList.add('hidden');
+					item.classList.remove('active-faq');
+				} else {
+					trigger.setAttribute('aria-expanded', 'true');
+					if (content) content.style.maxHeight = content.scrollHeight + 'px';
+					plus?.classList.add('hidden');
+					minus?.classList.remove('hidden');
+					item.classList.add('active-faq');
+				}
+			});
+		});
+	};
+
+	// Setup on initial load
+	setupFaq();
+
+	// Setup on view transitions (for Astro)
+	document.addEventListener('astro:page-load', setupFaq);
+</script>
+
+<style>
+	.faq-item {
+		transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.active-faq {
+		border-color: var(--color-primary) !important;
+		background-color: oklch(0.985 0 0); /* Subtle light bg for active */
+	}
+	.trigger-minus, .trigger-plus {
+		transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+</style>
