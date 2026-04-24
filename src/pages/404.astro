@@ -1,6 +1,8 @@
 ---
 import Button from "@components/Button/Button.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import bg from "@images/404-bg.png";
+import { Image } from "astro:assets";
 ---
 
 <BaseLayout
@@ -13,9 +15,9 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 	>
 		<!-- Background Image with tactical overlay -->
 		<div class="absolute inset-0 z-0">
-			<img
-				src="/images/404-bg.png"
-				alt="Tactical Target"
+			<Image
+				src={bg}
+				alt="Background"
 				class="h-full w-full object-cover opacity-20 mix-blend-overlay contrast-125 grayscale"
 			/>
 			<div
@@ -75,11 +77,13 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 					<ul class="mt-4 space-y-3 text-sm text-slate-400">
 						<li>
 							<a href="/blog/" class="hover:text-primary flex items-center gap-2 transition-colors">
-								Tactical Blog</a>
+								Tactical Blog</a
+							>
 						</li>
 						<li>
 							<a href="/faq/" class="hover:text-primary flex items-center gap-2 transition-colors">
-								Common Questions</a>
+								Common Questions</a
+							>
 						</li>
 					</ul>
 				</div>
@@ -91,14 +95,16 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 								href="/firearms-training-northern-virginia/"
 								class="hover:text-primary flex items-center gap-2 transition-colors"
 							>
-								Locations</a>
+								Locations</a
+							>
 						</li>
 						<li>
 							<a
 								href="/contact/"
 								class="hover:text-primary flex items-center gap-2 transition-colors"
 							>
-								Contact Us</a>
+								Contact Us</a
+							>
 						</li>
 					</ul>
 				</div>
