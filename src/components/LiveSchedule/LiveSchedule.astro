@@ -106,25 +106,14 @@ const { category } = Astro.props;
 		const errorEl = document.getElementById("schedule-error");
 		const emptyEl = document.getElementById("schedule-empty");
 		const controls = document.getElementById("schedule-controls");
-		const showMoreBtn = document.getElementById("show-more-button");
+		const showMoreBtn = document.getElementById("show-more-button") as HTMLButtonElement;
 
-		try {
-			const apiUrl = category ? `/api/live-schedule?category=${category}` : "/api/live-schedule";
-			const response = await fetch(apiUrl);
-			if (!response.ok) throw new Error("Fetch failed");
+		let currentPage = 1;
+		let lastPage = 1;
+		let isLoading = false;
+		let hasShownExtraFromFirstPage = false;
 
-			const data = await response.json();
-			const events = data.events?.data || [];
-
-			if (events.length === 0) {
-				skeleton?.classList.add("hidden");
-				emptyEl?.classList.remove("hidden");
-				controls?.classList.remove("hidden");
-				controls?.classList.add("flex");
-				return;
-			}
-
-			const renderEvent = (event: any) => `
+		const renderEvent = (event: any) => `
 				<div class="group flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
 					<div class="relative aspect-video overflow-hidden">
 						<img
@@ -135,7 +124,7 @@ const { category } = Astro.props;
 							onerror="this.src='/assets/placeholder-course.jpg'; this.onerror=null;"
 						/>
 						<div class="bg-orange absolute top-4 right-4 rounded-full px-3 py-1 text-sm font-semibold text-white shadow-sm">
-							$${event.ticket_items.price[0]}
+							$${event.ticket_items?.price?.[0] || "0"}
 						</div>
 					</div>
 
@@ -202,8 +191,87 @@ const { category } = Astro.props;
 				</div>
 			`;
 
-			const initial = events.slice(0, 6);
-			const extra = events.slice(6);
+		async function fetchPage(page: number) {
+			if (isLoading) return null;
+			isLoading = true;
+			if (showMoreBtn) {
+				showMoreBtn.disabled = true;
+				showMoreBtn.innerHTML = `
+					<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+						<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+					</svg>
+					Loading...
+				`;
+			}
+
+			try {
+				let apiUrl = `/api/live-schedule?page=${page}`;
+				if (category) apiUrl += `&category=${category}`;
+
+				const response = await fetch(apiUrl);
+				if (!response.ok) throw new Error("Fetch failed");
+
+				const data = await response.json();
+				lastPage = data.events?.last_page || 1;
+				return data.events?.data || [];
+			} catch (error) {
+				console.error("Error loading schedule page " + page, error);
+				return null;
+			} finally {
+				isLoading = false;
+				if (showMoreBtn) {
+					showMoreBtn.disabled = false;
+					showMoreBtn.textContent = "Show More Classes";
+				}
+			}
+		}
+
+		function updateButtonVisibility(hasMoreItemsInCurrentPage: boolean) {
+			if (hasMoreItemsInCurrentPage || currentPage < lastPage) {
+				showMoreBtn?.classList.remove("hidden");
+				showMoreBtn?.classList.add("flex");
+			} else {
+				showMoreBtn?.classList.add("hidden");
+				showMoreBtn?.classList.remove("flex");
+			}
+		}
+
+		async function handleShowMore() {
+			if (!hasShownExtraFromFirstPage && extraEvents && extraEvents.innerHTML.trim() !== "") {
+				extraEvents.classList.remove("hidden");
+				extraEvents.classList.add("grid");
+				hasShownExtraFromFirstPage = true;
+				updateButtonVisibility(false);
+			} else if (currentPage < lastPage) {
+				currentPage++;
+				const events = await fetchPage(currentPage);
+				if (events && events.length > 0) {
+					const html = events.map(renderEvent).join("");
+					if (extraEvents) {
+						extraEvents.insertAdjacentHTML("beforeend", html);
+						extraEvents.classList.remove("hidden");
+						extraEvents.classList.add("grid");
+					}
+				}
+				updateButtonVisibility(false);
+			}
+		}
+
+		try {
+			const initialEvents = await fetchPage(1);
+			if (initialEvents === null) throw new Error("Initial fetch failed");
+
+			if (initialEvents.length === 0) {
+				skeleton?.classList.add("hidden");
+				emptyEl?.classList.remove("hidden");
+				controls?.classList.remove("hidden");
+				controls?.classList.add("flex");
+				return;
+			}
+
+			const initial = initialEvents.slice(0, 6);
+			const extra = initialEvents.slice(6);
 
 			if (eventsGrid) eventsGrid.innerHTML = initial.map(renderEvent).join("");
 			if (extraEvents) extraEvents.innerHTML = extra.map(renderEvent).join("");
@@ -221,22 +289,8 @@ const { category } = Astro.props;
 				"text-center",
 			);
 
-			if (extra.length > 0 && showMoreBtn) {
-				showMoreBtn.classList.remove("hidden");
-				showMoreBtn.classList.add("flex", "items-center", "justify-center", "gap-2");
-				showMoreBtn.addEventListener("click", () => {
-					extraEvents?.classList.remove("hidden");
-					extraEvents?.classList.add(
-						"grid",
-						"grid-cols-1",
-						"gap-8",
-						"md:grid-cols-2",
-						"lg:grid-cols-3",
-					);
-					showMoreBtn.classList.add("hidden");
-					showMoreBtn.classList.remove("flex", "items-center", "justify-center", "gap-2");
-				});
-			}
+			updateButtonVisibility(extra.length > 0);
+			showMoreBtn?.addEventListener("click", handleShowMore);
 		} catch (error) {
 			console.error("Error loading schedule:", error);
 			skeleton?.classList.add("hidden");

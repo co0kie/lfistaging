@@ -4,10 +4,11 @@ export const GET: APIRoute = async ({ request }) => {
 	try {
 		const url = new URL(request.url);
 		const category = url.searchParams.get("category");
+		const page = url.searchParams.get("page") || "1";
 
-		let apiUrl = "https://instructorsdash.com/api/public/events/livefireinstruction";
+		let apiUrl = `https://instructorsdash.com/api/public/events/livefireinstruction?page=${page}`;
 		if (category) {
-			apiUrl += `?category=${category}`;
+			apiUrl += `&category=${category}`;
 		}
 
 		const response = await fetch(apiUrl);
