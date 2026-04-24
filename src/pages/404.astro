@@ -1,8 +1,6 @@
 ---
 import Button from "@components/Button/Button.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import bg from "@images/404-bg.png";
-import { Image } from "astro:assets";
 ---
 
 <BaseLayout
@@ -15,8 +13,8 @@ import { Image } from "astro:assets";
 	>
 		<!-- Background Image with tactical overlay -->
 		<div class="absolute inset-0 z-0">
-			<Image
-				src={bg}
+			<img
+				src="/images/404-bg.png"
 				alt="Background"
 				class="h-full w-full object-cover opacity-20 mix-blend-overlay contrast-125 grayscale"
 			/>
