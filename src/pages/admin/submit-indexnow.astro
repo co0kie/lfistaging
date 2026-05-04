@@ -20,7 +20,7 @@ let submissionResult: any = null;
 let error: string | null = null;
 let selectedUrls: string[] = [];
 
-if (Astro.request.method === "POST" && isAuthorized) {
+if (Astro.request.method === "POST") {
 	const formData = await Astro.request.formData();
 	const action = formData.get("action");
 	
@@ -45,7 +45,7 @@ if (Astro.request.method === "POST" && isAuthorized) {
 		return Astro.redirect(Astro.url.pathname);
 	}
 
-	if (action === "submit_indexnow") {
+	if (action === "submit_indexnow" && isAuthorized) {
 		selectedUrls = formData.getAll("selected_urls") as string[];
 		
 		if (selectedUrls.length > 0) {
