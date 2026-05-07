@@ -27,7 +27,7 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 		]}
 		href={link}
 		target={newTab ? "_blank" : ""}
-		rel={newTab ? "noopener noreferrer" : ""}
+		rel={newTab ? "nofollow noopener noreferrer" : ""}
 	>
 		{text}
 	</a>
