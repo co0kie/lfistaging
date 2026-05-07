@@ -9,7 +9,7 @@ export function slugify(text: string): string {
 
 	return (
 		String(text)
-			// .toLowerCase() // convert to lowercase
+			.toLowerCase() // convert to lowercase
 			.replace(/\s+/g, "-") // replace spaces with -
 			.replace(/[^\w-]+/g, "") // remove all non-word chars
 			.replace(/--+/g, "-") // replace multiple dashes with single dash
