@@ -1,5 +1,7 @@
 ---
 import { getKeystaticReader } from "@/lib/keystatic-reader";
+import { Image } from "astro:assets";
+import TrustedSafetyBg from "@assets/homepage/images/trusted-safety-bg.jpg";
 interface Props {
 	title?: string;
 	subtitle?: string;
@@ -25,11 +27,17 @@ const subtitle =
 	"Join hundreds of instructors who trust Live Fire Instruction for their shooting range business";
 ---
 
-<section class="bg-blue-dark text-primary-foreground py-16 md:py-24">
-	<div class="site-container text-center">
-		<h2 class="mb-6 text-4xl font-bold">{title}</h2><p
-			class="mx-auto mb-8 max-w-2xl text-xl opacity-90"
-		>
+<section class="bg-blue-dark text-primary-foreground relative overflow-hidden py-16 md:py-24">
+	<div class="absolute inset-0 z-0 hidden md:block">
+		<Image 
+			src={TrustedSafetyBg} 
+			alt="Ready to Get Started Background" 
+			class="h-full w-full object-cover opacity-20"
+		/>
+	</div>
+	<div class="site-container relative z-10 text-center">
+		<h2 class="mb-6 text-4xl font-bold">{title}</h2>
+		<p class="mx-auto mb-8 max-w-2xl text-xl opacity-90">
 			{subtitle}
 		</p>
 		<a href={ctaLink}>

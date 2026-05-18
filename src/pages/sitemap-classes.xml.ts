@@ -33,6 +33,7 @@ export async function GET() {
 				return `
       <url>
         <loc>${siteUrl}/class/${finalUrl}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
       </url>`;
 			})
 			.join("")}

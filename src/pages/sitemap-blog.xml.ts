@@ -12,7 +12,11 @@ export async function GET() {
                 <url>
         <loc>${siteUrl}/blog/${post.id}/</loc>
         <lastmod>${
-					post.data.pubDate ? new Date(post.data.pubDate).toISOString() : new Date().toISOString()
+					post.data.updatedDate 
+						? new Date(post.data.updatedDate).toISOString() 
+						: post.data.pubDate 
+							? new Date(post.data.pubDate).toISOString() 
+							: new Date().toISOString()
 				}</lastmod>
       </url>
       `,

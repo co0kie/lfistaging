@@ -24,6 +24,7 @@ export async function GET() {
 				(page) => `
       <url>
         <loc>${siteUrl}${page}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
       </url>`,
 			)
 			.join("")}

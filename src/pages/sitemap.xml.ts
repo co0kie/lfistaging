@@ -5,12 +5,15 @@ export async function GET() {
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <sitemap>
         <loc>${siteUrl}/sitemap-blog.xml</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
     </sitemap>
     <sitemap>
         <loc>${siteUrl}/sitemap-pages.xml</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
     </sitemap>
      <sitemap>
         <loc>${siteUrl}/sitemap-classes.xml</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
     </sitemap>
 </sitemapindex>
 `;
