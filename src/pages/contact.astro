@@ -12,6 +12,7 @@ import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
 const reader = getKeystaticReader();
 const contact = await reader.singletons.contact.read();
 const pagetitle = contact?.pageTitle || "Contact Us";
+const pageDescription = contact?.pageDescription || "Get in touch with Live Fire Instruction for premier firearms training and CCW classes in Fairfax and Ashburn, VA. Call 571-210-5651 or message us today!";
 const formInfoTitle =
 	contact?.formInfoTitle || "Customer Feedback Is The Lifeblood Of Our Business.";
 const formInfoSubtitle =
@@ -38,7 +39,7 @@ const schemaData = {
 			"@type": "ListItem",
 			item: {
 				"@type": "Organization",
-				name: "LiveFire Instruction",
+				name: "Live Fire Instruction",
 				url: "https://livefireinstruction.com",
 				email: "class@livefireinstruction.com",
 				telephone: "571.210.5651",
@@ -49,8 +50,8 @@ const schemaData = {
 ---
 
 <BaseLayout
-	title={pagetitle + " - " + siteData.title}
-	description={siteData.description}
+	title={pagetitle}
+	description={pageDescription}
 	schemaType="contact"
 	schemaData={schemaData}
 >
@@ -120,7 +121,7 @@ const schemaData = {
 						<div class="flex items-center gap-3">
 							<Mail className="text-primary-200 h-5 w-5" />
 							<a
-								href={`mailto: "class@livefireinstruction.com"`}
+								href="mailto:class@livefireinstruction.com"
 								class="text-primary-100 transition-colors hover:text-white"
 								>{contact?.formInfoEmail || "class@livefireinstruction.com"}</a
 							>

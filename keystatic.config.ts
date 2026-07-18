@@ -452,6 +452,14 @@ export default config({
 					defaultValue: "Contact Us",
 				}),
 
+				pageDescription: fields.text({
+					label: "Page Description",
+					multiline: true,
+					validation: { isRequired: true },
+					defaultValue:
+						"Get in touch with Live Fire Instruction for premier firearms training and CCW classes in Fairfax and Ashburn, VA. Call 571-210-5651 or message us today!",
+				}),
+
 				// Form Section - Column 1 (Info)
 				formInfoTitle: fields.text({
 					label: "Form Info Title",
