@@ -127,6 +127,9 @@ const schemaData = {
 			const content = item.querySelector('.faq-content') as HTMLElement;
 			const plus = item.querySelector('.trigger-plus');
 			const minus = item.querySelector('.trigger-minus');
+
+			if (trigger?.hasAttribute('data-faq-initialized')) return;
+			trigger?.setAttribute('data-faq-initialized', 'true');
 			
 			trigger?.addEventListener('click', () => {
 				const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
@@ -164,10 +167,7 @@ const schemaData = {
 		});
 	};
 
-	// Setup on initial load
-	setupFaq();
-
-	// Setup on view transitions (for Astro)
+	// Setup on view transitions and initial page load (for Astro)
 	document.addEventListener('astro:page-load', setupFaq);
 </script>
 
