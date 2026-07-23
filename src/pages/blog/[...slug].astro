@@ -1,6 +1,7 @@
 ---
 import BlogLayout from "@layouts/BlogLayoutSidebar.astro";
 import { getEntry, render } from "astro:content";
+import { isValidDraftPreview } from "@/utils/draftPreview";
 
 const { slug } = Astro.params;
 
@@ -14,8 +15,36 @@ if (!post) {
 	return Astro.redirect("/404");
 }
 
+let isDraftPreview = false;
+let previewExpiresAt: Date | undefined = undefined;
+
+if (post.data.draft === true) {
+	const authCookie = Astro.cookies.get("indexnow_auth")?.value;
+	const previewCheck = isValidDraftPreview(slug, Astro.url, authCookie);
+
+	if (!previewCheck.valid) {
+		return Astro.redirect("/404");
+	}
+
+	isDraftPreview = true;
+	previewExpiresAt = previewCheck.expiresAt;
+}
+
 const { Content } = await render(post);
 ---
+
+{
+	isDraftPreview && (
+		<div class="bg-amber-500 text-slate-950 flex items-center justify-center gap-2 border-b border-amber-600 px-4 py-2 text-center font-sans text-sm font-semibold shadow-md">
+			<span>⚠️ <strong>Draft Preview Mode</strong> &mdash; Temporary preview of an unpublished post.</span>
+			{previewExpiresAt && (
+				<span class="rounded bg-amber-600/30 px-2.5 py-0.5 font-mono text-xs">
+					Expires at: {previewExpiresAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+				</span>
+			)}
+		</div>
+	)
+}
 
 <BlogLayout post={post}>
 	<Content />

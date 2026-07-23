@@ -547,6 +547,11 @@ export default config({
 			schema: {
 				title: fields.slug({ name: { label: "Title", validation: { isRequired: true } } }),
 				description: fields.text({ label: "Description", validation: { isRequired: true } }),
+				draft: fields.checkbox({
+					label: "Draft",
+					description: "Check this box to set this post as a draft (hidden from public site and RSS).",
+					defaultValue: false,
+				}),
 				authors: fields.array(
 					fields.text({
 						label: "Author",

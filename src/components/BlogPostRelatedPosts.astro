@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getAllPosts } from "@js/blogUtils";
 
 interface Props {
 	relatedPosts?: string[];
@@ -9,7 +9,7 @@ interface Props {
 
 const { relatedPosts, categories, id } = Astro.props;
 
-const allPosts = await getCollection("blog");
+const allPosts = await getAllPosts();
 
 const posts = allPosts
 	.filter((post) => post.id !== id) // Exclude current post

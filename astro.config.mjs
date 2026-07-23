@@ -56,7 +56,9 @@ export default defineConfig({
 				],
 			},
 		}),
-		sitemap(),
+		sitemap({
+			filter: (page) => !page.includes("/admin/"),
+		}),
 		compress({
 			HTML: true,
 			JavaScript: true,
