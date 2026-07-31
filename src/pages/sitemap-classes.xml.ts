@@ -1,3 +1,5 @@
+import { formatClassUrl } from "@/utils/classUrl";
+
 export async function GET() {
 	const siteUrl = import.meta.env.SITE;
 
@@ -11,28 +13,15 @@ export async function GET() {
 		const data = await response.json();
 		const events = data.events?.data || [];
 
-		// Replicating the slugify logic used in LiveSchedule
-		const toSlug = (value: string) =>
-			value
-				.toLowerCase()
-				.trim()
-				.replace(/&/g, "and")
-				.replace(/[^a-z0-9]+/g, "-")
-				.replace(/^-+|-+$/g, "");
-
 		const result = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${events
 			.map((event: any) => {
-				const nameSlug = event.name ? toSlug(event.name) : "";
-				const slug = nameSlug || event.short_slug || "";
-				const finalUrl = event.short_slug ? `${slug}?s=${event.short_slug}` : slug;
-
-				if (!slug) return ""; // Skip if no valid slug could be generated
+				const classUrl = formatClassUrl(event);
 
 				return `
       <url>
-        <loc>${siteUrl}/class/${finalUrl}</loc>
+        <loc>${siteUrl}${classUrl}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
       </url>`;
 			})

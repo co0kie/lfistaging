@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getAllPosts } from "@js/blogUtils";
 import { getCollection } from "astro:content";
 import { generateDraftPreviewUrl } from "@/utils/draftPreview";
+import { formatClassUrl } from "@/utils/classUrl";
 import { Send, CheckCircle2, AlertCircle, Globe, Key, List, ArrowRight, Lock, ShieldCheck, CheckSquare, Square, Filter, Eye, Clock } from "lucide-react";
 
 // In Astro SSR, Astro.site is usually defined in astro.config.mjs
@@ -121,7 +122,7 @@ if (isAuthorized) {
 		`${siteUrl}/`,
 		`${siteUrl}/blog`,
 		`${siteUrl}/firearm-training-fairfax-va`,
-		`${siteUrl}/calendar`,
+		`${siteUrl}/ccw-courses-northern-va`,
 		`${siteUrl}/partners`,
 		`${siteUrl}/contact`,
 		`${siteUrl}/privacy-policy`,
@@ -130,15 +131,7 @@ if (isAuthorized) {
 		...trainings.map((item) => `${siteUrl}/${item.id}`),
 		...landingPages.map((item) => `${siteUrl}/${item.id}`),
 		...pages.map((item) => `${siteUrl}/${item.id}`),
-		...events
-			.map((event: any) => {
-				const nameSlug = event.name ? toSlug(event.name) : "";
-				const slug = nameSlug || event.short_slug || "";
-				const finalUrl = event.short_slug ? `${slug}?s=${event.short_slug}` : slug;
-				if (!slug) return "";
-				return `${siteUrl}/class/${finalUrl}`;
-			})
-			.filter((u: any) => u),
+		...events.map((event: any) => `${siteUrl}${formatClassUrl(event)}`),
 	];
 }
 

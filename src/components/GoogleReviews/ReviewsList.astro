@@ -1,120 +1,63 @@
 ---
-interface Props {
-	reviews: Array<{
-		author_name: string;
-		rating: number;
-		relative_time_description: string;
-		text: string;
-		profile_photo_url?: string;
-	}>;
+import GoogleReviewCard from "./GoogleReviewCard.astro";
+
+export interface ReviewItem {
+	author_name: string;
+	author_url?: string;
+	rating: number;
+	/** ISO date string (e.g. "2025-06-15"). Used to compute relative time dynamically. */
+	review_date?: string;
+	/** Fallback string shown when review_date is not provided. */
+	relative_time_description?: string;
+	text: string;
+	profile_photo_url?: string;
 }
 
-const { reviews } = Astro.props;
+export function getRelativeTime(dateStr?: string): string | undefined {
+	if (!dateStr) return undefined;
+	const now = new Date();
+	const then = new Date(dateStr);
+	const diffMs = now.getTime() - then.getTime();
+	const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+	if (diffDays < 1) return "Today";
+	if (diffDays === 1) return "Yesterday";
+	if (diffDays < 7) return `${diffDays} days ago`;
+	const diffWeeks = Math.floor(diffDays / 7);
+	if (diffWeeks === 1) return "1 week ago";
+	if (diffWeeks < 5) return `${diffWeeks} weeks ago`;
+	const diffMonths = Math.floor(diffDays / 30);
+	if (diffMonths === 1) return "1 month ago";
+	if (diffMonths === 2) return "2 months ago";
+	if (diffMonths === 3) return "3 months ago";
+	if (diffMonths === 4) return "4 months ago";
+	if (diffMonths < 12) return `${diffMonths} months ago`;
+	const diffYears = Math.floor(diffDays / 365);
+	return diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
+}
+
+interface Props {
+	reviews?: ReviewItem[];
+	limit?: number;
+	gridCols?: string;
+	className?: string;
+}
+
+const { reviews = [], limit, gridCols = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3", className = "" } = Astro.props;
+
+const displayedReviews = limit ? reviews.slice(0, limit) : reviews;
 ---
 
-<div class="reviews-list">
+<div class:list={["grid gap-6", gridCols, className]}>
 	{
-		reviews.slice(0, 3).map((review) => (
-			<article class="review-card">
-				<header class="review-header">
-					{review.profile_photo_url && (
-						<img
-							src={review.profile_photo_url}
-							alt={review.author_name}
-							width="40"
-							height="40"
-							class="review-avatar"
-						/>
-					)}
-					<div class="review-meta">
-						<h3 class="review-author">{review.author_name}</h3>
-						<div class="review-rating-time">
-							<div class="review-stars">
-								{[1, 2, 3, 4, 5].map((star) => (
-									<span class={`review-star ${star <= review.rating ? "filled" : ""}`}>★</span>
-								))}
-							</div>
-							<span class="review-time">{review.relative_time_description}</span>
-						</div>
-					</div>
-				</header>
-				<p class="review-text">{review.text}</p>
-			</article>
+		displayedReviews.map((review) => (
+			<GoogleReviewCard
+				name={review.author_name}
+				profileUrl={review.author_url}
+				photoUrl={review.profile_photo_url}
+				rating={review.rating}
+				relativeTime={getRelativeTime(review.review_date) ?? review.relative_time_description}
+				text={review.text}
+			/>
 		))
 	}
 </div>
-
-<style>
-	.reviews-list {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 1.5rem;
-		margin-top: 1rem;
-	}
-
-	.review-card {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 8px;
-		border: 1px solid #e9ecef;
-	}
-
-	.review-header {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 1rem;
-	}
-
-	.review-avatar {
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.review-meta {
-		flex: 1;
-	}
-
-	.review-author {
-		margin: 0 0 0.25rem 0;
-		font-size: 1rem;
-		color: #1a1a1a;
-	}
-
-	.review-rating-time {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.review-stars {
-		font-size: 1rem;
-		color: #ddd;
-	}
-
-	.review-star {
-		margin-right: 0.125rem;
-	}
-
-	.review-star.filled {
-		color: #ffb400;
-	}
-
-	.review-time {
-		font-size: 0.875rem;
-		color: #666;
-	}
-
-	.review-text {
-		margin: 0;
-		line-height: 1.5;
-		color: #333;
-		font-size: 0.95rem;
-	}
-
-	@media (max-width: 768px) {
-		.reviews-list {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

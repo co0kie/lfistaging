@@ -1,0 +1,32 @@
+---
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { schemaGenerators } from "@/utils/schema";
+import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
+
+const pageTitle = "CCW Classes near Fairfax, VA | Firearm Training Schedule";
+const metaDescription =
+	"Looking for NRA-certified CCW classes near Fairfax, VA? Join Live Fire Instruction at the NRA Range on Waples Mill Rd for VA Concealed Carry Permit & pistol courses. Reserve your spot today!";
+
+const schemaData = schemaGenerators.calendar({
+	name: pageTitle,
+	description: metaDescription,
+	url: Astro.url.href,
+});
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={metaDescription}
+	schemaType="calendar"
+	schemaData={schemaData}
+>
+	<PageHeader title="CCW Classes & Firearm Training Schedule in Fairfax, VA">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+	<section class="site-container px-4">
+		<LiveSchedule />
+		<GoogleReviews />
+	</section>
+</BaseLayout>

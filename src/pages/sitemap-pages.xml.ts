@@ -9,7 +9,7 @@ export async function GET() {
 	const pages = [
 		"/blog",
 		"/firearm-training-fairfax-va",
-		"/calendar",
+		"/ccw-courses-northern-va",
 		"/partners",
 		"/contact",
 		"/privacy-policy",

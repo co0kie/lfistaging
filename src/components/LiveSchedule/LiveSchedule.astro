@@ -2,7 +2,11 @@
 import { ArrowRight } from "lucide-react";
 
 const siteUrl = import.meta.env.SITE;
-const isCalendarPage = Astro.url.pathname === "/calendar";
+const isCalendarPage =
+	Astro.url.pathname === "/calendar" ||
+	Astro.url.pathname === "/ccw-courses-northern-va" ||
+	Astro.url.pathname === "/ccw-courses-northern-va/" ||
+	Astro.url.pathname === "/ccw-classes-fairfax-va";
 const { category } = Astro.props;
 ---
 
@@ -14,17 +18,16 @@ const { category } = Astro.props;
 	<div class="site-container mx-auto">
 		<div class="mb-12 text-center">
 			<h2 class="font-headline text-blue mb-4 text-3xl font-bold md:text-4xl">
-				Live Firearm Training & CCW Classes Near You
+				Get Your Virginia Concealed Carry Permit
 			</h2>
-			<p class="text-muted-foreground mx-auto max-w-2xl text-lg">
-				Join our expert-led sessions and develop your firearm skills in a safe, professional
-				environment.
+			<p class="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed">
+				Gain hands-on, NRA-certified training for all experience levels at the NRA Range in Fairfax, VA.
 			</p>
 			{
-				// If not on calendar page, show link to calendar
+				// If not on calendar page, show link to schedule
 				!isCalendarPage && (
 					<a
-						href={`${siteUrl}/calendar`}
+						href={`${siteUrl}/ccw-courses-northern-va`}
 						class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
 					>
 						View Full Calendar Site
@@ -35,7 +38,7 @@ const { category } = Astro.props;
 		</div>
 
 		{/* Skeleton Loader - Visible while loading */}
-		<div id="schedule-skeleton" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+		<div id="schedule-skeleton" class="grid grid-cols-1 gap-8 md:grid-cols-2">
 			{
 				[...Array(6)].map((_, i) => (
 					<div class="flex animate-pulse flex-col overflow-hidden rounded-2xl border bg-white shadow-sm">
@@ -72,12 +75,12 @@ const { category } = Astro.props;
 		</div>
 
 		{/* Events Container - Hidden initially */}
-		<div id="events-grid" class="hidden grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+		<div id="events-grid" class="hidden grid-cols-1 gap-8 md:grid-cols-2">
 			{/* Content injected via JS */}
 		</div>
 
 		{/* Extra Events Container - Hidden initially */}
-		<div id="extra-events" class="mt-8 hidden grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+		<div id="extra-events" class="mt-8 hidden grid-cols-1 gap-8 md:grid-cols-2">
 			{/* Content injected via JS */}
 		</div>
 
@@ -111,100 +114,289 @@ const { category } = Astro.props;
 		let currentPage = 1;
 		let lastPage = 1;
 		let isLoading = false;
-		let hasShownExtraFromFirstPage = false;
 
-		const renderEvent = (event: any) => `
-				<div class="group flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
-					<div class="relative aspect-video overflow-hidden">
+		const toSlug = (value: string) =>
+			value
+				.toLowerCase()
+				.trim()
+				.replace(/&/g, "and")
+				.replace(/[^a-z0-9]+/g, "-")
+				.replace(/^-+|-+$/g, "");
+
+		const toCourseSlug = (name: string) => {
+			if (!name) return "";
+			const lower = name.toLowerCase();
+			if (lower.includes("basic pistol") || lower.includes("basics of pistol")) return "nra-basic-pistol-ccw-fairfax-va";
+			if (lower.includes("first step")) return "nra-first-steps-ccw-fairfax-va";
+			if (lower.includes("one-on-one") || lower.includes("one on one") || lower.includes("personal training")) return "one-on-one-training";
+			if (lower.includes("defensive pistol") || lower.includes("advanced pistol") || (lower.includes("nra") && lower.includes("ccw") && lower.includes("course"))) return "nra-ccw-advanced";
+			if (lower.includes("refuse to be a victim")) return "refuse-to-be-a-victim";
+			if (lower.includes("chief range safety officer")) return "nra-crso-course";
+			if (lower.includes("range safety officer")) return "nra-rso-course";
+			if (lower.includes("instructor pistol")) return "nra-instructor-pistol";
+			if (lower.includes("instructor rifle")) return "nra-instructor-rifle";
+			if (lower.includes("instructor ccw")) return "nra-instructor-ccw";
+			return toSlug(name);
+		};
+
+		const formatDateSlug = (dateStr: string) => {
+			if (!dateStr) return "";
+			const d = new Date(dateStr);
+			if (isNaN(d.getTime())) return "";
+			const month = d.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" }).toLowerCase();
+			const day = d.toLocaleDateString("en-US", { day: "numeric", timeZone: "America/New_York" });
+			const year = d.toLocaleDateString("en-US", { year: "numeric", timeZone: "America/New_York" });
+			return `${month}-${day}-${year}`;
+		};
+
+		const getCourseMeta = (name: string) => {
+			const lower = (name || "").toLowerCase();
+			let shortTitle = name;
+			let badges = ["NRA Certified"];
+
+			if (lower.includes("basic pistol") || lower.includes("basics of pistol")) {
+				shortTitle = "Basic Pistol Course & VA Concealed Carry Permit (An NRA Program)";
+				badges = ["NRA Certified", "VA Permit Eligible"];
+			} else if (lower.includes("first step")) {
+				shortTitle = "First Steps Shooting Course & VA Concealed Carry Permit / Express Course (An NRA Program)";
+				badges = ["NRA Certified", "VA Permit Eligible", "Express"];
+			} else if (lower.includes("one-on-one") || lower.includes("one on one") || lower.includes("personal training")) {
+				shortTitle = "1-on-1 Firearm Instruction";
+				badges = ["Private Training", "Custom Pace"];
+			} else if (lower.includes("defensive pistol") || lower.includes("advanced pistol") || (lower.includes("nra") && lower.includes("ccw"))) {
+				shortTitle = "NRA Advanced Defensive Pistol";
+				badges = ["NRA Certified", "Advanced Level"];
+			} else if (lower.includes("refuse to be a victim")) {
+				shortTitle = "Refuse To Be A Victim® Seminar";
+				badges = ["NRA Certified", "Personal Safety"];
+			} else if (lower.includes("chief range safety officer")) {
+				shortTitle = "NRA Chief Range Safety Officer (CRSO)";
+				badges = ["NRA Certified", "Leadership"];
+			} else if (lower.includes("range safety officer")) {
+				shortTitle = "NRA Range Safety Officer (RSO)";
+				badges = ["NRA Certified", "Safety Specialist"];
+			} else if (lower.includes("instructor pistol")) {
+				shortTitle = "NRA Pistol Instructor Certification";
+				badges = ["NRA Instructor", "Certification"];
+			} else if (lower.includes("instructor rifle")) {
+				shortTitle = "NRA Rifle Instructor Certification";
+				badges = ["NRA Instructor", "Certification"];
+			} else if (lower.includes("instructor ccw")) {
+				shortTitle = "NRA CCW Instructor Certification";
+				badges = ["NRA Instructor", "Certification"];
+			} else {
+				shortTitle = name
+					.replace(/\s*-\s*an NRA Program/i, "")
+					.replace(/\(an NRA Program\)/i, "")
+					.replace(/CCW Class at NRA Range in Fairfax VA/i, "")
+					.trim();
+			}
+
+			return { shortTitle, badges };
+		};
+
+		const formatSessionDate = (dateStr: string, availableSeats: number) => {
+			if (!dateStr) {
+				return {
+					weekdayMonth: "TBA",
+					dayNum: "--",
+					timeShort: "",
+					formattedSummary: "Date TBA",
+					available_seats: availableSeats
+				};
+			}
+			const d = new Date(dateStr);
+			if (isNaN(d.getTime())) {
+				return {
+					weekdayMonth: "TBA",
+					dayNum: "--",
+					timeShort: "",
+					formattedSummary: "Date TBA",
+					available_seats: availableSeats
+				};
+			}
+
+			const weekday = d.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/New_York" }).toUpperCase();
+			const month = d.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" }).toUpperCase();
+			const weekdayMonth = `${weekday}, ${month}`;
+			const dayNum = d.toLocaleDateString("en-US", { day: "numeric", timeZone: "America/New_York" });
+			const timeShort = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
+
+			const datePart = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
+			const seatsStatus = availableSeats <= 0 
+				? "(Sold Out)" 
+				: (availableSeats === 1 ? "(1 seat left)" : `(${availableSeats} seats left)`);
+
+			const formattedSummary = `${datePart} · ${timeShort} ${seatsStatus}`;
+
+			return {
+				weekdayMonth,
+				dayNum,
+				timeShort,
+				formattedSummary,
+				available_seats: availableSeats
+			};
+		};
+
+		function groupEventsIntoMasterCards(rawEvents: any[]) {
+			const map = new Map();
+
+			for (const event of rawEvents) {
+				const courseSlug = toCourseSlug(event.name || event.short_slug || "");
+				if (!courseSlug) continue;
+
+				const dateSlug = formatDateSlug(event.start_date);
+				const url = dateSlug ? `/class/${courseSlug}/${dateSlug}` : `/class/${courseSlug}`;
+				const seats = typeof event.available_seats === 'number' ? event.available_seats : 12;
+				const dateInfo = formatSessionDate(event.start_date, seats);
+
+				const session = {
+					id: event.id,
+					start_date: event.start_date,
+					url,
+					...dateInfo
+				};
+
+				if (!map.has(courseSlug)) {
+					const { shortTitle, badges } = getCourseMeta(event.name || "");
+					map.set(courseSlug, {
+						courseSlug,
+						shortTitle,
+						badges,
+						tagline: event.tagline || "",
+						description: event.description || "",
+						background: event.background || "",
+						price: event.ticket_items?.price?.[0] || "0",
+						address: event.address || "NRA Range, 11250 Waples Mill Road, Fairfax, VA",
+						sessions: [session]
+					});
+				} else {
+					map.get(courseSlug).sessions.push(session);
+				}
+			}
+
+			return Array.from(map.values());
+		}
+
+		const renderMasterCard = (course: any) => {
+			const firstSession = course.sessions[0];
+			const firstUrl = firstSession ? firstSession.url : `/class/${course.courseSlug}`;
+
+			return `
+				<div class="master-course-card group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all">
+					<!-- Image Header -->
+					<div class="relative aspect-video overflow-hidden block">
 						<img
-							src="https://instructorsdash.com/storage/${event.background}"
-							alt="${event.name}"
-							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+							src="https://instructorsdash.com/storage/${course.background}"
+							alt="${course.shortTitle} - Live Fire Instruction"
+							class="h-full w-full object-cover transition-transform duration-500 "
 							loading="lazy"
 							onerror="this.src='/assets/placeholder-course.jpg'; this.onerror=null;"
 						/>
-						<div class="bg-orange absolute top-4 right-4 rounded-full px-3 py-1 text-sm font-semibold text-white shadow-sm">
-							$${event.ticket_items?.price?.[0] || "0"}
+						<div class="bg-orange absolute top-3 right-3 rounded-full px-3.5 py-1 text-base font-extrabold text-white shadow-lg ring-2 ring-white/80">
+							$${course.price}
 						</div>
 					</div>
 
+					<!-- Card Body -->
 					<div class="flex flex-1 flex-col p-6">
-						<h3 class="text-blue group-hover:text-blue-dark mb-2 line-clamp-2 text-xl font-bold">
-							${event.name}
-						</h3>
-						<p class="text-muted-foreground mb-4 line-clamp-2 text-sm italic">${event.tagline || ""}</p>
+						<!-- Badges Row -->
+						<div class="mb-2.5 flex flex-wrap items-center gap-1.5">
+							${course.badges.map((b: string) => `<span class="rounded-full bg-blue/10 px-2.5 py-0.5 text-sm font-semibold text-blue-800">${b}</span>`).join('')}
+						</div>
 
-						<div class="mt-auto space-y-3 text-sm text-gray-600">
-							<div class="flex items-center gap-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-								<span>${(() => {
-									const start = new Date(event.start_date);
-									const end = new Date(event.end_date);
-									const options: Intl.DateTimeFormatOptions = {
-										timeZone: "America/New_York",
-										weekday: "short",
-										month: "short",
-										day: "numeric",
-									};
-									const timeOptions: Intl.DateTimeFormatOptions = {
-										timeZone: "America/New_York",
-										hour: "numeric",
-										minute: "2-digit",
-										hour12: true,
-									};
-									const dateStr = start.toLocaleDateString("en-US", options);
-									const startTimeStr = start.toLocaleTimeString("en-US", timeOptions);
-									const endTimeStr = end.toLocaleTimeString("en-US", timeOptions);
-									return `${dateStr} | ${startTimeStr} - ${endTimeStr}`;
-								})()}</span>
+						<!-- Title -->
+						<h3 class="text-blue mb-2 text-2xl font-bold leading-tight">
+							${course.shortTitle}
+						</h3>
+
+						<!-- Tagline -->
+						<p class="text-muted-foreground mb-4 line-clamp-2 text-base italic">${course.tagline || ""}</p>
+
+						<!-- Location & Calendar Date Picker Grid -->
+						<div class="mt-auto space-y-4 text-base text-gray-600">
+							<!-- Location Badge -->
+							<div class="flex items-center gap-2 text-gray-600">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+								<span class="font-medium text-base">11250 Waples Mill Road, Fairfax, VA, USA</span>
 							</div>
-							<div class="flex items-start gap-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange mt-0.5 shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-								<span class="line-clamp-1">${event.address}</span>
-							</div>
-							<div class="flex items-center gap-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-								<span>${event.available_seats} seats available</span>
+
+							<!-- Calendar-like Date Picker Grid -->
+							<div class="mt-10">
+								<div class="flex-col mb-2 flex items-center justify-between sm:flex-row">
+									<span class="text-sm font-bold uppercase tracking-wider text-gray-500">
+										Select Class Date:
+									</span>
+									<span class="date-selected-summary text-sm font-semibold text-blue">
+										${firstSession ? firstSession.formattedSummary : 'Select Date'}
+									</span>
+								</div>
+
+								<!-- Mini Calendar Date Cards List (Rows) -->
+								<div class="flex flex-col gap-2.5" style="min-height: 15.5rem;">
+									${course.sessions.slice(0, 4).map((s: any, idx: number) => {
+										const parts = (s.weekdayMonth || "").split(', ');
+										const dayName = parts[0] || "";
+										const monthName = parts[1] || "";
+										return `
+											<button
+												type="button"
+												data-url="${s.url}"
+												data-summary="${s.formattedSummary}"
+												class="date-pill-btn group/btn flex items-center justify-between rounded-xl border p-2.5 text-left transition-all cursor-pointer w-full ${
+													idx === 0
+														? 'active-date bg-blue border-blue text-white shadow-sm font-bold ring-2 ring-blue/20'
+														: 'border-gray-200 bg-gray-50/80 text-gray-800'
+												}"
+											>
+												<div class="flex items-center gap-3">
+													<!-- Mini Calendar Badge -->
+													<div class="inner-date-badge flex h-11 w-11 flex-col items-center justify-center rounded-lg border border-gray-200 bg-white transition-all">
+														<span class="date-month text-[10px] font-extrabold uppercase tracking-wider ${idx === 0 ? 'text-white/80' : 'text-gray-500'}">${monthName}</span>
+														<span class="date-day text-base font-black leading-none ${idx === 0 ? 'text-white' : 'text-gray-900'}">${s.dayNum}</span>
+													</div>
+													
+													<!-- Day & Time Details -->
+													<div class="flex flex-col">
+														<span class="date-weekday text-[10px] font-extrabold uppercase tracking-widest ${idx === 0 ? 'text-white/400' : 'text-gray-400'}">${dayName}</span>
+														<span class="date-time text-sm font-semibold ${idx === 0 ? 'text-white/90' : 'text-gray-700'}">${s.timeShort}</span>
+													</div>
+												</div>
+
+												<!-- Availability Badge -->
+												<div class="availability-badge rounded-full px-2.5 py-1 text-xs font-bold transition-all ${
+													s.available_seats <= 0 
+														? 'bg-red-50 text-red-600 border border-red-100' 
+														: (s.available_seats <= 3 
+															? 'bg-amber-50 text-amber-700 border border-amber-100' 
+															: 'bg-emerald-50 text-emerald-700 border border-emerald-100')
+												}">
+													${s.available_seats <= 0 ? 'Sold Out' : `${s.available_seats} Left`}
+												</div>
+											</button>
+										`;
+									}).join('')}
+								</div>
 							</div>
 						</div>
 
+						<!-- CTA Button -->
 						<a
-							href="/class/${(() => {
-								const toSlug = (value: any) =>
-									value
-										.toLowerCase()
-										.trim()
-										.replace(/&/g, "and")
-										.replace(/[^a-z0-9]+/g, "-")
-										.replace(/^-+|-+$/g, "");
-								const nameSlug = event.name ? toSlug(event.name) : "";
-								const slug = nameSlug || event.short_slug || "";
-								return event.short_slug ? `${slug}?s=${event.short_slug}` : slug;
-							})()}"
-							class="bg-blue hover:bg-blue-dark mt-6 flex items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition-colors active:scale-[0.98]"
-							title="${event.name}"
-							>
-							Register Now
-							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+							href="${firstUrl}"
+							class="master-book-btn bg-blue hover:bg-blue-dark mt-5 flex items-center justify-center gap-2 rounded-xl py-3.5 text-base font-bold text-white transition-all active:scale-[0.98] shadow-sm"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+							<span>Book Selected Date</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
 						</a>
 					</div>
 				</div>
 			`;
+		};
 
 		async function fetchPage(page: number) {
 			if (isLoading) return null;
 			isLoading = true;
-			if (showMoreBtn) {
-				showMoreBtn.disabled = true;
-				showMoreBtn.innerHTML = `
-					<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-						<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-					</svg>
-					Loading...
-				`;
-			}
-
 			try {
 				let apiUrl = `/api/live-schedule?page=${page}`;
 				if (category) apiUrl += `&category=${category}`;
@@ -220,90 +412,125 @@ const { category } = Astro.props;
 				return null;
 			} finally {
 				isLoading = false;
-				if (showMoreBtn) {
-					showMoreBtn.disabled = false;
-					showMoreBtn.textContent = "Show More Classes";
-				}
 			}
 		}
 
-		function updateButtonVisibility(hasMoreItemsInCurrentPage: boolean) {
-			if (hasMoreItemsInCurrentPage || currentPage < lastPage) {
-				showMoreBtn?.classList.remove("hidden");
-				showMoreBtn?.classList.add("flex");
-			} else {
-				showMoreBtn?.classList.add("hidden");
-				showMoreBtn?.classList.remove("flex");
-			}
-		}
+		// Handle Calendar Date Card Click Selection
+		document.addEventListener("click", (e) => {
+			const btn = (e.target as HTMLElement).closest(".date-pill-btn") as HTMLButtonElement;
+			if (btn) {
+				const card = btn.closest(".master-course-card");
+				if (card) {
+					const newUrl = btn.dataset.url || "#";
+					const summary = btn.dataset.summary || "";
 
-		async function handleShowMore() {
-			if (!hasShownExtraFromFirstPage && extraEvents && extraEvents.innerHTML.trim() !== "") {
-				extraEvents.classList.remove("hidden");
-				extraEvents.classList.add("grid");
-				hasShownExtraFromFirstPage = true;
-				updateButtonVisibility(false);
-			} else if (currentPage < lastPage) {
-				currentPage++;
-				const events = await fetchPage(currentPage);
-				if (events && events.length > 0) {
-					const html = events.map(renderEvent).join("");
-					if (extraEvents) {
-						extraEvents.insertAdjacentHTML("beforeend", html);
-						extraEvents.classList.remove("hidden");
-						extraEvents.classList.add("grid");
+					// Deactivate all buttons in this card
+					card.querySelectorAll(".date-pill-btn").forEach((b) => {
+						b.classList.remove("active-date", "bg-blue", "border-blue", "text-white", "shadow-md", "font-bold", "ring-2", "ring-blue/20");
+						b.classList.add("border-gray-200", "bg-gray-50/80", "text-gray-800");
+
+						const monthSpan = b.querySelector(".date-month");
+						if (monthSpan) {
+							monthSpan.classList.remove("text-white/80");
+							monthSpan.classList.add("text-gray-500");
+						}
+						const daySpan = b.querySelector(".date-day");
+						if (daySpan) {
+							daySpan.classList.remove("text-white");
+							daySpan.classList.add("text-gray-900");
+						}
+						const timeSpan = b.querySelector(".date-time");
+						if (timeSpan) {
+							timeSpan.classList.remove("text-white/90");
+							timeSpan.classList.add("text-gray-600");
+						}
+					});
+
+					// Activate clicked button
+					btn.classList.add("active-date", "bg-blue", "border-blue", "text-white", "shadow-md", "font-bold", "ring-2", "ring-blue/20");
+					btn.classList.remove("border-gray-200", "bg-gray-50/80", "text-gray-800");
+
+					const monthSpan = btn.querySelector(".date-month");
+					if (monthSpan) {
+						monthSpan.classList.add("text-white/80");
+						monthSpan.classList.remove("text-gray-500");
 					}
+					const daySpan = btn.querySelector(".date-day");
+					if (daySpan) {
+						daySpan.classList.add("text-white");
+						daySpan.classList.remove("text-gray-900");
+					}
+					const timeSpan = btn.querySelector(".date-time");
+					if (timeSpan) {
+						timeSpan.classList.add("text-white/90");
+						timeSpan.classList.remove("text-gray-600");
+					}
+
+					// Update card links & selected summary text
+					const summaryEl = card.querySelector(".date-selected-summary");
+					if (summaryEl) summaryEl.textContent = summary;
+
+					const bookBtn = card.querySelector(".master-book-btn") as HTMLAnchorElement;
+					if (bookBtn) bookBtn.href = newUrl;
 				}
-				updateButtonVisibility(false);
 			}
-		}
+		});
 
-		try {
-			const initialEvents = await fetchPage(1);
-			if (initialEvents === null) throw new Error("Initial fetch failed");
+		// Book button loading animation
+		document.addEventListener("click", (e) => {
+			const bookBtn = (e.target as HTMLElement).closest(".master-book-btn") as HTMLAnchorElement;
+			if (!bookBtn) return;
 
-			if (initialEvents.length === 0) {
-				skeleton?.classList.add("hidden");
-				emptyEl?.classList.remove("hidden");
-				controls?.classList.remove("hidden");
-				controls?.classList.add("flex");
+			// Prevent double-click
+			if (bookBtn.classList.contains("btn-loading")) {
+				e.preventDefault();
 				return;
 			}
 
-			const initial = initialEvents.slice(0, 6);
-			const extra = initialEvents.slice(6);
+			bookBtn.classList.add("btn-loading");
+			bookBtn.style.pointerEvents = "none";
+			bookBtn.innerHTML = `
+				<svg class="book-spinner" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+				</svg>
+				<span>Opening&hellip;</span>
+			`;
+		});
 
-			if (eventsGrid) eventsGrid.innerHTML = initial.map(renderEvent).join("");
-			if (extraEvents) extraEvents.innerHTML = extra.map(renderEvent).join("");
+		try {
+			// Fetch first page
+			const page1Events = await fetchPage(1);
+			if (page1Events === null) throw new Error("Initial fetch failed");
+
+			let allRawEvents = [...page1Events];
+
+			// Fetch page 2 if available to aggregate more course dates into dropdowns
+			if (lastPage > 1) {
+				const page2Events = await fetchPage(2);
+				if (page2Events) {
+					allRawEvents = [...allRawEvents, ...page2Events];
+				}
+			}
+
+			if (allRawEvents.length === 0) {
+				skeleton?.classList.add("hidden");
+				emptyEl?.classList.remove("hidden");
+				return;
+			}
+
+			const masterCourses = groupEventsIntoMasterCards(allRawEvents);
+
+			if (eventsGrid) {
+				eventsGrid.innerHTML = masterCourses.map(renderMasterCard).join("");
+			}
 
 			skeleton?.classList.add("hidden");
 			eventsGrid?.classList.remove("hidden");
-			eventsGrid?.classList.add("grid", "grid-cols-1", "gap-8", "md:grid-cols-2", "lg:grid-cols-3");
-			controls?.classList.remove("hidden");
-			controls?.classList.add(
-				"flex",
-				"flex-col",
-				"items-center",
-				"justify-center",
-				"gap-6",
-				"text-center",
-			);
-
-			updateButtonVisibility(extra.length > 0);
-			showMoreBtn?.addEventListener("click", handleShowMore);
+			eventsGrid?.classList.add("grid", "grid-cols-1", "gap-8", "md:grid-cols-2");
 		} catch (error) {
 			console.error("Error loading schedule:", error);
 			skeleton?.classList.add("hidden");
 			errorEl?.classList.remove("hidden");
-			controls?.classList.remove("hidden");
-			controls?.classList.add(
-				"flex",
-				"flex-col",
-				"items-center",
-				"justify-center",
-				"gap-6",
-				"text-center",
-			);
 		}
 	}
 
@@ -323,6 +550,13 @@ const { category } = Astro.props;
 	.hidden {
 		display: none;
 	}
+	:global(.book-spinner) {
+		animation: book-spin 0.75s linear infinite;
+	}
+	@keyframes book-spin {
+		from { transform: rotate(0deg); }
+		to   { transform: rotate(360deg); }
+	}
 	.line-clamp-2 {
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
@@ -334,5 +568,14 @@ const { category } = Astro.props;
 		-webkit-line-clamp: 1;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+	}
+	:global(.date-pill-btn.active-date .inner-date-badge) {
+		background-color: rgba(255, 255, 255, 0.15) !important;
+		border-color: rgba(255, 255, 255, 0.25) !important;
+	}
+	:global(.date-pill-btn.active-date .availability-badge) {
+		background-color: rgba(255, 255, 255, 0.15) !important;
+		color: #ffffff !important;
+		border-color: transparent !important;
 	}
 </style>

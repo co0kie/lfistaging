@@ -99,7 +99,7 @@ const navConfig: navItem[] = [
 	// },
 	{
 		text: "Course Calendar",
-		link: "/calendar",
+		link: "/ccw-courses-northern-va",
 	},
 	{
 		text: "Partners",

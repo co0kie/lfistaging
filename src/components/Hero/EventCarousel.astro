@@ -1,4 +1,5 @@
 ---
+import { formatClassUrl } from "@/utils/classUrl";
 // Fetch next up to 3 upcoming classes for the sidebar
 let nextClasses = [];
 try {
@@ -42,16 +43,7 @@ const formatTime = (dateStr: string) => {
 			aria-label="Upcoming classes"
 		>
 			{nextClasses.map((item: any, index: number) => {
-				const toSlug = (value: string) =>
-					value
-						.toLowerCase()
-						.trim()
-						.replace(/&/g, "and")
-						.replace(/[^a-z0-9]+/g, "-")
-						.replace(/^-+|-+$/g, "");
-				const nameSlug = item.name ? toSlug(item.name) : "";
-				const slug = nameSlug || item.short_slug;
-				const href = slug ? `/class/${slug}${item.short_slug ? "?s=" + item.short_slug : ""}` : null;
+				const href = formatClassUrl(item);
 
 				return (
 					<div

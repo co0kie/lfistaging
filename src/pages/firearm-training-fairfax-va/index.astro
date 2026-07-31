@@ -5,6 +5,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import CourseCard from "@/components/CourseCard/CourseCard.astro";
 import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
 const trainingItems = await getCollection("trainings");
 const schemaData = {
 	name: "Firearms Training Northern Virginia | NRA & CCW Classes",
@@ -39,5 +40,7 @@ const schemaData = {
 		<CourseCard trainingItems={trainingItems} />
 
 		<LiveSchedule />
+
+		<GoogleReviews />
 	</div>
 </BaseLayout>

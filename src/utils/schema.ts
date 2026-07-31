@@ -239,12 +239,56 @@ export const schemaGenerators = {
 			image: data.image,
 		}),
 
-	// Calendar schema
+	// Calendar / CCW Classes schema
 	calendar: (data: CalendarSchemaData) =>
 		generateSchema(schemaTypes.CALENDAR, {
-			name: data.name,
-			description: data.description,
+			name: data.name || "CCW Classes near Fairfax, VA | Firearm Training Schedule",
+			description:
+				data.description ||
+				"Looking for NRA-certified CCW classes near Fairfax, VA? Join Live Fire Instruction at the NRA Range on Waples Mill Rd for VA Concealed Carry Permit & pistol courses.",
 			url: data.url,
+			provider: {
+				"@type": "LocalBusiness",
+				name: "Live Fire Instruction",
+				telephone: "1-571-210-5651",
+				email: "info@livefireinstruction.com",
+				address: {
+					"@type": "PostalAddress",
+					streetAddress: "11250 Waples Mill Rd",
+					addressLocality: "Fairfax",
+					addressRegion: "VA",
+					postalCode: "22030",
+					addressCountry: "US",
+				},
+				geo: {
+					"@type": "GeoCoordinates",
+					latitude: 38.8687251,
+					longitude: -77.348398,
+				},
+			},
+			hasCourse: {
+				"@type": "Course",
+				name: "Virginia Concealed Carry Permit (CCW) Course",
+				description:
+					"NRA-certified CCW classes and firearm training schedule near Fairfax, VA at the NRA Range.",
+				provider: {
+					"@type": "Organization",
+					name: "Live Fire Instruction",
+					url: fullDomain,
+				},
+				location: {
+					"@type": "Place",
+					name: "NRA Range",
+					address: {
+						"@type": "PostalAddress",
+						streetAddress: "11250 Waples Mill Rd",
+						addressLocality: "Fairfax",
+						addressRegion: "VA",
+						postalCode: "22030",
+						addressCountry: "US",
+					},
+				},
+			},
 		}),
 
 	// Partners schema
