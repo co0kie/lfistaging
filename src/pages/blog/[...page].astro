@@ -30,7 +30,7 @@ const schemaData = {
 		"@type": "BlogPosting",
 		headline: post.data.title,
 		publishedDate: post.data.pubDate?.toISOString() || post.data.date?.toISOString(),
-		url: new URL(`/blog/${post.id}/`, Astro.site || Astro.url.origin).toString(),
+		url: new URL(`/blog/${post.id}`, Astro.site || Astro.url.origin).toString(),
 		keywords: post.data.tags,
 	})),
 };

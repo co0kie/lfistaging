@@ -93,7 +93,7 @@ export default config({
 				heroCtaUrl: fields.text({
 					label: "Primary CTA Button URL",
 					validation: { isRequired: true },
-					defaultValue: "/firearm-training",
+					defaultValue: "/firearm-training-fairfax-va",
 				}),
 				heroSecondaryCtaText: fields.text({
 					label: "Secondary CTA Button Text",

@@ -10,6 +10,8 @@ import netlify from "@astrojs/netlify";
 import keystatic from "@keystatic/astro";
 import markdoc from "@astrojs/markdoc";
 
+import { fileURLToPath } from "node:url";
+
 const isProd = import.meta.env.PROD || import.meta.env.MODE === "production";
 
 // https://astro.build/config
@@ -79,7 +81,7 @@ export default defineConfig({
 		},
 		resolve: {
 			alias: {
-				"@": new URL("./src", import.meta.url),
+				"@": fileURLToPath(new URL("./src", import.meta.url)),
 			},
 		},
 	},
@@ -87,14 +89,17 @@ export default defineConfig({
 		"/contact-2": "/contact/",
 		"/gift-certificates": "/calendar/",
 		"/trusted-partners-2": "/partners/",
-		"/product/[...slug]": "/firearm-training/",
-		"/product-category/[...slug]": "/firearm-training/",
-		"/product/one-on-one-training-36/": "/firearm-training/",
+		"/product/[...slug]": "/firearm-training-fairfax-va/",
+		"/product-category/[...slug]": "/firearm-training-fairfax-va/",
+		"/product/one-on-one-training-36/": "/firearm-training-fairfax-va/",
 		"/nra-basics-of-pistol-shooting-course-with-concealed-carry-permit-silver-eagle":
 			"/nra-basic-pistol-shooting-course/",
-		"/my-account": "/firearm-training/",
-		"/wp-login.php?action=googlesitekit_auth": "/firearm-training/",
-		"/feed": "/firearm-training/",
+		"/my-account": "/firearm-training-fairfax-va/",
+		"/firearms-training-northern-virginia": "/firearm-training-fairfax-va/",
+		"/firearm-training": "/firearm-training-fairfax-va/",
+		"/firearm-training": "/firearm-training-fairfax-va/",
+		"/wp-login.php?action=googlesitekit_auth": "/firearm-training-fairfax-va/",
+		"/feed": "/firearm-training-fairfax-va/",
 		"/cdn-cgi/l/email-protection": "/",
 		"/intro-to-firearms": "/",
 		"/business-side-of-firearms-course1": "/",

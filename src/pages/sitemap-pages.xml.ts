@@ -8,7 +8,7 @@ export async function GET() {
 
 	const pages = [
 		"/blog",
-		"/firearm-training",
+		"/firearm-training-fairfax-va",
 		"/calendar",
 		"/partners",
 		"/contact",

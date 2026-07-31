@@ -38,7 +38,7 @@ const navConfig: navItem[] = [
 	// },
 	{
 		text: "Training",
-		link: "/firearm-training",
+		link: "/firearm-training-fairfax-va",
 		dropdown: [
 			{
 				text: "NRA Basic Pistol Course & VA Concealed Carry Permit",

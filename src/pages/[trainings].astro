@@ -69,7 +69,7 @@ const schemaData = {
 						</li>
 						<li>
 							<a
-								href={isInstructor ? "#" : "/firearm-training"}
+								href={isInstructor ? "#" : "/firearm-training-fairfax-va"}
 								class="hover:text-primary transition-colors hover:underline"
 								>{isInstructor ? "Instructor Courses" : "Training"}</a
 							>
@@ -234,6 +234,7 @@ const schemaData = {
 		<div id="iframe">
 			<LiveSchedule category={item.id === "first-step-pistol-orientation" ? "607" : item.id === "nra-basic-pistol-shooting-course" ? "133" : "all"} />
 		</div>
+	</div>
 </BaseLayout>
 
 <style is:inline>
