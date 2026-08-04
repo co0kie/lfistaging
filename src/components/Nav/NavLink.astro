@@ -9,9 +9,13 @@ interface Props {
 
 const { href, navItem, class: className } = Astro.props as Props;
 const { text, link, newTab = false } = navItem;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+
+// Normalize trailing slashes so /about and /about/ both match
+const normalize = (p: string) => p.replace(/\/$/, "") || "/";
+const currentPath = normalize(Astro.url.pathname);
+const linkPath = normalize(link);
+
+const isActive = currentPath === linkPath || currentPath.startsWith(linkPath + "/");
 
 // if the current page is the same as the link, we change the styling
 ---
@@ -19,15 +23,17 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 <li>
 	<a
 		class:list={[
-			`primary-focus hover:text-primary-600 relative block w-full px-4 py-2 font-medium transition ${isActive}`,
+			`primary-focus hover:text-primary-600 relative block w-full px-4 py-2 font-medium transition`,
+			className,
 			{
 				// styling for current active page link
-				"text-base-600": Astro.url.pathname === link,
+				"text-primary font-bold": isActive,
 			},
 		]}
 		href={link}
 		target={newTab ? "_blank" : ""}
 		rel={newTab ? "nofollow noopener noreferrer" : ""}
+		aria-current={isActive ? "page" : undefined}
 	>
 		{text}
 	</a>

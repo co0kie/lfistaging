@@ -232,7 +232,11 @@ const schemaData = {
 			<Content />
 		</div>
 		<div id="iframe">
-			<LiveSchedule category={item.id === "first-step-pistol-orientation" ? "607" : item.id === "nra-basic-pistol-shooting-course" ? "133" : "all"} />
+			<LiveSchedule 
+				category={item.id === "first-step-pistol-orientation" ? "607" : item.id === "nra-basic-pistol-shooting-course" ? "133" : undefined}
+				defaultTab={item.id === "nra-basic-pistol-shooting-course" ? "basic-pistol" : item.id === "first-step-pistol-orientation" ? "first-steps" : "all"}
+				onlyTab={item.id === "nra-basic-pistol-shooting-course" ? "basic-pistol" : item.id === "first-step-pistol-orientation" ? "first-steps" : undefined}
+			/>
 		</div>
 	</div>
 </BaseLayout>
