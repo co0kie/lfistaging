@@ -9,20 +9,23 @@ const getSecret = (): string => {
 };
 
 /**
- * Generate a disposable preview URL for a draft blog post
- * @param slug The blog post slug
+ * Generate a disposable preview URL for any draft page/post
+ * @param slug The entry slug or page identifier
  * @param minutesValid Number of minutes the link stays valid (default 60 mins = 1 hour)
  * @param baseUrl Optional base URL (e.g. "https://livefireinstruction.com")
+ * @param pathPrefix Optional path prefix (e.g. "/blog", "/partners", or "" for root pages)
  */
 export function generateDraftPreviewUrl(
 	slug: string,
 	minutesValid: number = 60,
-	baseUrl: string = ""
+	baseUrl: string = "",
+	pathPrefix: string = "/blog"
 ): string {
 	const secret = getSecret();
 	const exp = Date.now() + minutesValid * 60 * 1000;
 	const sig = createHmac("sha256", secret).update(`${slug}:${exp}`).digest("hex").slice(0, 16);
-	const path = `/blog/${slug}/?preview_exp=${exp}&preview_sig=${sig}`;
+	const cleanPrefix = pathPrefix ? `/${pathPrefix.replace(/^\/|\/$/g, "")}` : "";
+	const path = `${cleanPrefix}/${slug.replace(/^\//, "")}/?preview_exp=${exp}&preview_sig=${sig}`;
 	return baseUrl ? `${baseUrl.replace(/\/$/, "")}${path}` : path;
 }
 

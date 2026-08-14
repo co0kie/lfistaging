@@ -82,19 +82,64 @@ if (Astro.request.method === "POST") {
 	}
 }
 
-let draftPostsWithLinks: Array<{ id: string; title: string; link1h: string; link24h: string }> = [];
+let draftPostsWithLinks: Array<{ id: string; title: string; collection: string; link1h: string; link24h: string }> = [];
 
 if (isAuthorized) {
 	// Gather URLs from various sources
 	const blogPosts = await getAllPosts();
 	const allBlogDrafts = await getCollection("blog", ({ data }) => data.draft === true);
-	draftPostsWithLinks = allBlogDrafts.map((post) => ({
-		id: post.id,
-		title: post.data.title,
-		link1h: generateDraftPreviewUrl(post.id, 60, siteUrl),
-		link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl),
-	}));
-	const trainings = await getCollection("trainings");
+	const allPageDrafts = await getCollection("pages", ({ data }) => data.draft === true);
+	const allOtherPageDrafts = await getCollection("otherPages", ({ data }) => data.draft === true);
+	const allLandingDrafts = await getCollection("landing", ({ data }) => data.draft === true);
+	const allTrainingDrafts = await getCollection("trainings", ({ data }) => data.draft === true);
+	const allPartnerDrafts = await getCollection("partners", ({ data }) => data.draft === true);
+
+	draftPostsWithLinks = [
+		...allBlogDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Blog",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, "/blog"),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, "/blog"),
+		})),
+		...allPageDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Page",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, ""),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, ""),
+		})),
+		...allOtherPageDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Page",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, ""),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, ""),
+		})),
+		...allLandingDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Landing",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, ""),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, ""),
+		})),
+		...allTrainingDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Training",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, ""),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, ""),
+		})),
+		...allPartnerDrafts.map((post) => ({
+			id: post.id,
+			title: post.data.title,
+			collection: "Partner",
+			link1h: generateDraftPreviewUrl(post.id, 60, siteUrl, "/partners"),
+			link24h: generateDraftPreviewUrl(post.id, 1440, siteUrl, "/partners"),
+		})),
+	];
+
+	const trainings = await getCollection("trainings", ({ data }) => data.draft !== true);
 	const landingPages = await getCollection("landing", ({ data }) => data.draft !== true);
 	const pages = await getCollection("pages", ({ data }) => data.draft !== true);
 
@@ -333,13 +378,18 @@ const pageTitle = "IndexNow Submission | Live Fire Instruction Admin";
 												</div>
 												<div>
 													<h4 class="font-headline font-bold text-amber-950 text-base">Disposable Draft Previews</h4>
-													<p class="text-xs text-amber-800">Time-limited preview URLs for draft posts</p>
+													<p class="text-xs text-amber-800">Time-limited preview URLs for draft pages & posts</p>
 												</div>
 											</div>
 											<div class="space-y-3">
 												{draftPostsWithLinks.map((item) => (
 													<div class="rounded-xl border border-amber-200/80 bg-white p-4 shadow-2xs">
-														<p class="font-semibold text-slate-900 text-sm line-clamp-1 mb-2">{item.title}</p>
+														<div class="flex items-center gap-2 mb-2">
+															<span class="rounded bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-900 uppercase">
+																{item.collection}
+															</span>
+															<p class="font-semibold text-slate-900 text-sm line-clamp-1">{item.title}</p>
+														</div>
 														<div class="flex flex-wrap items-center gap-2">
 															<a
 																href={item.link1h}

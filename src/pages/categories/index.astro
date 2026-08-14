@@ -5,7 +5,7 @@ import CategoryCloud from "@components/CategoryCloud/CategoryCloud.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Recent Blog Posts" description="Recent Blog Posts Description">
+<BaseLayout title="Categories" description="Blog Categories" noindex={true}>
 	<div class="mx-auto max-w-3xl px-4 pt-24 md:pt-36">
 		<h1 class="h1 text-center">Categories</h1>
 		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
@@ -15,3 +15,4 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 		</div>
 	</div>
 </BaseLayout>
+

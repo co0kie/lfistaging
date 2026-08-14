@@ -1,114 +1,119 @@
-# Welcome to Blogsmith Free!
+# Live Fire Instruction
 
-This is a free theme for Astro created by [Cosmic Themes](https://cosmicthemes.com/). This is a great starting point with various pages, features, and utilities to help you get started with your blog.
+Official website repository for **Live Fire Instruction** – Northern Virginia's premier firearm training provider based in Fairfax, VA. Specializing in Virginia Concealed Carry Permit (CCW) courses, NRA Basics of Pistol Shooting, 1-on-1 instruction, and defensive firearm training.
 
-[website demo](https://blogsmithfree.cosmicthemes.com/)
+[Live Website](https://livefireinstruction.com)
 
-## Quickstart
+---
 
-1. Fork this project to your own repository, and clone it to your local machine
-2. Install all necessary packages with `npm install` or `pnpm install`
-3. Run `npm run dev` or `pnpm dev` to start the dev server
-4. Now you can setup the site to your liking!
-   - [Style customization](https://cosmicthemes.com/docs/styles/)
-   - [Content editing](https://cosmicthemes.com/docs/content/)
-   - [Forms](https://cosmicthemes.com/docs/contact-form/)
-5. Update the site URL in `astro.config.mjs` and `/public/robots.txt` to match your domain
-6. After you're happy, update your changes to your repo and [deploy to Netlify, Vercel, Cloudflare](https://cosmicthemes.com/deployment/), or other provider of your choice
+## 🛠️ Tech Stack & Architecture
 
-## Code Intro
+- **Core Framework**: [Astro 5](https://astro.build/) (Server-Side Rendering enabled via Netlify Adapter)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite`
+- **CMS**: [Keystatic CMS](https://keystatic.com/) integrated directly into Astro (`/keystatic`)
+- **UI & Components**: [React 19](https://react.dev/), Radix UI Primitives, Lucide Icons, Astro Icon (`tabler`), Sonner Toast Notifications
+- **Content Engine**: Astro Content Collections (`src/content.config.ts`) powering blogs, courses, partners, and landing pages
+- **Backend & Email**: Supabase Client (`@supabase/supabase-js`), Nodemailer with EJS template engine, Netlify Edge Functions
+- **SEO & Performance**: `astro-seo`, `astro-seo-schema`, `@astrojs/sitemap`, `@playform/compress`
 
-I have created a code tour to introduce you to the codebase. You will need the extension [Code Tour](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) to view them in VSCode.
+---
 
-The source files have the following setup. Note that not all files are listed here.
+## 📁 Directory Structure
 
-```
-.
-├── .tours/
-│   └── code-intro.tour
-├── public/
-│   ├── favicons/
-│   │   └── favicon.ico
-│   ├── images/
-│   └── robots.txt
+```text
+├── public/                    # Static public assets (images, favicons, robots.txt)
 ├── src/
-│   ├── assets/
-│   │   └── images/
-│   │       └── site-logo.png
-│   ├── components/
-│   │   └── Hero/
-│   │       └── Hero.astro
-│   ├── config/
-│   │   └── navData.json.ts
-│   ├── data/
-│   │   ├── authors/
-│   │   ├── blog/
-│   │   └── otherPages/
-│   ├── js/
-│   │   └── blogUtils.ts
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── blog/
-│   │   │   ├── [...page].astro
-│   │   │   └── [...slug].astro
-│   │   ├── categories/
-│   │   │   ├── [category]/
-│   │   │   │   └── [...page].astro
-│   │   │   └── index.astro
-│   │   ├── [page].astro
-│   │   ├── 404.astro
-│   │   ├── index.astro
-│   │   └── rss.xml.ts
-│   ├── styles/
-│   │   └── global.css
-│   └── content.config.ts
-├── .gitignore
-├── .prettierrc.mjs
-├── astro.config.mjs
-├── keystatic.config.tsx
-├── netlify.toml
-├── package.json
-├── package-lock.json
-├── README.md
-└── tsconfig.json
+│   ├── actions/               # Astro server actions
+│   ├── assets/                # Optimized internal images and icons
+│   ├── components/            # Reusable Astro & React components (Hero, Nav, Buttons, etc.)
+│   ├── config/                # Site configuration (siteData, navData, siteSettings)
+│   ├── data/                  # Markdown & MDX content collections
+│   │   ├── authors/           # Author profiles
+│   │   ├── blog/              # Blog articles & guides
+│   │   ├── otherPages/        # Training courses, partner directories & landing pages
+│   │   └── pages/             # Custom page contents
+│   ├── js/                    # Utility scripts (blogUtils, textUtils)
+│   ├── layouts/               # Page layouts (BaseLayout, MainLayout)
+│   ├── lib/                   # Integrations and helpers (Supabase, mailers)
+│   ├── middleware.ts          # Astro middleware handlers
+│   ├── pages/                 # File-based routing (SSR & Static pages)
+│   ├── styles/                # Global CSS styles
+│   └── content.config.ts      # Schema definitions for Astro Content Collections
+├── astro.config.mjs           # Astro configuration (integrations, redirects, SSR adapter)
+├── keystatic.config.ts        # Keystatic CMS configuration & collection schemas
+├── netlify.toml               # Netlify deployment configuration
+├── package.json               # Node.js dependencies & scripts
+└── tsconfig.json              # TypeScript configuration
 ```
 
-For robots like Google to see the correct sitemap, you will want to edit the `public/robots.txt` file to use your website domain.
+---
 
-## Other Resources
+## 🚀 Getting Started
 
-- See my blog post on [recommended Astro web development setup](https://cosmicthemes.com/blog/astro-web-development-setup/).
-- You can learn more information from the [theme docs](https://cosmicthemes.com/docs/) page on the [Cosmic Themes Website](https://cosmicthemes.com/).
+### Prerequisites
 
-## License
+- [Node.js](https://nodejs.org/) (v18.x or higher)
+- npm or pnpm package manager
 
-This project is open source and available under the [GPL-3.0 License](https://www.gnu.org/licenses/gpl-3.0.en.html).
+### Local Installation & Setup
 
-However, If you have purchased [All Access](https://cosmicthemes.com/all-access/) from Cosmic Themes, there is a no attribution required license you can view at [License details](https://cosmicthemes.com/license/).
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd livefireinstruction
+   ```
 
-## General Astro Info
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+3. **Environment Setup**:
+   Create a `.env` file in the project root with the necessary keys (Supabase API credentials, email configurations, etc.).
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+4. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:4321` in your browser to view the site.
 
-Any static assets, like images, can be placed in the `public/` directory. I also frequently use `src/assets` for images when using Astro asssets for image optimization.
+---
 
-### Commands
+## 📝 Managing Content with Keystatic CMS
 
-All commands are run from the root of the project, from a terminal:
+This site uses **Keystatic CMS** for headless content management directly in the repository:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- Access the local CMS dashboard by visiting `http://localhost:4321/keystatic` while running the dev server.
+- Manage blog posts, firearm training courses, partner listings, author bios, and landing page content.
+- Changes made in Keystatic automatically update markdown/MDX files in `src/data/`.
 
-### Want to learn more?
+---
 
-Feel free to check out the [Astro documentation](https://docs.astro.build).
+## ⚡ Available Commands
+
+All scripts are executed from the project root:
+
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` / `npm start` | Starts local dev server at `http://localhost:4321` |
+| `npm run build` | Builds the production bundle to `./dist/` |
+| `npm run preview` | Previews the production build locally |
+| `npm run lint` | Runs ESLint analysis across the project |
+| `npm run format` | Runs ESLint `--fix` and formats files with Prettier |
+| `npm run astro ...` | Runs Astro CLI commands directly |
+
+---
+
+## 🌐 Deployment
+
+The application is deployed on **Netlify** using `@astrojs/netlify` edge functions:
+
+- Production builds are triggered automatically upon pushing to the primary branch.
+- Configured with server-side redirects for legacy URL compatibility (`astro.config.mjs`).
+
+---
+
+## 📄 License
+
+Distributed under the [GPL-3.0 License](LICENSE).
+

@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import CourseCard from "@/components/CourseCard/CourseCard.astro";
 import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
 import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
-const trainingItems = await getCollection("trainings");
+const trainingItems = await getCollection("trainings", ({ data }) => data.draft !== true);
 const schemaData = {
 	name: "Firearms Training Northern Virginia | NRA & CCW Classes",
 	description: "Top-rated firearms training in Northern Virginia. Certified NRA basic pistol, Virginia CCW permit, and private instruction in Fairfax, VA. Register today!",

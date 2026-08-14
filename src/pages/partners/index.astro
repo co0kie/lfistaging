@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import { getCollection } from "astro:content";
 import { schemaGenerators, schemaTypes } from "@/utils/schema";
 
-const partners = await getCollection("partners");
+const partners = await getCollection("partners", ({ data }) => data.draft !== true);
 
 const schemaData = {
 	name: "Partners",
@@ -25,12 +25,12 @@ const schemaData = {
 ---
 
 <BaseLayout
-	title={"Firearm Training Partners | Northern Virginia Ranges"}
-	description={siteData.description}
+	title="Firearm Training Partners & Shooting Ranges | Northern VA"
+	description="Explore Live Fire Instruction’s trusted partners, including top shooting ranges, local gun stores, and tactical training groups in Northern VA."
 	schemaType="partners"
 	schemaData={schemaData}
 >
-	<PageHeader title="Partners">
+	<PageHeader title="Our Trusted Northern Virginia Firearm Partners & Shooting Ranges">
 		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
 	</PageHeader>
 	<div class="site-container mx-auto px-4 py-16">

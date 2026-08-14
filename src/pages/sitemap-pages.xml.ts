@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 export async function GET() {
 	const siteUrl = import.meta.env.SITE;
 
-	const trainings = await getCollection("trainings");
+	const trainings = await getCollection("trainings", ({ data }) => data.draft !== true);
 	const trainingPages = trainings.map(item => `/${item.id}`);
 
 	const pages = [

@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { ArrowRight, Globe, Phone } from "lucide-react";
 
-const recentPosts = (await getCollection("partners")).sort(
+const recentPosts = (await getCollection("partners", ({ data }) => data.draft !== true)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---

@@ -641,6 +641,10 @@ export default config({
 			schema: {
 				title: fields.slug({ name: { label: "Title", validation: { isRequired: true } } }),
 				description: fields.text({ label: "Description", validation: { isRequired: true } }),
+				draft: fields.checkbox({
+					label: "Draft",
+					defaultValue: false,
+				}),
 				heroImage: fields.image({
 					label: "Partner Logo/Image",
 					directory: "src/data/otherPages/partners",
@@ -712,10 +716,18 @@ export default config({
 					description: "Check this box if this is an instructor certification course.",
 					defaultValue: false,
 				}),
+				draft: fields.checkbox({
+					label: "Draft",
+					defaultValue: false,
+				}),
 				description: fields.text({
 					label: "Description",
 					multiline: true,
 					validation: { isRequired: true },
+				}),
+				metaDescription: fields.text({
+					label: "Meta Description",
+					multiline: true,
 				}),
 				button: fields.text({
 					label: "Button Text",
@@ -818,6 +830,10 @@ export default config({
 			schema: {
 				title: fields.slug({ name: { label: "Title", validation: { isRequired: true } } }),
 				description: fields.text({ label: "Description", validation: { isRequired: true } }),
+				draft: fields.checkbox({
+					label: "Draft",
+					defaultValue: false,
+				}),
 				headerImage: fields.image({
 					label: "Header Image",
 					directory: "src/assets/images/pages",

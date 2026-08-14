@@ -1,0 +1,15 @@
+---
+interface Props {
+	expiresAt?: Date;
+}
+const { expiresAt } = Astro.props;
+---
+
+<div class="bg-amber-500 text-slate-950 flex items-center justify-center gap-2 border-b border-amber-600 px-4 py-2 text-center font-sans text-sm font-semibold shadow-md relative z-50">
+	<span>⚠️ <strong>Draft Preview Mode</strong> &mdash; Temporary preview of an unpublished page.</span>
+	{expiresAt && (
+		<span class="rounded bg-amber-600/30 px-2.5 py-0.5 font-mono text-xs">
+			Expires at: {expiresAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+		</span>
+	)}
+</div>

@@ -42,19 +42,19 @@ const navConfig: navItem[] = [
 		dropdown: [
 			{
 				text: "NRA Basic Pistol Course & VA Concealed Carry Permit",
-				link: "/nra-basic-pistol-shooting-course",
+				link: "/nra-basic-pistol-course-fairfax-va",
 			},
 			{
 				text: "First Step Pistol Orientation with Concealed Carry Permit",
-				link: "/first-step-pistol-orientation",
+				link: "/first-step-pistol-orientation-fairfax-va",
 			},
 			{
 				text: "One-on-One Personal Training",
-				link: "/one-on-one-instruction",
+				link: "/private-shooting-lessons-northern-va",
 			},
 			{
 				text: "NRA CCW Advanced Pistol Course",
-				link: "/nra-defensive-pistol-course",
+				link: "/nra-advanced-ccw-fairfax-va",
 			},
 			{
 				text: "NRA Refuse To Be A Victim®",

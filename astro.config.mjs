@@ -59,7 +59,7 @@ export default defineConfig({
 			},
 		}),
 		sitemap({
-			filter: (page) => !page.includes("/admin/"),
+			filter: (page) => !page.includes("/admin/") && !page.includes("/categories/"),
 		}),
 		compress({
 			HTML: true,
@@ -95,14 +95,16 @@ export default defineConfig({
 		"/product-category/[...slug]": "/firearm-training-fairfax-va/",
 		"/product/one-on-one-training-36/": "/firearm-training-fairfax-va/",
 		"/nra-basics-of-pistol-shooting-course-with-concealed-carry-permit-silver-eagle":
-			"/nra-basic-pistol-shooting-course/",
+			"/nra-basic-pistol-course-fairfax-va",
 		"/my-account": "/firearm-training-fairfax-va/",
 		"/firearms-training-northern-virginia": "/firearm-training-fairfax-va/",
 		"/firearm-training": "/firearm-training-fairfax-va/",
 		"/wp-login.php?action=googlesitekit_auth": "/firearm-training-fairfax-va/",
 		"/feed": "/firearm-training-fairfax-va/",
-		"/cdn-cgi/l/email-protection": "/",
 		"/intro-to-firearms": "/",
-		"/business-side-of-firearms-course1": "/",
+		"/nra-basic-pistol-shooting-course": "/nra-basic-pistol-course-fairfax-va",
+		"/first-step-pistol-orientation": "/first-step-pistol-orientation-fairfax-va",
+		"/one-on-one-instruction": "/private-shooting-lessons-northern-va",
+		"/nra-defensive-pistol-course": "/nra-advanced-ccw-fairfax-va"
 	},
 });

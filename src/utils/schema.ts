@@ -134,6 +134,15 @@ interface ContactSchemaData extends BaseSchemaData {
 	itemListElement?: ListItemSchema[];
 }
 
+interface FAQItem {
+	question: string;
+	answer: string;
+}
+
+interface FAQPageSchemaData extends BaseSchemaData {
+	faqs: FAQItem[];
+}
+
 // Base organization info (shared across schemas)
 const baseOrganization = {
 	"@type": "Organization",
@@ -314,4 +323,19 @@ export const schemaGenerators = {
 				itemListElement: data.itemListElement,
 			},
 		}),
+
+	// FAQPage schema (boosts AI search engine citation rate by ~40%)
+	faqpage: (data: FAQPageSchemaData) =>
+		generateSchema(schemaTypes.FAQ, {
+			mainEntity: data.faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		}),
+
 };
+

@@ -1,0 +1,112 @@
+---
+import {
+	Building2,
+	FileCheck2,
+	GraduationCap,
+	MailCheck,
+	ShieldCheck,
+	UserCheck,
+} from "lucide-react";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const steps = [
+	{
+		number: "1",
+		title: "Complete Training",
+		description:
+			"Attend the 6-hour NRA Basic Pistol Course and complete the live-fire qualification.",
+		icon: GraduationCap,
+	},
+	{
+		number: "2",
+		title: "Obtain Certificate",
+		description:
+			"Receive your official NRA Certificate of Completion signed by your instructor.",
+		icon: FileCheck2,
+	},
+	{
+		number: "3",
+		title: "Submit Application",
+		description:
+			"File your certificate along with the Virginia CHP Application and government ID at your local Circuit Court (e.g., Fairfax County Circuit Court).",
+		icon: Building2,
+	},
+	{
+		number: "4",
+		title: "Background Check",
+		description:
+			"The Virginia State Police and local Sheriff will complete a standard background check.",
+		icon: UserCheck,
+	},
+	{
+		number: "5",
+		title: "Receive Permit",
+		description:
+			"Your permit will be issued and mailed within 45 days.",
+		icon: MailCheck,
+	},
+];
+---
+
+<section class={`my-10 text-left ${className}`}>
+	<!-- Eligibility Banner -->
+	<div class="rounded-xl border border-gray-200 bg-white p-6 sm:p-8 shadow-xs mb-8">
+		<div class="flex flex-col sm:flex-row sm:items-start gap-4">
+			<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
+				<ShieldCheck className="h-5 w-5" />
+			</div>
+			<div class="flex-1">
+				<div class="flex flex-wrap items-center gap-2 mb-2">
+					<h2 class="text-xl font-bold text-gray-900 tracking-tight mt-0">
+						Virginia Concealed Carry Permit (CHP) Eligibility
+					</h2>
+					
+				</div>
+				<p class="text-gray-700 text-base leading-relaxed max-w-3xl">
+					Completing this live-fire NRA Basic Pistol Shooting Course satisfies the Virginia legal requirement for proof of handgun competency under <strong class="font-semibold text-gray-900">VA Code § 18.2-308.02</strong>.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- 5 Steps Process Heading -->
+	<div class="mb-6">
+		<h3 class="text-lg font-bold text-gray-900">
+			5 Steps to Get Your Virginia Concealed Handgun Permit:
+		</h3>
+	</div>
+
+	<!-- Steps List / Grid -->
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+		{steps.map((step, idx) => {
+			const IconComponent = step.icon;
+			const isLast = idx === steps.length - 1;
+			return (
+				<div class={`flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-colors duration-150 hover:border-gray-300 ${isLast ? 'md:col-span-2 lg:col-span-1' : ''}`}>
+					<div>
+						<div class="flex items-center justify-between mb-3">
+							<div class="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-gray-800">
+								<IconComponent className="h-4 w-4" />
+							</div>
+							<span class="text-sm font-semibold text-gray-400 font-mono">
+								Step {step.number}
+							</span>
+						</div>
+						<h4 class="text-base font-bold text-gray-900 mb-1.5">
+							{step.title}
+						</h4>
+						<p class="text-sm text-gray-600 leading-relaxed">
+							{step.description}
+						</p>
+					</div>
+				</div>
+			);
+		})}
+	</div>
+</section>
+

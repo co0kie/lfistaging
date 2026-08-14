@@ -1,26 +1,46 @@
 ---
-export const prerender = true;
 import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import { CardTitle } from "@/components/ui/card";
 import siteData from "@/config/siteData.json";
 import CourseLayout from "@layouts/CourseLayout.astro";
+import DraftBanner from "@/components/DraftBanner/DraftBanner.astro";
 import { Image } from "astro:assets";
-import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getEntry, render } from "astro:content";
+import { isValidDraftPreview } from "@/utils/draftPreview";
 
-export async function getStaticPaths() {
-	const posts = await getCollection("partners");
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect("/404");
 }
-type Props = CollectionEntry<"partners">;
 
-const post = Astro.props;
+const post = await getEntry("partners", slug);
+
+if (!post) {
+	return Astro.redirect("/404");
+}
+
+let isDraftPreview = false;
+let previewExpiresAt: Date | undefined = undefined;
+
+if (post.data.draft === true) {
+	const authCookie = Astro.cookies.get("indexnow_auth")?.value;
+	const previewCheck = isValidDraftPreview(slug, Astro.url, authCookie);
+
+	if (!previewCheck.valid) {
+		return Astro.redirect("/404");
+	}
+
+	isDraftPreview = true;
+	previewExpiresAt = previewCheck.expiresAt;
+}
+
 const { Content } = await render(post);
 ---
 
-<CourseLayout title={siteData.title + " - " + post.data.title} description={post.data.title}>
+{isDraftPreview && <DraftBanner expiresAt={previewExpiresAt} />}
+
+<CourseLayout title={post.data.title + " | " + siteData.title} description={post.data.title} noindex={isDraftPreview}>
 	<PageHeader title={post.data.title}>
 		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
 	</PageHeader>

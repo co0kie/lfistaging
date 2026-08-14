@@ -21,9 +21,10 @@ interface Props {
 	post: CollectionEntry<"blog">;
 	schemaType?: string;
 	schemaData?: any;
+	noindex?: boolean;
 }
 
-const { post } = Astro.props as Props;
+const { post, noindex = false } = Astro.props as Props;
 const { title, description, authors, pubDate, updatedDate, heroImage, categories, tags } =
 	post.data;
 
@@ -52,6 +53,7 @@ const schemaData = {
 	postFrontmatter={post.data}
 	schemaData={schemaData}
 	schemaType="blogpost"
+	noindex={noindex}
 >
 	<article class="site-container pt-10 md:pt-24">
 		<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">

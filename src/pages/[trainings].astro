@@ -21,29 +21,61 @@ import {
 
 export async function getStaticPaths() {
 	const trainingItems = await getCollection("trainings");
-	return trainingItems.map((item) => ({
-		params: { trainings: item.id },
-		props: item,
-	}));
+	return trainingItems
+		.filter((item) => !item.data.draft)
+		.map((item) => ({
+			params: { trainings: item.id },
+			props: item,
+		}));
 }
 type Props = CollectionEntry<"trainings">;
 
 const item = Astro.props;
 const { Content } = await render(item);
 const isInstructor = item.data.isInstructor;
+const isPrivateInstruction = item.id === "private-shooting-lessons-northern-va" || item.id === "one-on-one-instruction";
 
+const isNRADefensivePistol = item.id === "nra-advanced-ccw-fairfax-va";
 
-const schemaData = {
-	name: item.data.title,
-	description: item.data.description,
-};
+const nraDefensivePistolFAQs = [
+	{
+		question: "What gear do I need to bring to the NRA CCW Advanced Pistol Course?",
+		answer: "You must bring your own personally-owned firearm, a dominant-side hip holster, a sturdy carry belt, two magazines, a mag pouch, a suitable concealment garment (such as a jacket or vest), a billed cap, and lunch. You will also need 125 rounds of ammunition, which can be purchased at the NRA Range pro shop on the day of class.",
+	},
+	{
+		question: "Does this course satisfy Virginia concealed carry permit requirements?",
+		answer: "This is an advanced skills course designed for shooters who already hold or are pursuing a Virginia Concealed Handgun Permit (CHP). It is not a standalone course for the initial permit application, but it significantly enhances the defensive competency of current permit holders. Contact us for guidance on which course best fits your training goals.",
+	},
+	{
+		question: "Are ammo and range fees included in the $165 course price?",
+		answer: "No. The $165.00 course fee covers classroom instruction and range supervision by NRA-certified instructors. Range lane fees ($15–$35) and ammunition (125 rounds required) are separate costs paid directly to the NRA Range on the day of class. Ammunition is available for purchase on-site at the NRA Range pro shop.",
+	},
+	{
+		question: "Do I need prior shooting experience to enroll in this advanced course?",
+		answer: "Yes. This is an intermediate-to-advanced level course. Students must already be comfortable handling, loading, and safely operating a semi-automatic pistol. If you are new to shooting, we recommend starting with the NRA Basic Pistol Course or First Step Pistol Orientation before attending this advanced class.",
+	},
+	{
+		question: "What is the refund or cancellation policy for the NRA CCW Advanced Pistol Course?",
+		answer: "Please contact us directly at class@livefireinstruction.com or call 1-571-210-5651 to discuss scheduling changes or cancellations prior to your course date.",
+	},
+];
+
+const schemaData = isNRADefensivePistol
+	? { faqs: nraDefensivePistolFAQs }
+	: {
+		name: item.data.title,
+		description: item.data.description,
+		metaDescription: item.data.meta_description,
+	};
+
+const schemaType = isNRADefensivePistol ? "faqpage" : "course";
 ---
 
 <BaseLayout
-	title={item.data.title + " - " + siteData.title}
-	description={item.data.description}
+	title={item.data.title + " | " + siteData.title}
+	description={item.data.meta_description ?? item.data.description.substring(0, 160)}
 	schemaData={schemaData}
-	schemaType="course"
+	schemaType={schemaType}
 >
 	<div class="site-container mx-auto px-4">
 		<!-- subtle background gradient effect -->
@@ -57,7 +89,7 @@ const schemaData = {
 		<!-- Hero Section -->
 		<header class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32">
 			<div class="relative z-[11] mx-auto max-w-4xl px-4 text-center">
-				<nav aria-label="Breadcrumb" class="mb-6 flex justify-center">
+				<!-- <nav aria-label="Breadcrumb" class="mb-6 flex justify-center">
 					<ol role="list" class="flex items-center space-x-2 text-sm text-gray-500">
 						<li>
 							<a href="/" class="hover:text-primary transition-colors hover:underline"
@@ -83,16 +115,19 @@ const schemaData = {
 							>
 						</li>
 					</ol>
-				</nav>
+				</nav> -->
 				<h1
 					class="mb-6 text-2xl leading-tight font-extrabold tracking-tight text-gray-900 lg:text-4xl"
 				>
-					{item.data.title}
+					{item.data.h1_title}
 				</h1>
 				{item.data.subtitle && (
 					<p class="mx-auto leading-relaxed max-w-2xl mb-8 md:text-xl text-gray-600 text-lg"><span class="font-semibold border-b-2 border-primary text-gray-900">{item.data.subtitle}</span></p>
 				)}
-				<p class="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-gray-600 md:text-xl" set:html={item.data.description} />
+				<p class="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-gray-600 md:text-xl" set:html={item.data.description} />
+				{item.data.sub_description && (
+					<div class="mx-auto mb-8 max-w-3xl text-base leading-relaxed text-gray-600 space-y-4" set:html={item.data.sub_description} />
+				)}
 			</div>
 
 			<Button
@@ -136,20 +171,20 @@ const schemaData = {
 							>
 							</div>
 							<!-- Image Section -->
-								
+
 								<div class="relative overflow-hidden rounded-2xl border border-gray-200 shadow-xl">
 									<Image
 										src={item.data.leftColumnImage}
 										alt={item.data.title}
 											class="h-auto w-full transform object-cover transition duration-700 group-hover:scale-105"
 										/>
-								</div>	
-							
+								</div>
+
 						</div>
 						)
 				}
 				<div>
-					<h2 class="mb-6 flex items-center gap-3 text-3xl font-bold text-gray-900">
+					<h2 class="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900">
 						<span class:list={["h-8 w-2 rounded-full", isInstructor ? "bg-blue-600" : "bg-primary"]}></span>
 						{item.data.rightColumnTitle}
 					</h2>
@@ -162,11 +197,11 @@ const schemaData = {
 										<h3 class="mb-2 text-sm font-semibold tracking-wider text-gray-400 uppercase">
 											{listItem.listTitle}
 										</h3>
-										<ul class="grid grid-cols-2 space-y-2">
+										<ul class="grid grid-cols-1 space-y-2">
 											{listItem.listItem?.map((item) => (
 												<li class="flex items-start gap-3">
 													<CheckCheck className={isInstructor ? "mt-0.5 h-5 w-5 text-blue-600 flex-shrink-0" : "text-primary mt-0.5 h-5 w-5 flex-shrink-0"} />
-													<span class="text-gray-700">{item}</span>
+													<p set:html={item}  class="text-gray-700" />
 												</li>
 											))}
 										</ul>
@@ -177,8 +212,36 @@ const schemaData = {
 					</div>
 				</div>
 			</div>
+			{item.data.bottomRow && <div class="mx-auto max-w-6xl px-4">
+						<div
+							class="grid grid-cols-1 gap-8 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl mt-8"
+					>
+					<!-- Info -->
+					<div class="flex flex-col justify-center p-8 md:p-12">
+						<div class="mb-6">
+							<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>{item.data.bottomRow.title}</span>
+							<p class="mt-2 text-base  text-gray-900" set:html={item.data.bottomRow.paragraph} />
+						</div>
+						<div class="space-y-8">
+							<h3 class="mb-2 text-sm font-semibold tracking-wider text-gray-400 uppercase">
+											{item.data.bottomRow.listTitle}
+							</h3>
+							<ul class="grid grid-cols-1 space-y-2">
+							{
+								item.data.bottomRow.list?.map((listItem) => (
+									<li class="flex items-start gap-3">
+										<CheckCheck className={isInstructor ? "mt-0.5 h-5 w-5 text-blue-600 flex-shrink-0" : "text-primary mt-0.5 h-5 w-5 flex-shrink-0"} />
+										<p set:html={listItem}  class="text-gray-700" />
+									</li>
+								))
+							}</ul>
+						</div>
+					</div>
+				</div>
+			</div>				
+			}
 		</section>
-			{item.data.hasMap.value && 
+			{item.data.hasMap.value &&
 			<section class="bg-surface border-y border-gray-200 py-20">
 				<div class="mx-auto max-w-6xl px-4">
 					<div
@@ -187,7 +250,7 @@ const schemaData = {
 					<!-- Info -->
 					<div class="flex flex-col justify-center p-8 md:p-12">
 						<div class="mb-6">
-							<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>Location</span>
+							<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>Class Location & Facility Details</span>
 							<h3 class="mt-2 text-3xl font-bold text-gray-900">{item.data.hasMap.value.mapTitle}</h3>
 						</div>
 
@@ -203,14 +266,16 @@ const schemaData = {
 										</>
 									))}
 								</div>
+								
 							</div>
+<em class="text-gray-600">{item.data.hasMap.value.mapQuotes}</em>
 
-							
 						</div>
 					</div>
 
 					<!-- Map -->
 					<div class="relative h-64 min-h-[300px] bg-gray-100 md:h-auto">
+
 						<iframe
 							class="absolute inset-0 h-full w-full opacity-80 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
 							loading="lazy"
@@ -228,15 +293,17 @@ const schemaData = {
 
 	<!-- Bottom Sticky CTA for Mobile or Footer CTA -->
 	<div id="register" class="border-t border-gray-200 bg-gray-50 py-12 register">
-		<div class="site-container mx-auto px-4 text-center">
+		<div class="site-container mx-auto px-4 prose max-w-6xl text-left">
 			<Content />
 		</div>
-		<div id="iframe">
-			<LiveSchedule 
-				category={item.id === "first-step-pistol-orientation" ? "607" : item.id === "nra-basic-pistol-shooting-course" ? "133" : undefined}
-				defaultTab={item.id === "nra-basic-pistol-shooting-course" ? "basic-pistol" : item.id === "first-step-pistol-orientation" ? "first-steps" : "all"}
-				onlyTab={item.id === "nra-basic-pistol-shooting-course" ? "basic-pistol" : item.id === "first-step-pistol-orientation" ? "first-steps" : undefined}
-			/>
+		<div id="iframe" class="relative mt-12">
+			<div class="bg-dots"></div>
+			
+				<LiveSchedule
+					category={item.id === "first-step-pistol-orientation-fairfax-va" ? "607" : (item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "133" : undefined}
+					defaultTab={(item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "basic-pistol" : item.id === "first-step-pistol-orientation-fairfax-va" ? "first-steps" : "all"}
+					onlyTab={(item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "basic-pistol" : item.id === "first-step-pistol-orientation-fairfax-va" ? "first-steps" : undefined}
+				/>
 		</div>
 	</div>
 </BaseLayout>
@@ -245,8 +312,12 @@ const schemaData = {
 	.prose {
 		@apply text-gray-700;
 	}
+	.prose .mt-0{
+		@apply mt-0;
+		margin-top: 0;
+	}
 	.prose h2 {
-		@apply mt-12 mb-6 text-3xl font-bold text-gray-900;
+		@apply  mb-6 text-3xl font-bold text-gray-900;
 	}
 	.prose h3 {
 		@apply mt-8 mb-4 text-2xl font-bold text-gray-900;

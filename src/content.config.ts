@@ -80,6 +80,7 @@ const partnersCollection = defineCollection({
 				.string()
 				.or(z.date())
 				.transform((val) => new Date(val)),
+			draft: z.boolean().optional(),
 		}),
 });
 
@@ -101,6 +102,7 @@ const trainingCollection = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
+			h1_title: z.string().optional(),
 			subtitle: z.string().optional(),
 			slug: z.string(),
 			pubDate: z
@@ -109,7 +111,10 @@ const trainingCollection = defineCollection({
 				.transform((val) => new Date(val)),
 			featured: z.boolean().optional(),
 			isInstructor: z.boolean().optional(),
+			draft: z.boolean().optional(),
 			description: z.string(),
+			sub_description: z.string().optional(),
+			meta_description: z.string().optional(),
 			button: z.string().optional(),
 			badgeGroup: z.array(z.string()).optional(),
 			leftColumnImage: image().optional(),
@@ -123,6 +128,12 @@ const trainingCollection = defineCollection({
 					}),
 				)
 				.optional(),
+			bottomRow: z.object({
+				title: z.string().optional(),
+				paragraph: z.string().optional(),
+				listTitle: z.string().optional(),
+				list: z.array(z.string()).optional(),
+			}).optional(),
 			hasMap: z.object({
 				discriminant: z.boolean(),
 				value: z
@@ -130,6 +141,7 @@ const trainingCollection = defineCollection({
 						mapTitle: z.string().optional(),
 						address: z.array(z.string()).optional(),
 						mapLink: z.string().url().optional(),
+						mapQuotes: z.string().optional(),
 					})
 					.optional(),
 			}),

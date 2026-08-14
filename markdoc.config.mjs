@@ -1,7 +1,12 @@
-import { defineMarkdocConfig, nodes } from '@astrojs/markdoc/config';
+import { defineMarkdocConfig, nodes, component } from '@astrojs/markdoc/config';
 import Markdoc from '@markdoc/markdoc';
 
 export default defineMarkdocConfig({
+  tags: {
+    chp_eligibility: {
+      render: component('./src/components/ChpEligibility/ChpEligibility.astro'),
+    },
+  },
   nodes: {
     link: {
       ...nodes.link,
@@ -25,3 +30,4 @@ export default defineMarkdocConfig({
     },
   },
 });
+
