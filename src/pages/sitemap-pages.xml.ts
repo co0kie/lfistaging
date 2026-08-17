@@ -9,6 +9,9 @@ export async function GET() {
 	const pages = [
 		"/blog",
 		"/firearm-training-fairfax-va",
+		"/firearms-training-northern-virginia",
+		"/firearms-training-virginia-fairfax-city",
+		"/shooting-range-guide-fairfax-va",
 		"/ccw-courses-northern-va",
 		"/partners",
 		"/contact",

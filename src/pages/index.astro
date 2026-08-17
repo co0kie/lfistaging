@@ -116,16 +116,23 @@ const defaultReasons = [
 	"Beginner-friendly, supportive learning environment",
 ];
 
-const reader = getKeystaticReader();
-const draftPage = await reader.singletons.homepagedraft.read();
+let draftPage: any = null;
+try {
+	const reader = getKeystaticReader();
+	draftPage = await reader.singletons.homepagedraft.read();
+} catch (e) {
+	console.warn("Could not read homepagedraft singleton, using fallback defaults:", e);
+}
 
 const pageMetaTitle =
-	draftPage?.pageMetaTitle || "Live Fire Instruction | Firearms Training Northern Virginia";
+	draftPage?.pageMetaTitle ||
+	"Fairfax Firearm Academy | CCW Classes & Training Center Near Fairfax City";
 const pageMetaDescription =
 	draftPage?.pageMetaDescription ||
-	"Expert firearms training in Fairfax and Northern Virginia. NRA certified courses, concealed carry classes, and personal instruction for all skill levels.";
+	"Join 7,500+ graduates at Fairfax's top firearm academy. NRA-certified CCW classes, basic pistol, and private lessons near Fairfax City. Enroll today!";
 
-const heroTitle = draftPage?.heroTitle || "Top-Rated Firearms Training In Northern Virginia";
+const heroTitle =
+	draftPage?.heroTitle || "Fairfax Firearm Academy – CCW & Pistol Training Center";
 const heroSubtitle =
 	draftPage?.heroSubtitle ||
 	"Professional firearms training in Northern Virginia serving Fairfax, Arlington, Alexandria, Loudoun County, Prince William County, Washington DC, and Maryland since 2016.";
@@ -210,9 +217,9 @@ const ctaSectionCtaUrl = draftPage?.ctaSectionCtaUrl || "/contact";
 
 const schemaData = {
 	name: "Firearm Training",
-	description: "We offer a variety of training courses as well as one-on-one instruction.",
+	description: "Join 7,500+ graduates at Fairfax's top firearm academy. NRA-certified CCW classes, basic pistol, and private lessons near Fairfax City. Enroll today!",
 	url: siteData.website,
-	itemListElement: courseHighlights.map((course, index) => ({
+	itemListElement: courseHighlights.map((course: { title: any; description: any; }, index: number) => ({
 		"@type": "ListItem",
 		position: index + 1,
 		item: {
@@ -231,7 +238,6 @@ const schemaData = {
 <BaseLayout
 	title={pageMetaTitle}
 	description={pageMetaDescription}
-	keywords="firearms training Northern Virginia, concealed carry permit VA, NRA basic pistol course, CCW training Fairfax, firearms instruction Virginia, handgun training, beginner shooting class, NRA certified instructors"
 	schemaType="home"
 	schemaData={schemaData}
 >
@@ -486,7 +492,7 @@ const schemaData = {
 
 				<div class="grid gap-4 sm:grid-cols-2">
 					{
-						learningPoints.map((item) => (
+						learningPoints.map((item: unknown) => (
 							<div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
 								<div class="bg-blue-dark text-orange mb-3 inline-flex rounded-xl p-3">
 									<Target className="h-5 w-5" />
@@ -529,11 +535,11 @@ const schemaData = {
 					class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
 				>
 					{
-						serviceAreas.map((area) => (
+						serviceAreas.map((area: { title: unknown; locations: any[]; }) => (
 							<div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
 								<h3 class="font-headline text-xl font-semibold text-white">{area.title}</h3>
 								<ul class="mt-4 space-y-2">
-									{area.locations.map((location) => (
+									{area.locations.map((location: unknown) => (
 										<li class="flex items-center gap-2 text-slate-300">
 											<BadgeCheck className="h-4 w-4 text-orange" />
 											<span>{location}</span>
@@ -594,7 +600,7 @@ const schemaData = {
 
 				<div class="grid gap-4 sm:grid-cols-2">
 					{
-						reasons.map((reason, index) => (
+						reasons.map((reason: unknown, index: number) => (
 							<div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
 								<div class="bg-orange/15 text-orange mb-3 inline-flex rounded-xl p-3">
 									{index % 2 === 0 ? (

@@ -97,7 +97,6 @@ export default defineConfig({
 		"/nra-basics-of-pistol-shooting-course-with-concealed-carry-permit-silver-eagle":
 			"/nra-basic-pistol-course-fairfax-va",
 		"/my-account": "/firearm-training-fairfax-va/",
-		"/firearms-training-northern-virginia": "/firearm-training-fairfax-va/",
 		"/firearm-training": "/firearm-training-fairfax-va/",
 		"/wp-login.php?action=googlesitekit_auth": "/firearm-training-fairfax-va/",
 		"/feed": "/firearm-training-fairfax-va/",

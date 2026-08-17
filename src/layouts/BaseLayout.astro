@@ -22,7 +22,6 @@ interface Props {
 	heroImage?: CollectionEntry<"blog">["data"]["heroImage"];
 	authorsData?: CollectionEntry<"authors">[];
 	postFrontmatter?: CollectionEntry<"blog">["data"];
-	keywords?: string;
 	noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
 	schemaType?: string;
 	schemaData?: any;
@@ -35,7 +34,6 @@ const {
 	heroImage,
 	authorsData,
 	postFrontmatter,
-	keywords,
 	noindex = false,
 } = Astro.props as Props;
 ---
@@ -50,7 +48,6 @@ const {
 			image={heroImage ? heroImage : undefined}
 			authors={authorsData ? authorsData : undefined}
 			postFrontmatter={postFrontmatter ? postFrontmatter : undefined}
-			keywords={keywords}
 			noindex={noindex}
 		/>
 		<Preloader color="#ff9200" height="3px" class="custom-loading-class" />

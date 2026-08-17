@@ -9,15 +9,16 @@ import keystaticConfig from "../../keystatic.config";
  */
 export function getKeystaticReader() {
 	const isDev = import.meta.env.DEV;
+	const githubToken = import.meta.env.GITHUB_API;
 
-	if (isDev) {
-		// Local development - read from file system
+	if (isDev || !githubToken) {
+		// Local development or build without GitHub token - read from local file system
 		return createReader(process.cwd(), keystaticConfig);
 	} else {
 		// Production - read from GitHub
 		return createGitHubReader(keystaticConfig, {
 			repo: "co0kie/lfistaging",
-			token: import.meta.env.GITHUB_API,
+			token: githubToken,
 		});
 	}
 }

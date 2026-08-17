@@ -72,7 +72,7 @@ const schemaType = isNRADefensivePistol ? "faqpage" : "course";
 ---
 
 <BaseLayout
-	title={item.data.title + " | " + siteData.title}
+	title={item.data.title.includes("|") ? item.data.title : `${item.data.title} | ${siteData.title}`}
 	description={item.data.meta_description ?? item.data.description.substring(0, 160)}
 	schemaData={schemaData}
 	schemaType={schemaType}
