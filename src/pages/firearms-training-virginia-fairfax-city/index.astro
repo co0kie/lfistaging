@@ -1,0 +1,410 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import siteData from "@/config/siteData.json.ts";
+import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
+import {
+	Shield,
+	Award,
+	CheckCircle,
+	MapPin,
+	Calendar,
+	Clock,
+	Target,
+	Users,
+	ArrowRight,
+	Phone,
+	Mail,
+} from "lucide-react";
+
+const pageTitle = "Firearms Training Virginia & Fairfax City | CCW & Pistol Courses";
+const metaDescription =
+	"Find NRA-certified firearms training across Virginia and Fairfax City. Earn your concealed carry permit with expert instructors. Enroll in a course today.";
+
+const schemaData = {
+	name: "Firearms Training in Virginia & Fairfax City, VA",
+	description: metaDescription,
+	url: Astro.url.href,
+	itemListElement: [
+		{
+			"@type": "ListItem",
+			position: 1,
+			item: {
+				"@type": "Course",
+				name: "NRA Basic Pistol Course & Virginia CCW Permit",
+				description:
+					"Comprehensive 6-hour firearm training course for Virginia concealed handgun permit qualification.",
+				provider: {
+					"@type": "Organization",
+					name: siteData.name,
+				},
+			},
+		},
+		{
+			"@type": "ListItem",
+			position: 2,
+			item: {
+				"@type": "Course",
+				name: "First Step Pistol Orientation",
+				description: "3-hour express introductory handgun safety and CCW qualification course.",
+				provider: {
+					"@type": "Organization",
+					name: siteData.name,
+				},
+			},
+		},
+		{
+			"@type": "ListItem",
+			position: 3,
+			item: {
+				"@type": "Course",
+				name: "NRA CCW Advanced Pistol Course",
+				description: "Defensive shooting techniques, holster draw, and real-world tactical mindset.",
+				provider: {
+					"@type": "Organization",
+					name: siteData.name,
+				},
+			},
+		},
+		{
+			"@type": "ListItem",
+			position: 4,
+			item: {
+				"@type": "Course",
+				name: "Private One-on-One Shooting Lessons",
+				description: "Customized 60-minute private firearm coaching at the NRA Range in Fairfax, VA.",
+				provider: {
+					"@type": "Organization",
+					name: siteData.name,
+				},
+			},
+		},
+	],
+};
+
+const faqs = [
+	{
+		question: "Where is your firearms training center located near Fairfax City?",
+		answer:
+			"Our training classes and live-fire range sessions are held at the prestigious NRA Range facility located at 11250 Waples Mill Rd, Fairfax, VA 22030 — just minutes from Old Town Fairfax City and easily accessible from across Northern Virginia.",
+	},
+	{
+		question: "Does your firearms training qualify for a Virginia Concealed Carry Permit?",
+		answer:
+			"Yes! Both our NRA Basic Pistol Course (6 hours) and First Step Pistol Orientation (3+ hours) meet all statutory requirements under Virginia Code § 18.2-308.02 for in-person handgun competency certification needed to obtain a Virginia Concealed Handgun Permit (CHP).",
+	},
+	{
+		question: "Do I need prior shooting experience or my own gun to attend?",
+		answer:
+			"No experience is needed. Our beginner courses are designed specifically for first-time gun owners and novices. We provide firearms and training materials for classroom and range use.",
+	},
+	{
+		question: "How do I enroll in firearms training courses in Virginia?",
+		answer:
+			"You can easily view our upcoming schedule and reserve your seat online through our course calendar, or contact us directly at 1-571-210-5651.",
+	},
+];
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={metaDescription}
+	schemaData={schemaData}
+	schemaType="courses"
+>
+	<PageHeader title="Firearms Training in Virginia & Fairfax City, VA">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16">
+		<!-- Breadcrumbs -->
+		<nav class="mb-8 text-sm text-gray-500" aria-label="Breadcrumb">
+			<ol class="flex items-center space-x-2">
+				<li><a href="/" class="hover:text-primary-600">Home</a></li>
+				<li><span>/</span></li>
+				<li><a href="/firearms-training-northern-virginia" class="hover:text-primary-600">Training</a></li>
+				<li><span>/</span></li>
+				<li class="text-gray-900 font-medium" aria-current="page">Fairfax City & Virginia Firearms Training</li>
+			</ol>
+		</nav>
+
+		<!-- Introduction Section -->
+		<section class="mb-16">
+			<div class="mx-auto max-w-4xl text-center">
+				<span class="text-primary-600 font-bold uppercase tracking-wider text-sm">
+					NRA-Certified Firearms Training Center
+				</span>
+				<h2 class="font-headline text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">
+					Premier Firearms Training Center for Virginia & Fairfax City Residents
+				</h2>
+				<p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+					Looking for a trusted <strong>firearms training center near Fairfax City</strong> or throughout <strong>Virginia</strong>? 
+					Since 2016, <strong>Live Fire Instruction</strong> has graduated over 7,500 students with a 98% pass rate. 
+					Whether you are a beginner looking to earn your <a href="/nra-basic-pistol-course-fairfax-va" class="text-primary-600 font-semibold underline hover:text-primary-700">Virginia Concealed Carry Permit</a>, 
+					refine fundamental marksmanship, or book <a href="/private-shooting-lessons-northern-va" class="text-primary-600 font-semibold underline hover:text-primary-700">private 1-on-1 shooting lessons</a>, 
+					our NRA-certified instructors provide patient, professional instruction in a welcoming environment.
+				</p>
+			</div>
+		</section>
+
+		<!-- Key Highlights -->
+		<section class="mb-16 grid gap-6 md:grid-cols-3">
+			<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+				<div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4">
+					<Shield className="w-6 h-6" />
+				</div>
+				<h3 class="text-xl font-bold text-gray-900 mb-2">State-Approved CCW Certification</h3>
+				<p class="text-gray-600">
+					Meets all Virginia Code requirements for proof of handgun competency for your concealed handgun permit application in Fairfax City and all Virginia circuit courts.
+				</p>
+			</div>
+			<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+				<div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4">
+					<Award className="w-6 h-6" />
+				</div>
+				<h3 class="text-xl font-bold text-gray-900 mb-2">NRA-Certified Instructors</h3>
+				<p class="text-gray-600">
+					Learn from highly trained, experienced firearms instructors dedicated to safe gun handling, responsible ownership, and stress-free learning.
+				</p>
+			</div>
+			<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+				<div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4">
+					<Target className="w-6 h-6" />
+				</div>
+				<h3 class="text-xl font-bold text-gray-900 mb-2">Premier Training Facility</h3>
+				<p class="text-gray-600">
+					Conduct live-fire range drills at the world-class NRA Headquarters Range in Fairfax, VA — a clean, climate-controlled, state-of-the-art indoor facility.
+				</p>
+			</div>
+		</section>
+
+		<!-- Course Offerings -->
+		<section class="mb-16">
+			<div class="text-center mb-10">
+				<h2 class="font-headline text-3xl font-bold text-gray-900">
+					Firearms Training Courses in Virginia & Fairfax City
+				</h2>
+				<p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+					Explore our comprehensive selection of handgun safety, concealed carry, and marksmanship courses designed for all experience levels.
+				</p>
+			</div>
+
+			<div class="grid gap-8 md:grid-cols-2">
+				<!-- Course 1 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+					<div>
+						<div class="flex items-center justify-between mb-4">
+							<span class="inline-block rounded-full bg-primary-100 px-3 py-1 text-xs font-semibold text-primary-800">
+								Most Popular
+							</span>
+							<span class="text-sm font-semibold text-gray-500">6 Hours</span>
+						</div>
+						<h3 class="text-2xl font-bold text-gray-900 mb-3">
+							<a href="/nra-basic-pistol-course-fairfax-va" class="hover:text-primary-600">
+								NRA Basic Pistol Course & Virginia CCW
+							</a>
+						</h3>
+						<p class="text-gray-600 mb-4 leading-relaxed">
+							Our premier 6-hour foundational course covers handgun mechanics, ammunition safety, marksmanship fundamentals, and supervised live-fire qualification at the NRA Range. Perfect for obtaining your Virginia Concealed Handgun Permit (CHP).
+						</p>
+						<ul class="space-y-2 mb-6 text-sm text-gray-700">
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Virginia CCW qualification certificate</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Firearms & classroom materials included</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Hands-on live-fire training on the range</li>
+						</ul>
+					</div>
+					<a
+						href="/nra-basic-pistol-course-fairfax-va"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+					>
+						Course Details & Registration <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+
+				<!-- Course 2 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+					<div>
+						<div class="flex items-center justify-between mb-4">
+							<span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+								Express Option
+							</span>
+							<span class="text-sm font-semibold text-gray-500">3+ Hours</span>
+						</div>
+						<h3 class="text-2xl font-bold text-gray-900 mb-3">
+							<a href="/first-step-pistol-orientation-fairfax-va" class="hover:text-primary-600">
+								First Step Pistol Orientation
+							</a>
+						</h3>
+						<p class="text-gray-600 mb-4 leading-relaxed">
+							Short on time? Earn your Virginia concealed carry qualification with our 3-hour express orientation. Ideal for busy professionals and first-time shooters seeking focused, beginner-friendly instruction.
+						</p>
+						<ul class="space-y-2 mb-6 text-sm text-gray-700">
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Meets VA concealed carry requirements</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Beginner-friendly small classes</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Thursday evening & weekend schedules</li>
+						</ul>
+					</div>
+					<a
+						href="/first-step-pistol-orientation-fairfax-va"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+					>
+						View First Step Course <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+
+				<!-- Course 3 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+					<div>
+						<div class="flex items-center justify-between mb-4">
+							<span class="inline-block rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-800">
+								Advanced Defensive
+							</span>
+							<span class="text-sm font-semibold text-gray-500">Full Day</span>
+						</div>
+						<h3 class="text-2xl font-bold text-gray-900 mb-3">
+							<a href="/nra-advanced-ccw-fairfax-va" class="hover:text-primary-600">
+								NRA Advanced CCW & Defensive Pistol
+							</a>
+						</h3>
+						<p class="text-gray-600 mb-4 leading-relaxed">
+							Elevate your tactical skills beyond the basics. Master holster drawing, rapid recoil recovery, malfunction clearing under stress, and shoot/don't shoot decision making.
+						</p>
+						<ul class="space-y-2 mb-6 text-sm text-gray-700">
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Holster draw & concealment mastery</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Live-fire tactical drills</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Ideal for current CCW permit holders</li>
+						</ul>
+					</div>
+					<a
+						href="/nra-advanced-ccw-fairfax-va"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+					>
+						Explore Advanced CCW <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+
+				<!-- Course 4 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+					<div>
+						<div class="flex items-center justify-between mb-4">
+							<span class="inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
+								Personal Coaching
+							</span>
+							<span class="text-sm font-semibold text-gray-500">60 Minutes</span>
+						</div>
+						<h3 class="text-2xl font-bold text-gray-900 mb-3">
+							<a href="/private-shooting-lessons-northern-va" class="hover:text-primary-600">
+								Private 1-on-1 Shooting Lessons
+							</a>
+						</h3>
+						<p class="text-gray-600 mb-4 leading-relaxed">
+							Get dedicated, undivided instruction tailored to your individual goals. Perfect for brand-new shooters wanting private orientation or seasoned shooters diagnosing specific marksmanship habits.
+						</p>
+						<ul class="space-y-2 mb-6 text-sm text-gray-700">
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> 1-on-1 instructor attention</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Individual or 2-student private sessions</li>
+							<li class="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Flexible scheduling at the NRA Range</li>
+						</ul>
+					</div>
+					<a
+						href="/private-shooting-lessons-northern-va"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+					>
+						Book Private Lessons <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Location & Service Areas Section -->
+		<section class="mb-16 rounded-3xl bg-blue-dark text-white p-8 md:p-12">
+			<div class="grid gap-8 lg:grid-cols-2 items-center">
+				<div>
+					<span class="text-primary-400 font-bold uppercase tracking-wider text-sm">
+						Convenient Virginia Location
+					</span>
+					<h2 class="text-3xl font-bold mt-2 mb-4 text-white">
+						Convenient Firearms Training for Fairfax City & Northern Virginia
+					</h2>
+					<p class="text-blue-100 text-lg leading-relaxed mb-6">
+						Our classroom and range training take place at the world-renowned <strong>NRA Headquarters Range</strong> in Fairfax, Virginia. 
+						Just minutes from Fairfax City center, our location provides easy highway access via I-66, Route 50, and Route 29.
+					</p>
+					<div class="space-y-3 text-blue-100">
+						<div class="flex items-start gap-3">
+							<MapPin className="w-5 h-5 text-primary-400 mt-1 flex-shrink-0" />
+							<div>
+								<strong>Facility:</strong> The NRA Range, 11250 Waples Mill Rd, Fairfax, VA 22030
+							</div>
+						</div>
+						<div class="flex items-start gap-3">
+							<Phone className="w-5 h-5 text-primary-400 mt-1 flex-shrink-0" />
+							<div>
+								<strong>Direct Line:</strong> <a href="tel:1-571-210-5651" class="text-white hover:underline">1-571-210-5651</a>
+							</div>
+						</div>
+						<div class="flex items-start gap-3">
+							<Mail className="w-5 h-5 text-primary-400 mt-1 flex-shrink-0" />
+							<div>
+								<strong>Email:</strong> <a href="mailto:class@livefireinstruction.com" class="text-white hover:underline">class@livefireinstruction.com</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="rounded-2xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
+					<h3 class="text-xl font-bold mb-4 text-white">Serving Communities Across Virginia:</h3>
+					<div class="grid grid-cols-2 gap-2 text-sm text-blue-100">
+						<div>✓ Fairfax City</div>
+						<div>✓ City of Falls Church</div>
+						<div>✓ Vienna & Oakton</div>
+						<div>✓ Arlington County</div>
+						<div>✓ Alexandria</div>
+						<div>✓ Reston & Herndon</div>
+						<div>✓ McLean & Great Falls</div>
+						<div>✓ Burke & Springfield</div>
+						<div>✓ Ashburn & Loudoun</div>
+						<div>✓ Manassas & Prince William</div>
+					</div>
+					<div class="mt-6 pt-4 border-t border-white/10 text-xs text-blue-200">
+						Also welcoming students from Washington DC, Maryland, and surrounding areas.
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Live Schedule & Registration -->
+		<section class="mb-16">
+			<div class="text-center mb-8">
+				<h2 class="font-headline text-3xl font-bold text-gray-900">
+					Upcoming Class Schedule in Fairfax, VA
+				</h2>
+				<p class="text-gray-600 mt-2">
+					Select your date below to reserve your spot. Classes fill quickly due to limited lane availability.
+				</p>
+			</div>
+			<LiveSchedule />
+		</section>
+
+		<!-- FAQ Section -->
+		<section class="mb-16 max-w-4xl mx-auto">
+			<h2 class="font-headline text-3xl font-bold text-gray-900 text-center mb-8">
+				Frequently Asked Questions About Firearms Training in Virginia
+			</h2>
+			<div class="space-y-4">
+				{
+					faqs.map((faq) => (
+						<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+							<h3 class="text-lg font-bold text-gray-900 mb-2">{faq.question}</h3>
+							<p class="text-gray-600 leading-relaxed">{faq.answer}</p>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- Google Reviews Section -->
+		<GoogleReviews />
+	</div>
+</BaseLayout>

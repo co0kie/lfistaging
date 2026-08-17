@@ -1,0 +1,348 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import siteData from "@/config/siteData.json.ts";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
+import {
+	Target,
+	MapPin,
+	ShieldCheck,
+	CheckCircle2,
+	Clock,
+	Award,
+	Sparkles,
+	ArrowRight,
+	Phone,
+	Mail,
+	HelpCircle,
+} from "lucide-react";
+
+const pageTitle = "Best Shooting Range Near Fairfax VA | NRA Range & Training Guide";
+const metaDescription =
+	"Looking for a shooting range near Fairfax, VA? Train at the NRA Range with certified instructors. CCW, pistol, and private lessons available. Learn more.";
+
+const schemaData = {
+	name: pageTitle,
+	description: metaDescription,
+	url: Astro.url.href,
+	faqs: [
+		{
+			question: "Where is the best indoor shooting range near Fairfax, VA?",
+			answer:
+				"The NRA Range located at 11250 Waples Mill Rd in Fairfax, VA is widely considered the premier indoor shooting facility in Northern Virginia, featuring 32 climate-controlled lanes up to 50 yards and state-of-the-art air filtration.",
+		},
+		{
+			question: "Can I take private shooting lessons at the NRA Range near Fairfax?",
+			answer:
+				"Yes. Live Fire Instruction conducts certified 1-on-1 private shooting lessons and group CCW permit classes directly at the NRA Range in Fairfax, VA.",
+		},
+		{
+			question: "Do I need my own firearm to shoot or take lessons at the range?",
+			answer:
+				"No. When taking classes or private instruction with Live Fire Instruction, handguns and training materials can be provided for your session.",
+		},
+		{
+			question: "What should I expect on my first visit to a shooting range near Fairfax?",
+			answer:
+				"First-time visitors must complete a standard safety briefing and range waiver, present a valid government-issued photo ID, and wear approved eye and ear protection. If you are taking a course with Live Fire Instruction, our instructors will guide you through check-in and range rules seamlessly.",
+		},
+	],
+};
+
+const rangeFeatures = [
+	{
+		title: "32 Climate-Controlled Lanes",
+		description:
+			"Shoot year-round in total comfort. The NRA Range features 32 individual 50-yard lanes capable of handling handguns, shotguns, and standard centerfire rifles.",
+	},
+	{
+		title: "State-of-the-Art Air Filtration",
+		description:
+			"Equipped with advanced multi-stage HEPA air ventilation that constantly circulates clean, lead-filtered air for maximum shooter safety and comfort.",
+	},
+	{
+		title: "Target Retrieval System",
+		description:
+			"User-friendly programmable target carriers allow you to position your target at precise yardages from 7 to 50 yards with the press of a button.",
+	},
+	{
+		title: "On-Site Pro Shop & Ammunition",
+		description:
+			"Conveniently purchase eye/ear protection, factory new ammunition, targets, and shooting accessories directly on-site before your session.",
+	},
+];
+
+const faqs = [
+	{
+		question: "What should I expect on my first visit to a shooting range near Fairfax?",
+		answer:
+			"First-time visitors must complete a standard safety briefing and range waiver, present a valid government-issued photo ID, and wear approved eye and ear protection. If you are taking a course with Live Fire Instruction, our instructors will guide you through check-in and range rules seamlessly.",
+	},
+	{
+		question: "How do I book private shooting lessons at the NRA Range?",
+		answer:
+			"You can book directly through Live Fire Instruction by visiting our Private Shooting Lessons page. We offer 60-minute one-on-one and two-person sessions tailored to your individual goals and skill level.",
+	},
+	{
+		question: "What classes are offered at the Fairfax shooting range?",
+		answer:
+			"Live Fire Instruction provides NRA Basic Pistol, First Step Pistol Orientation (Express CCW), NRA Advanced CCW Defensive Pistol, and One-on-One Private Coaching at the NRA Range in Fairfax.",
+	},
+	{
+		question: "Is the range open to the general public?",
+		answer:
+			"Yes, the NRA Range is open to the public as well as NRA members. When enrolling in a Live Fire Instruction training course, your classroom instruction and supervised live-fire lane reservations are pre-arranged.",
+	},
+];
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={metaDescription}
+	schemaData={schemaData}
+	schemaType="faqpage"
+>
+	<PageHeader title="Your Guide to Shooting Ranges & Training in Fairfax, VA">
+		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+	</PageHeader>
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16">
+		<!-- Breadcrumbs -->
+		<nav class="mb-8 text-sm text-gray-500" aria-label="Breadcrumb">
+			<ol class="flex items-center space-x-2">
+				<li><a href="/" class="hover:text-primary-600">Home</a></li>
+				<li><span>/</span></li>
+				<li><a href="/firearms-training-northern-virginia" class="hover:text-primary-600">Training</a></li>
+				<li><span>/</span></li>
+				<li class="text-gray-900 font-medium" aria-current="page">Fairfax Shooting Range Guide</li>
+			</ol>
+		</nav>
+
+		<!-- Introduction Section -->
+		<section class="mb-16">
+			<div class="mx-auto max-w-4xl text-center">
+				<span class="text-primary-600 font-bold uppercase tracking-wider text-sm">
+					Fairfax Range & Training Resource
+				</span>
+				<h2 class="font-headline text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">
+					Finding the Best Shooting Range Near Fairfax, VA
+				</h2>
+				<p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+					If you've been searching for a <strong>shooting range near me</strong> in Fairfax or Northern Virginia, you are in luck. 
+					Fairfax is home to one of the cleanest, safest, and most technologically advanced indoor shooting facilities in the nation: 
+					the <strong>NRA Headquarters Range</strong>.
+				</p>
+				<p class="text-base md:text-lg text-gray-600 leading-relaxed mt-4">
+					Whether you are looking for open range time, preparing for your Virginia Concealed Carry Permit, or looking for 
+					<a href="/private-shooting-lessons-northern-va" class="text-primary-600 font-semibold underline hover:text-primary-700">private shooting lessons near Fairfax</a>, 
+					this comprehensive guide covers everything you need to know about range facilities, amenities, etiquette, and expert instruction.
+				</p>
+			</div>
+		</section>
+
+		<!-- NRA Range Spotlight -->
+		<section class="mb-16 rounded-3xl border border-gray-200 bg-slate-50 p-8 md:p-12">
+			<div class="max-w-4xl mx-auto">
+				<div class="flex items-center gap-3 text-primary-600 mb-3">
+					<Award className="w-6 h-6" />
+					<span class="font-bold uppercase tracking-wider text-sm">Featured Range Facility</span>
+				</div>
+				<h2 class="font-headline text-3xl font-bold text-gray-900 mb-4">
+					The NRA Range in Fairfax, VA — Premier Indoor Facility
+				</h2>
+				<p class="text-gray-700 leading-relaxed mb-6">
+					Located conveniently at <strong>11250 Waples Mill Road in Fairfax, Virginia</strong>, the NRA Range is a 50-yard, 32-lane indoor shooting complex designed for both novices and seasoned marksmen. It is the official training headquarters for <strong>Live Fire Instruction</strong>.
+				</p>
+
+				<div class="grid gap-6 md:grid-cols-2 mb-8">
+					{
+						rangeFeatures.map((feat) => (
+							<div class="rounded-2xl bg-white p-6 shadow-sm border border-gray-100">
+								<h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+									<CheckCircle2 className="w-5 h-5 text-primary-600 flex-shrink-0" />
+									{feat.title}
+								</h3>
+								<p class="text-sm text-gray-600 leading-relaxed">{feat.description}</p>
+							</div>
+						))
+					}
+				</div>
+
+				<div class="rounded-2xl bg-primary-50 border border-primary-200 p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+					<div>
+						<h3 class="font-bold text-gray-900 text-lg">Looking for Hands-On Coaching at the NRA Range?</h3>
+						<p class="text-sm text-gray-600">
+							Train 1-on-1 with certified instructors or enroll in our weekly CCW permit classes.
+						</p>
+					</div>
+					<a
+						href="/private-shooting-lessons-northern-va"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700 whitespace-nowrap"
+					>
+						Book Private Lessons <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Training Options at the Range -->
+		<section class="mb-16">
+			<div class="text-center mb-10">
+				<h2 class="font-headline text-3xl font-bold text-gray-900">
+					Training Programs Available at the Fairfax Range
+				</h2>
+				<p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+					Maximize your range time with structured, expert coaching. Live Fire Instruction offers classes for every skill level.
+				</p>
+			</div>
+
+			<div class="grid gap-6 md:grid-cols-3">
+				<!-- Card 1 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col justify-between">
+					<div>
+						<div class="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center mb-4">
+							<Target className="w-5 h-5" />
+						</div>
+						<h3 class="text-xl font-bold text-gray-900 mb-2">1-on-1 Private Lessons</h3>
+						<p class="text-sm text-gray-600 mb-4 leading-relaxed">
+							Personalized 60-minute marksmanship coaching at the NRA Range. Perfect for beginner orientation, fixing recoil anticipation, or fine-tuning defensive accuracy.
+						</p>
+					</div>
+					<a
+						href="/private-shooting-lessons-northern-va"
+						class="text-primary-600 font-semibold text-sm inline-flex items-center gap-1 hover:text-primary-700"
+					>
+						Explore Private Lessons <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+
+				<!-- Card 2 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col justify-between">
+					<div>
+						<div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+							<ShieldCheck className="w-5 h-5" />
+						</div>
+						<h3 class="text-xl font-bold text-gray-900 mb-2">NRA Basic Pistol & CCW</h3>
+						<p class="text-sm text-gray-600 mb-4 leading-relaxed">
+							Our comprehensive 6-hour course covering firearm safety, pistol mechanics, and live-fire range qualification to earn your Virginia Concealed Carry Permit.
+						</p>
+					</div>
+					<a
+						href="/nra-basic-pistol-course-fairfax-va"
+						class="text-primary-600 font-semibold text-sm inline-flex items-center gap-1 hover:text-primary-700"
+					>
+						View CCW Course <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+
+				<!-- Card 3 -->
+				<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col justify-between">
+					<div>
+						<div class="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
+							<Clock className="w-5 h-5" />
+						</div>
+						<h3 class="text-xl font-bold text-gray-900 mb-2">First Step Orientation</h3>
+						<p class="text-sm text-gray-600 mb-4 leading-relaxed">
+							A 3-hour fast-track pistol safety orientation with live-fire range practice, qualifying you for your Virginia CHP in a single afternoon or evening.
+						</p>
+					</div>
+					<a
+						href="/first-step-pistol-orientation-fairfax-va"
+						class="text-primary-600 font-semibold text-sm inline-flex items-center gap-1 hover:text-primary-700"
+					>
+						View Express Course <ArrowRight className="w-4 h-4" />
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Range Etiquette & Safety Tips -->
+		<section class="mb-16 rounded-3xl bg-blue-dark text-white p-8 md:p-12">
+			<div class="max-w-3xl mx-auto">
+				<h2 class="text-3xl font-bold text-white mb-6 text-center">
+					Essential Shooting Range Safety & Etiquette in Fairfax
+				</h2>
+				<p class="text-blue-100 leading-relaxed mb-6 text-center">
+					Whether you are visiting a shooting range near Fairfax for the first time or returning for practice, strictly following range safety protocol ensures a safe and enjoyable environment for everyone.
+				</p>
+				<div class="space-y-4">
+					<div class="flex items-start gap-4 rounded-xl bg-white/10 p-4 border border-white/10">
+						<span class="rounded-full bg-primary-500 text-white font-bold w-7 h-7 flex items-center justify-center flex-shrink-0 text-sm">1</span>
+						<div>
+							<h3 class="font-bold text-white">Always Keep Firearms Cased Until on the Firing Line</h3>
+							<p class="text-sm text-blue-100">Never uncase a firearm in the lobby, parking lot, or behind the firing line. Firearms must remain completely unloaded and in a case until you are at your assigned booth.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-4 rounded-xl bg-white/10 p-4 border border-white/10">
+						<span class="rounded-full bg-primary-500 text-white font-bold w-7 h-7 flex items-center justify-center flex-shrink-0 text-sm">2</span>
+						<div>
+							<h3 class="font-bold text-white">Always Keep the Muzzle Pointed Downrange</h3>
+							<p class="text-sm text-blue-100">Even when a firearm is unloaded or locked open, keep the barrel pointed directly towards the bullet trap downrange at all times.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-4 rounded-xl bg-white/10 p-4 border border-white/10">
+						<span class="rounded-full bg-primary-500 text-white font-bold w-7 h-7 flex items-center justify-center flex-shrink-0 text-sm">3</span>
+						<div>
+							<h3 class="font-bold text-white">Keep Finger Off the Trigger Until Ready to Shoot</h3>
+							<p class="text-sm text-blue-100">Rest your index finger along the frame outside the trigger guard until your sights are aligned on target and you are ready to fire.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-4 rounded-xl bg-white/10 p-4 border border-white/10">
+						<span class="rounded-full bg-primary-500 text-white font-bold w-7 h-7 flex items-center justify-center flex-shrink-0 text-sm">4</span>
+						<div>
+							<h3 class="font-bold text-white">Eye and Ear Protection are Mandatory</h3>
+							<p class="text-sm text-blue-100">Proper eye protection and hearing protection (earmuffs or earplugs) must be put on before entering the range airlock doors and worn throughout your stay.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Frequently Asked Questions -->
+		<section class="mb-16 max-w-4xl mx-auto">
+			<h2 class="font-headline text-3xl font-bold text-gray-900 text-center mb-8">
+				Frequently Asked Questions About Fairfax Shooting Ranges
+			</h2>
+			<div class="space-y-4">
+				{
+					faqs.map((faq) => (
+						<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+							<h3 class="text-lg font-bold text-gray-900 mb-2 flex items-start gap-2">
+								<HelpCircle className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
+								{faq.question}
+							</h3>
+							<p class="text-gray-600 leading-relaxed ml-7">{faq.answer}</p>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- Call to Action -->
+		<section class="mb-16 rounded-3xl bg-slate-900 text-white p-8 md:p-12 text-center max-w-4xl mx-auto">
+			<h2 class="text-3xl font-bold mb-4">Ready to Train at Fairfax's Premier Shooting Range?</h2>
+			<p class="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
+				Join thousands of shooters who have trained with Live Fire Instruction at the NRA Range. 
+				View our upcoming class dates or contact us to schedule private 1-on-1 coaching.
+			</p>
+			<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+				<a
+					href="/ccw-courses-northern-va"
+					class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-8 py-4 font-bold text-white transition-colors hover:bg-primary-700"
+				>
+					View Class Schedule <ArrowRight className="w-5 h-5" />
+				</a>
+				<a
+					href="/private-shooting-lessons-northern-va"
+					class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 px-8 py-4 font-bold text-white transition-colors hover:bg-white/20 border border-white/20"
+				>
+					Book Private Lessons
+				</a>
+			</div>
+		</section>
+
+		<!-- Google Reviews Section -->
+		<GoogleReviews />
+	</div>
+</BaseLayout>
