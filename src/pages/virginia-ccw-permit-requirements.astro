@@ -1,0 +1,220 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import Button from "@/components/Button/Button.astro";
+import CTASection from "@/components/CTASection/CTASection.astro";
+import siteData from "@/config/siteData.json.ts";
+import { Shield, CheckCircle, FileText, Clock, DollarSign, AlertCircle, HelpCircle } from "lucide-react";
+
+const pageTitle = "Virginia CCW Permit Requirements | Guide for Fairfax & Northern VA";
+const pageDescription = "Learn the Virginia CCW permit requirements for Fairfax & Northern VA. Age, training, application process, and fees explained. Start your permit journey today.";
+const pageH1 = "Virginia CCW Permit Requirements – Complete Guide for Fairfax & Northern VA";
+
+const faqs = [
+	{
+		question: "Is in-person live fire training required for a Virginia CCW permit?",
+		answer: "Yes. Under Virginia Code § 18.2-308.02, online training courses are strictly no longer accepted for Virginia Concealed Handgun Permits (CHP). Applicants must demonstrate competence with a handgun in an in-person, instructor-led course such as our NRA Basic Pistol Course or First Step Pistol Orientation."
+	},
+	{
+		question: "What is the minimum age to apply for a Virginia Concealed Handgun Permit?",
+		answer: "You must be at least 21 years of age to apply for a resident or non-resident Virginia Concealed Handgun Permit (CHP)."
+	},
+	{
+		question: "How long does it take Fairfax County Circuit Court to process a CCW permit application?",
+		answer: "By Virginia state law (VA Code § 18.2-308.04), the Circuit Court must issue or deny the permit within 45 days of receiving your completed application. If no decision is rendered within 45 days, your certified application copy acts as a de facto temporary permit."
+	},
+	{
+		question: "How much does a Virginia Concealed Handgun Permit cost?",
+		answer: "The application fee is capped by Virginia law at $50.00 total for resident applications submitted to your local Circuit Court Clerk (e.g., Fairfax County Circuit Court)."
+	},
+	{
+		question: "How long is a Virginia Concealed Handgun Permit valid?",
+		answer: "A Virginia CHP is valid for 5 years from the date of issuance. Permit holders must apply for renewal prior to expiration."
+	}
+];
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqs.map((faq) => ({
+		"@type": "Question",
+		name: faq.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: faq.answer,
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={pageDescription}
+	schemaType="faq"
+	schemaData={schemaData}
+>
+	<PageHeader title={pageH1}>
+		<p class="mx-auto mt-4 max-w-3xl text-center text-lg text-slate-200">
+			Everything you need to know about qualifying, applying, and securing your Virginia Concealed Handgun Permit (CHP) in Fairfax County and Northern Virginia.
+		</p>
+	</PageHeader>
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16">
+		<!-- Quick Summary Box (GEO Answer-First) -->
+		<div class="mb-12 rounded-2xl border border-primary-200 bg-primary-50/50 p-6 md:p-8 shadow-sm">
+			<div class="flex items-center gap-3 mb-4">
+				<Shield className="h-7 w-7 text-primary-600" />
+				<h2 class="text-2xl font-bold text-slate-900">Virginia CCW Permit Requirements Summary</h2>
+			</div>
+			<p class="text-slate-700 leading-relaxed text-base md:text-lg mb-6">
+				To obtain a <strong>Virginia Concealed Handgun Permit (CHP)</strong> in Fairfax County or anywhere in Northern Virginia, applicants must be at least 21 years old, complete an <strong>in-person, state-approved handgun safety course</strong>, submit Form SP-266 to the Circuit Court Clerk, pay a maximum $50 fee, and pass a criminal background check. Online training is prohibited by VA Code § 18.2-308.02.
+			</p>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<Clock className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Processing Time</span>
+						<p class="text-slate-900 font-bold">45 Days Maximum</p>
+					</div>
+				</div>
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<DollarSign className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Application Fee</span>
+						<p class="text-slate-900 font-bold">$50.00 State Cap</p>
+					</div>
+				</div>
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<CheckCircle className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Validity</span>
+						<p class="text-slate-900 font-bold">5 Years (Renewable)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Content Section -->
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+			<div class="lg:col-span-2 space-y-10">
+				<!-- Section 1: Basic Eligibility -->
+				<section class="space-y-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900">1. Basic Eligibility Requirements</h2>
+					<p class="text-slate-700 leading-relaxed">
+						Before submitting your application to the Fairfax County Circuit Court or your local jurisdiction, ensure you satisfy all statutory legal requirements under Virginia law:
+					</p>
+					<ul class="space-y-3 pl-2">
+						<li class="flex items-start gap-3 text-slate-700">
+							<CheckCircle className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+							<span><strong>Age Requirement:</strong> You must be at least 21 years of age.</span>
+						</li>
+						<li class="flex items-start gap-3 text-slate-700">
+							<CheckCircle className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+							<span><strong>Residency / Status:</strong> Resident of the city or county where you file (or non-resident applying under VA non-resident provisions).</span>
+						</li>
+						<li class="flex items-start gap-3 text-slate-700">
+							<CheckCircle className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+							<span><strong>Legal Eligibility:</strong> Must legally be permitted to purchase and possess a firearm under both federal and Virginia state law.</span>
+						</li>
+						<li class="flex items-start gap-3 text-slate-700">
+							<CheckCircle className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+							<span><strong>No Disqualifying Records:</strong> No felony convictions, active protective orders, dishonorable military discharge, or disqualifying substance abuse convictions within specified statutory timeframes.</span>
+						</li>
+					</ul>
+				</section>
+
+				<!-- Section 2: In-Person Training Requirement -->
+				<section class="space-y-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900">2. In-Person Handgun Safety Training (Mandatory)</h2>
+					<div class="rounded-xl bg-amber-50 border border-amber-200 p-4 text-amber-900 flex items-start gap-3">
+						<AlertCircle className="h-6 w-6 text-amber-600 flex-shrink-0 mt-0.5" />
+						<div>
+							<strong>Important Legal Update:</strong> Effective January 1, 2021, Virginia Code § 18.2-308.02 strictly prohibits online firearm training courses for concealed carry permit qualification. All training must be completed in-person with a certified instructor.
+						</div>
+					</div>
+					<p class="text-slate-700 leading-relaxed">
+						To satisfy the proof of handgun competence requirement, applicants must complete an in-person course taught by an NRA-certified instructor or state-certified law enforcement instructor.
+					</p>
+					<p class="text-slate-700 leading-relaxed">
+						Live Fire Instruction provides two state-recognized, in-person training programs at the world-class <strong>NRA Range in Fairfax, VA</strong>:
+					</p>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+						<div class="p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary-400 transition-colors">
+							<h3 class="font-bold text-lg text-slate-900 mb-2">NRA Basic Pistol Course</h3>
+							<p class="text-sm text-slate-600 mb-4">Comprehensive 6-hour course combining classroom fundamentals with live-fire range qualification. 98% pass rate.</p>
+							<a href="/nra-basic-pistol-course-fairfax-va" class="text-primary-600 font-semibold text-sm hover:underline">Learn & Enroll &rarr;</a>
+						</div>
+						<div class="p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary-400 transition-colors">
+							<h3 class="font-bold text-lg text-slate-900 mb-2">First Step Pistol Orientation</h3>
+							<p class="text-sm text-slate-600 mb-4">Express 3-hour beginner-friendly course meeting all VA CCW permit proof requirements + live fire practice.</p>
+							<a href="/first-step-pistol-orientation-fairfax-va" class="text-primary-600 font-semibold text-sm hover:underline">Learn & Enroll &rarr;</a>
+						</div>
+					</div>
+				</section>
+
+				<!-- Section 3: Step-by-Step Application Process -->
+				<section class="space-y-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900">3. Step-by-Step Application Process in Fairfax & NoVA</h2>
+					<ol class="space-y-4 list-decimal list-inside text-slate-700">
+						<li class="pl-2">
+							<strong>Complete Your In-Person CCW Training:</strong> Attend and pass an NRA-certified training course with Live Fire Instruction to receive your official certificate of completion.
+						</li>
+						<li class="pl-2">
+							<strong>Download Form SP-266:</strong> Fill out the official <em>Virginia Concealed Handgun Permit Application (Form SP-266)</em>.
+						</li>
+						<li class="pl-2">
+							<strong>Submit Application to Circuit Court Clerk:</strong> Take your application, government ID, certificate of training, and $50 fee to your local Circuit Court (e.g., Fairfax County Circuit Court at 4110 Chain Bridge Rd, Fairfax, VA 22030).
+						</li>
+						<li class="pl-2">
+							<strong>Background Check & Processing:</strong> The Sheriff's office/Police department conducts a background check. By law, decisions must be made within 45 days.
+						</li>
+						<li class="pl-2">
+							<strong>Receive Your CHP Card:</strong> Upon approval, your 5-year Concealed Handgun Permit is mailed directly to your address.
+						</li>
+					</ol>
+				</section>
+
+				<!-- Section 4: FAQ Section -->
+				<section class="space-y-6 pt-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-3">
+						<HelpCircle className="h-7 w-7 text-primary-600" />
+						Frequently Asked Questions
+					</h2>
+					<div class="space-y-4">
+						{faqs.map((faq) => (
+							<div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+								<h3 class="font-bold text-lg text-slate-900 mb-2">{faq.question}</h3>
+								<p class="text-slate-700 text-sm leading-relaxed">{faq.answer}</p>
+							</div>
+						))}
+					</div>
+				</section>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="space-y-6">
+				<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sticky top-8">
+					<h3 class="text-xl font-bold text-slate-900 mb-4">Ready to Get Certified?</h3>
+					<p class="text-slate-600 text-sm mb-6 leading-relaxed">
+						Join 7,500+ graduates who earned their Virginia Concealed Carry Permit with Live Fire Instruction at the NRA Range in Fairfax, VA.
+					</p>
+					<div class="space-y-3">
+						<Button variant="primary" href="/ccw-courses-northern-va" class="w-full justify-center py-3">
+							View Course Schedule
+						</Button>
+						<Button variant="secondary" href="/nra-basic-pistol-course-fairfax-va" class="w-full justify-center py-3">
+							NRA Basic Pistol Course
+						</Button>
+					</div>
+					<div class="mt-6 pt-6 border-t border-slate-100 text-center">
+						<span class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Location</span>
+						<p class="text-sm font-bold text-slate-800 mt-1">NRA Range – Fairfax, VA</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<CTASection />
+</BaseLayout>

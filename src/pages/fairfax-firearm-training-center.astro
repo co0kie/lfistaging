@@ -1,0 +1,116 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import Button from "@/components/Button/Button.astro";
+import LiveSchedule from "@/components/LiveSchedule/LiveSchedule.astro";
+import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
+import CTASection from "@/components/CTASection/CTASection.astro";
+import { Shield, Award, Users, CheckCircle, MapPin, Star, Target } from "lucide-react";
+
+const pageTitle = "Fairfax Firearm Training Center | CCW & Concealed Carry Classes";
+const pageDescription = "Welcome to Fairfax's trusted firearm training center. Earn your Virginia CCW permit with NRA-certified concealed carry classes. Join 7,500+ graduates. Enroll today.";
+const pageH1 = "Fairfax Firearm Training Center – CCW Permit & Concealed Carry Classes";
+
+const courseOfferings = [
+	{
+		title: "NRA Basic Pistol Course & VA CCW",
+		description: "Our signature 6-hour course combining classroom fundamentals, firearm safety mechanics, and live-fire range qualification.",
+		href: "/nra-basic-pistol-course-fairfax-va",
+		badge: "Most Popular"
+	},
+	{
+		title: "First Step Pistol Orientation",
+		description: "Express 3+ hour beginner course designed for busy individuals seeking Virginia CCW permit qualification in a supportive environment.",
+		href: "/first-step-pistol-orientation-fairfax-va",
+		badge: "Express Option"
+	},
+	{
+		title: "NRA Advanced CCW Course",
+		description: "Intermediate to advanced defensive pistol training focusing on holster draws, shoot/don't shoot diagnostics, and defensive tactics.",
+		href: "/nra-advanced-ccw-fairfax-va",
+		badge: "Advanced Skills"
+	},
+	{
+		title: "Private 1-on-1 Range Lessons",
+		description: "Tailored 60-minute personal instruction with a dedicated NRA-certified coach at the NRA Range in Fairfax, VA.",
+		href: "/private-shooting-lessons-northern-va",
+		badge: "Custom Coaching"
+	}
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+	<PageHeader title={pageH1}>
+		<p class="mx-auto mt-4 max-w-3xl text-center text-lg text-slate-200">
+			Northern Virginia's premier firearm training center based at the world-class NRA Range in Fairfax, VA. Over 7,500+ successful graduates since 2016.
+		</p>
+	</PageHeader>
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16">
+		<!-- Value Props Banner -->
+		<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+			<div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
+				<Award className="h-8 w-8 text-primary-600 mx-auto mb-3" />
+				<h3 class="text-2xl font-extrabold text-slate-900">98%</h3>
+				<p class="text-xs text-slate-500 font-semibold uppercase mt-1">Pass Rate</p>
+			</div>
+			<div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
+				<Users className="h-8 w-8 text-primary-600 mx-auto mb-3" />
+				<h3 class="text-2xl font-extrabold text-slate-900">7,500+</h3>
+				<p class="text-xs text-slate-500 font-semibold uppercase mt-1">Alumni Graduates</p>
+			</div>
+			<div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
+				<Shield className="h-8 w-8 text-primary-600 mx-auto mb-3" />
+				<h3 class="text-2xl font-extrabold text-slate-900">NRA</h3>
+				<p class="text-xs text-slate-500 font-semibold uppercase mt-1">Certified Instructors</p>
+			</div>
+			<div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
+				<MapPin className="h-8 w-8 text-primary-600 mx-auto mb-3" />
+				<h3 class="text-2xl font-extrabold text-slate-900">Fairfax</h3>
+				<p class="text-xs text-slate-500 font-semibold uppercase mt-1">NRA Range Facility</p>
+			</div>
+		</div>
+
+		<!-- Central Training Center Overview -->
+		<div class="mb-16 space-y-6 max-w-4xl mx-auto text-center">
+			<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Fairfax's Leading Firearm & Concealed Carry Training Center</h2>
+			<p class="text-slate-700 text-lg leading-relaxed">
+				Welcome to <strong>Live Fire Instruction</strong>, Fairfax's trusted firearm training center. Located at the prestigious NRA Range in Fairfax, VA, we specialize in providing state-approved concealed carry (CCW) permit certification, beginner firearm fundamentals, and defensive marksmanship instruction for residents across Fairfax City, Fairfax County, Arlington, Alexandria, Loudoun, and Prince William County.
+			</p>
+		</div>
+
+		<!-- Course Grid -->
+		<div class="mb-20">
+			<h2 class="text-2xl md:text-3xl font-bold text-slate-900 text-center mb-10">Our Firearms Training Programs</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				{courseOfferings.map((course) => (
+					<div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:border-primary-400 transition-all flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-4">
+								<span class="text-xs font-bold tracking-wider uppercase bg-primary-100 text-primary-800 px-3 py-1 rounded-full">{course.badge}</span>
+								<Target className="h-5 w-5 text-slate-400" />
+							</div>
+							<h3 class="text-xl font-bold text-slate-900 mb-3">{course.title}</h3>
+							<p class="text-slate-600 text-sm leading-relaxed mb-6">{course.description}</p>
+						</div>
+						<Button variant="primary" href={course.href} class="w-full justify-center">
+							View Course Details
+						</Button>
+					</div>
+				))}
+			</div>
+		</div>
+
+		<!-- Live Schedule & Reviews -->
+		<div class="space-y-16">
+			<div>
+				<h2 class="text-2xl md:text-3xl font-bold text-slate-900 text-center mb-8">Upcoming Fairfax Class Dates</h2>
+				<LiveSchedule />
+			</div>
+			<GoogleReviews />
+		</div>
+	</div>
+
+	<CTASection />
+</BaseLayout>

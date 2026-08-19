@@ -1,0 +1,179 @@
+---
+export const prerender = true;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import Button from "@/components/Button/Button.astro";
+import CTASection from "@/components/CTASection/CTASection.astro";
+import { Shield, RefreshCw, CheckCircle, Clock, FileText, AlertCircle, HelpCircle } from "lucide-react";
+
+const pageTitle = "Concealed Carry Permit Renewal Virginia | Fairfax & Northern VA Guide";
+const pageDescription = "Renew your Virginia concealed carry permit. Step-by-step renewal guide for Fairfax & Northern VA residents. Stay compliant with your CCW permit. Learn more.";
+const pageH1 = "Virginia Concealed Carry Permit Renewal – Guide for Fairfax & Northern VA";
+
+const faqs = [
+	{
+		question: "Do I need to take another training class to renew my Virginia CCW permit?",
+		answer: "No. You do not need to re-take a handgun training class to renew your Virginia Concealed Handgun Permit (CHP), provided you present a copy of your existing permit or original proof of training competence when filing your renewal application."
+	},
+	{
+		question: "When should I submit my Virginia CCW permit renewal application?",
+		answer: "You should submit your renewal application to your local Circuit Court Clerk at least 60 to 90 days before your current 5-year permit expires to ensure uninterrupted coverage."
+	},
+	{
+		question: "Can I renew my Virginia Concealed Handgun Permit by mail?",
+		answer: "Yes. Virginia law allows resident permit holders to renew their CHP by mail or in person at the Circuit Court Clerk's office (e.g., Fairfax County Circuit Court)."
+	},
+	{
+		question: "How much does a Virginia CCW permit renewal cost?",
+		answer: "The renewal fee is capped at $50.00 total by Virginia state law, identical to initial permit applications."
+	},
+	{
+		question: "Is there advanced training available for existing permit holders who want to refresh their skills?",
+		answer: "Yes! Many permit holders take our NRA Advanced CCW course or private 1-on-1 shooting lessons to update their defensive handgun techniques, holster work, and legal awareness."
+	}
+];
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqs.map((faq) => ({
+		"@type": "Question",
+		name: faq.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: faq.answer,
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title={pageTitle}
+	description={pageDescription}
+	schemaType="faq"
+	schemaData={schemaData}
+>
+	<PageHeader title={pageH1}>
+		<p class="mx-auto mt-4 max-w-3xl text-center text-lg text-slate-200">
+			A complete step-by-step guide to renewing your Virginia Concealed Handgun Permit (CHP) for Fairfax County and Northern Virginia residents.
+		</p>
+	</PageHeader>
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16">
+		<!-- Summary / Quick Facts -->
+		<div class="mb-12 rounded-2xl border border-primary-200 bg-primary-50/50 p-6 md:p-8 shadow-sm">
+			<div class="flex items-center gap-3 mb-4">
+				<RefreshCw className="h-7 w-7 text-primary-600" />
+				<h2 class="text-2xl font-bold text-slate-900">Virginia CCW Permit Renewal Overview</h2>
+			</div>
+			<p class="text-slate-700 leading-relaxed text-base md:text-lg mb-6">
+				Virginia Concealed Handgun Permits (CHP) are valid for <strong>5 years</strong>. To renew your permit in Fairfax County or Northern Virginia, submit a completed Form SP-266 along with a copy of your current permit and the $50 fee via mail or in-person at your local Circuit Court. No re-testing or additional basic training class is mandated by state law.
+			</p>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<Clock className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Renewal Window</span>
+						<p class="text-slate-900 font-bold">Apply 60-90 Days Prior</p>
+					</div>
+				</div>
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<FileText className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Submission Method</span>
+						<p class="text-slate-900 font-bold">In-Person or By Mail</p>
+					</div>
+				</div>
+				<div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+					<Shield className="h-6 w-6 text-primary-600 flex-shrink-0" />
+					<div>
+						<span class="text-xs text-slate-500 font-semibold uppercase">Fee Limit</span>
+						<p class="text-slate-900 font-bold">$50.00 State Cap</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+			<div class="lg:col-span-2 space-y-10">
+				<!-- Renewal Steps -->
+				<section class="space-y-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900">How to Renew Your Virginia CCW Permit Step-by-Step</h2>
+					<ol class="space-y-4 list-decimal list-inside text-slate-700">
+						<li class="pl-2">
+							<strong>Obtain State Form SP-266:</strong> Download the official <em>Virginia Concealed Handgun Permit Application</em> from the State Police website or your Circuit Court Clerk.
+						</li>
+						<li class="pl-2">
+							<strong>Check Section 1 for "Renewal":</strong> Indicate on the form that you are applying for a permit renewal.
+						</li>
+						<li class="pl-2">
+							<strong>Attach Proof of Existing Permit:</strong> Include a photocopy of your current Virginia CHP or original documentation demonstrating handgun competency.
+						</li>
+						<li class="pl-2">
+							<strong>Submit to Circuit Court Clerk:</strong> Mail or drop off your application, photocopy of ID/permit, and $50 payment to your resident Circuit Court (e.g., Fairfax County Circuit Court Clerk).
+						</li>
+						<li class="pl-2">
+							<strong>Receive Updated Permit Card:</strong> Once processed (within 45 days), your new 5-year permit card will be issued and mailed.
+						</li>
+					</ol>
+				</section>
+
+				<!-- Skill Refresh Section -->
+				<section class="space-y-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900">Sharpen Your Skills Upon Permit Renewal</h2>
+					<p class="text-slate-700 leading-relaxed">
+						While Virginia state law does not mandate a refresher class for CCW renewals, 5 years is a long time. Responsible gun owners frequently seek advanced skill refresher courses upon renewal to practice holster draw mechanics, defensive shooting under pressure, and threat identification.
+					</p>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+						<div class="p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary-400 transition-colors">
+							<h3 class="font-bold text-lg text-slate-900 mb-2">NRA Advanced CCW Course</h3>
+							<p class="text-sm text-slate-600 mb-4">Master holster draws, tactical movement, and defensive scenarios designed specifically for permit holders.</p>
+							<a href="/nra-advanced-ccw-fairfax-va" class="text-primary-600 font-semibold text-sm hover:underline">View Advanced Course &rarr;</a>
+						</div>
+						<div class="p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary-400 transition-colors">
+							<h3 class="font-bold text-lg text-slate-900 mb-2">Private 1-on-1 Range Lessons</h3>
+							<p class="text-sm text-slate-600 mb-4">Dedicated 60-minute private coaching session at the NRA Range tailored to your specific defensive carry setup.</p>
+							<a href="/private-shooting-lessons-northern-va" class="text-primary-600 font-semibold text-sm hover:underline">Book Private Coaching &rarr;</a>
+						</div>
+					</div>
+				</section>
+
+				<!-- FAQs -->
+				<section class="space-y-6 pt-4">
+					<h2 class="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-3">
+						<HelpCircle className="h-7 w-7 text-primary-600" />
+						Renewal FAQs
+					</h2>
+					<div class="space-y-4">
+						{faqs.map((faq) => (
+							<div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+								<h3 class="font-bold text-lg text-slate-900 mb-2">{faq.question}</h3>
+								<p class="text-slate-700 text-sm leading-relaxed">{faq.answer}</p>
+							</div>
+						))}
+					</div>
+				</section>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="space-y-6">
+				<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sticky top-8">
+					<h3 class="text-xl font-bold text-slate-900 mb-4">Train with Live Fire Instruction</h3>
+					<p class="text-slate-600 text-sm mb-6 leading-relaxed">
+						Elevate your marksmanship and defensive skills with NRA-certified instruction at the NRA Range in Fairfax, VA.
+					</p>
+					<div class="space-y-3">
+						<Button variant="primary" href="/nra-advanced-ccw-fairfax-va" class="w-full justify-center py-3">
+							Advanced CCW Course
+						</Button>
+						<Button variant="secondary" href="/private-shooting-lessons-northern-va" class="w-full justify-center py-3">
+							Private Shooting Lessons
+						</Button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<CTASection />
+</BaseLayout>

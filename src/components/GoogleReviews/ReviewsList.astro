@@ -38,26 +38,173 @@ export function getRelativeTime(dateStr?: string): string | undefined {
 interface Props {
 	reviews?: ReviewItem[];
 	limit?: number;
-	gridCols?: string;
 	className?: string;
 }
 
-const { reviews = [], limit, gridCols = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3", className = "" } = Astro.props;
-
+const { reviews = [], limit, className = "" } = Astro.props;
 const displayedReviews = limit ? reviews.slice(0, limit) : reviews;
 ---
 
-<div class:list={["grid gap-6", gridCols, className]}>
-	{
-		displayedReviews.map((review) => (
-			<GoogleReviewCard
-				name={review.author_name}
-				profileUrl={review.author_url}
-				photoUrl={review.profile_photo_url}
-				rating={review.rating}
-				relativeTime={getRelativeTime(review.review_date) ?? review.relative_time_description}
-				text={review.text}
-			/>
-		))
-	}
+<div class:list={["reviews-carousel-container relative w-full overflow-hidden py-2 px-2", className]} id="reviews-carousel">
+	<div class="reviews-track flex transition-transform duration-500 ease-out gap-6" id="reviews-track">
+		{
+			displayedReviews.map((review: { author_name: string | undefined; author_url: string | undefined; profile_photo_url: string | undefined; rating: number | undefined; review_date: string | undefined; relative_time_description: any; text: string | undefined; }) => (
+				<div class="review-slide w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 flex flex-col">
+					<GoogleReviewCard
+						name={review.author_name}
+						profileUrl={review.author_url}
+						photoUrl={review.profile_photo_url}
+						rating={review.rating}
+						relativeTime={getRelativeTime(review.review_date) ?? review.relative_time_description}
+						text={review.text}
+						class="h-full"
+					/>
+				</div>
+			))
+		}
+	</div>
+
+	<!-- Dot Navigation -->
+	<div class="reviews-dots flex items-center justify-center gap-2 mt-8" id="reviews-dots"></div>
 </div>
+
+<script>
+	function setupReviewsCarousel() {
+		const container = document.getElementById("reviews-carousel");
+		const track = document.getElementById("reviews-track") as HTMLElement | null;
+		const dotsContainer = document.getElementById("reviews-dots");
+
+		if (!container || !track || !dotsContainer) return;
+
+		const slides = track.querySelectorAll(".review-slide");
+		const totalSlides = slides.length;
+		if (totalSlides === 0) return;
+
+		let currentIndex = 0;
+		let autoPlayTimer: any = null;
+		let touchStartX = 0;
+		let touchEndX = 0;
+
+		function getItemsPerPage() {
+			const width = window.innerWidth;
+			if (width >= 1024) return 3;
+			if (width >= 768) return 2;
+			return 1;
+		}
+
+		function getMaxIndex() {
+			const itemsPerPage = getItemsPerPage();
+			return Math.max(0, totalSlides - itemsPerPage);
+		}
+
+		function renderDots() {
+			if (!dotsContainer) return;
+			dotsContainer.innerHTML = "";
+			const maxIndex = getMaxIndex();
+
+			for (let i = 0; i <= maxIndex; i++) {
+				const dot = document.createElement("button");
+				dot.type = "button";
+				dot.ariaLabel = `Go to slide ${i + 1}`;
+				dot.className = `h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+					i === currentIndex ? "w-8 bg-amber-500" : "w-2.5 bg-slate-300 hover:bg-slate-400"
+				}`;
+				dot.addEventListener("click", () => {
+					goToSlide(i);
+					resetAutoPlay();
+				});
+				dotsContainer.appendChild(dot);
+			}
+		}
+
+		function updateDots() {
+			if (!dotsContainer) return;
+			const dots = dotsContainer.querySelectorAll("button");
+			dots.forEach((dot, idx) => {
+				if (idx === currentIndex) {
+					dot.className = "h-2.5 rounded-full transition-all duration-300 cursor-pointer w-8 bg-amber-500";
+				} else {
+					dot.className = "h-2.5 rounded-full transition-all duration-300 cursor-pointer w-2.5 bg-slate-300 hover:bg-slate-400";
+				}
+			});
+		}
+
+		function goToSlide(index: number) {
+			if (!track) return;
+			const maxIndex = getMaxIndex();
+			if (index > maxIndex) {
+				currentIndex = 0; // Cycle the loop back to start
+			} else if (index < 0) {
+				currentIndex = maxIndex;
+			} else {
+				currentIndex = index;
+			}
+
+			const gap = 24; // gap-6 is 24px
+			const firstSlide = slides[0] as HTMLElement;
+			if (!firstSlide) return;
+			const slideWidth = firstSlide.offsetWidth;
+			const offset = currentIndex * (slideWidth + gap);
+
+			track.style.transform = `translateX(-${offset}px)`;
+			updateDots();
+		}
+
+		function startAutoPlay() {
+			stopAutoPlay();
+			autoPlayTimer = setInterval(() => {
+				goToSlide(currentIndex + 1);
+			}, 4000);
+		}
+
+		function stopAutoPlay() {
+			if (autoPlayTimer) clearInterval(autoPlayTimer);
+		}
+
+		function resetAutoPlay() {
+			stopAutoPlay();
+			startAutoPlay();
+		}
+
+		// Touch swipe handlers
+		container.addEventListener("touchstart", (e) => {
+			touchStartX = e.changedTouches[0].screenX;
+		}, { passive: true });
+
+		container.addEventListener("touchend", (e) => {
+			touchEndX = e.changedTouches[0].screenX;
+			handleSwipe();
+		}, { passive: true });
+
+		function handleSwipe() {
+			const swipeThreshold = 50;
+			if (touchStartX - touchEndX > swipeThreshold) {
+				goToSlide(currentIndex + 1);
+				resetAutoPlay();
+			} else if (touchEndX - touchStartX > swipeThreshold) {
+				goToSlide(currentIndex - 1);
+				resetAutoPlay();
+			}
+		}
+
+		// Mouse pause on hover
+		container.addEventListener("mouseenter", stopAutoPlay);
+		container.addEventListener("mouseleave", startAutoPlay);
+
+		let resizeTimeout: any = null;
+		window.addEventListener("resize", () => {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				renderDots();
+				goToSlide(currentIndex);
+			}, 100);
+		});
+
+		renderDots();
+		goToSlide(0);
+		startAutoPlay();
+	}
+
+	setupReviewsCarousel();
+	document.addEventListener("astro:after-swap", setupReviewsCarousel);
+</script>

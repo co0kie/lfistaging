@@ -4,6 +4,7 @@ import MobileNav from "@components/Nav/MobileNav/MobileNav.astro";
 import NavDropdown from "@components/Nav/NavDropdown/NavDropdown.astro";
 import NavLink from "@components/Nav/NavLink.astro";
 import SiteLogo from "@components/SiteLogo/SiteLogo.astro";
+import TopBar from "@components/Nav/TopBar.astro";
 import navData from "@config/navData.json";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 	id="nav__container"
 	class="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 left-0 z-30 flex w-full flex-col border-b border-b-transparent backdrop-blur transition-all duration-300"
 >
+	<TopBar />
 	<div class="mx-auto flex w-full">
 		<div class="site-container flex h-16 w-full items-center">
 			<header class="flex w-full items-center gap-2">
