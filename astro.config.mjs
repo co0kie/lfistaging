@@ -104,6 +104,11 @@ export default defineConfig({
 		"/nra-basic-pistol-shooting-course": "/nra-basic-pistol-course-fairfax-va",
 		"/first-step-pistol-orientation": "/first-step-pistol-orientation-fairfax-va",
 		"/one-on-one-instruction": "/private-shooting-lessons-northern-va",
-		"/nra-defensive-pistol-course": "/nra-advanced-ccw-fairfax-va"
+		"/nra-defensive-pistol-course": "/nra-advanced-ccw-fairfax-va",
+		"/nra-basic-range-safety-officer-course": "/nra-basic-pistol-course-fairfax-va",
+		"/nra-chief-range-safety-officer-course": "/nra-basic-pistol-course-fairfax-va",
+		"/nra-instructor-ccw": "/nra-basic-pistol-course-fairfax-va",
+		"/nra-instructor-pistol-shooting-course": "/nra-basic-pistol-course-fairfax-va",
+		"/nra-instructor-rifle-shooting-course": "/nra-basic-pistol-course-fairfax-va"
 	},
 });
