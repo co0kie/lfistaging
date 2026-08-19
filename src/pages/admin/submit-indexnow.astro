@@ -44,6 +44,7 @@ if (Astro.request.method === "POST") {
 
 	if (action === "logout") {
 		Astro.cookies.delete("indexnow_auth", { path: "/" });
+		Astro.cookies.set("indexnow_auth", "", { path: "/", maxAge: 0 });
 		return Astro.redirect(Astro.url.pathname);
 	}
 
@@ -422,18 +423,18 @@ const pageTitle = "IndexNow Submission | Live Fire Instruction Admin";
 											"Only class/* URLs are updated regularly (everyday weekdays). Others remain static."
 										</p>
 									</div>
-
-									<form method="POST" class="mt-4">
-										<input type="hidden" name="action" value="logout" />
-										<button 
-											type="submit" 
-											class="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3 text-sm font-semibold text-slate-500 transition-colors hover:bg-slate-50 hover:text-red-500"
-										>
-											Sign Out
-										</button>
-									</form>
 								</aside>
 							</div>
+						</form>
+
+						<form method="POST" class="mt-6">
+							<input type="hidden" name="action" value="logout" />
+							<button 
+								type="submit" 
+								class="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3 text-sm font-semibold text-slate-500 transition-colors hover:bg-slate-50 hover:text-red-500 cursor-pointer shadow-xs"
+							>
+								Sign Out
+							</button>
 						</form>
 					</>
 				)}
