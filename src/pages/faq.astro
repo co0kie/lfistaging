@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageHeader from "@/components/PageHeader/PageHeader.astro";
 import { getKeystaticReader } from "@/lib/keystatic-reader";
@@ -167,8 +168,15 @@ const schemaData = {
 		});
 	};
 
-	// Setup on view transitions and initial page load (for Astro)
+	// astro:page-load fires on every navigation with View Transitions (and on initial load)
 	document.addEventListener('astro:page-load', setupFaq);
+
+	// Fallback for dev mode / direct page load where astro:page-load may not fire in time
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupFaq);
+	} else {
+		setupFaq();
+	}
 </script>
 
 <style>
