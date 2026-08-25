@@ -3,14 +3,14 @@ import siteData from "@/config/siteData.json";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PartnersCard from "@/components/PartnersCard/PartnersCard.astro";
 import PageHeader from "@/components/PageHeader/PageHeader.astro";
+import { Award, Target, Users, ShieldCheck, MapPin } from "lucide-react";
 
 import { getCollection } from "astro:content";
-import { schemaGenerators, schemaTypes } from "@/utils/schema";
 
 const partners = await getCollection("partners", ({ data }) => data.draft !== true);
 
 const schemaData = {
-	name: "Partners",
+	name: "Affiliate Ranges",
 	description: siteData.description,
 	url: Astro.url.href,
 	partnersList: partners.map((partner) => ({
@@ -22,18 +22,114 @@ const schemaData = {
 		telephone: partner.data.phone,
 	})),
 };
+
+const offers = [
+	{
+		title: "NRA & State-Approved Curriculums",
+		description:
+			"Courses covering essential handgun safety, marksmanship fundamentals, and concealed carry qualifications.",
+		icon: Award,
+	},
+	{
+		title: "Hands-On Range Practice",
+		description:
+			"Practical live-fire execution conducted in state-of-the-art, climate-controlled indoor shooting facilities.",
+		icon: Target,
+	},
+	{
+		title: "Supportive Environment",
+		description:
+			"Low-pressure, safety-focused coaching designed for individuals, families, and new shooters of all backgrounds.",
+		icon: Users,
+	},
+];
 ---
 
 <BaseLayout
-	title="Firearm Training Partners & Shooting Ranges | Northern VA"
-	description="Explore Live Fire Instruction’s trusted partners, including top shooting ranges, local gun stores, and tactical training groups in Northern VA."
+	title="Affiliate Ranges & Firearm Training | Northern VA"
+	description="Explore Live Fire Instruction’s affiliate ranges, including top shooting ranges, local gun stores, and tactical training groups in Northern VA."
 	schemaType="partners"
 	schemaData={schemaData}
 >
-	<PageHeader title="Our Trusted Northern Virginia Firearm Partners & Shooting Ranges">
+	<PageHeader title="Affiliate Ranges & Training Facilities">
 		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
 	</PageHeader>
-	<div class="site-container mx-auto px-4 py-16">
-		<PartnersCard />
+
+	<div class="site-container mx-auto px-4 py-12 md:py-16 space-y-16">
+		{/* About Live Fire Instruction Section */}
+		<section class="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 md:p-12 shadow-xl border border-slate-800">
+			<div class="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-primary-600/20 blur-3xl pointer-events-none"></div>
+			<div class="absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
+			
+			<div class="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+				<div class="inline-flex items-center gap-2 rounded-full bg-primary-600/20 border border-primary-500/30 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary-400">
+					<ShieldCheck className="h-4 w-4" />
+					About Live Fire Instruction
+				</div>
+				
+				<h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-white">
+					Empowering You With Safe & Practical Firearm Training
+				</h2>
+
+				<div class="space-y-4 text-slate-300 text-base md:text-lg leading-relaxed text-left md:text-center max-w-3xl mx-auto">
+					<p>At Live Fire Instruction we want to help people who follow the law learn how to handle guns and feel confident when they use them. We do most of our teaching at the good NRA Headquarters Range in Fairfax, Virginia. We teach people about guns in a way that makes sense for them no matter how much they already know.</p>
+				<p>We have classes for people who have never shot a gun before people who want to get a Virginia Concealed Handgun Permit and people who want to get better at defending themselves with a gun. Our goal, at Live Fire Instruction is to teach people what they need to know to use guns in an responsible way so they can exercise their Second Amendment rights.</p>
+				</div>
+			</div>
+		</section>
+
+		{/* What We Offer Section */}
+		<section class="space-y-8">
+			<div class="text-center max-w-2xl mx-auto space-y-3">
+				<div class="inline-flex items-center gap-1.5 text-primary-600 text-xs font-bold uppercase tracking-widest">
+					<Target className="h-4 w-4" />
+					Our Core Strengths
+				</div>
+				<h2 class="font-headline text-3xl font-bold text-slate-900">What We Offer</h2>
+				<p class="text-slate-600 text-sm md:text-base">
+					Comprehensive firearm safety education built on proven techniques and hands-on experience.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+				{offers.map((offer) => {
+					const IconComponent = offer.icon;
+					return (
+						<div class="group relative rounded-2xl bg-white p-6 md:p-8 shadow-sm hover:shadow-md border border-slate-200 hover:border-primary-500/40 transition-all duration-300 flex flex-col items-start">
+							<div class="mb-5 inline-flex p-3.5 rounded-xl bg-primary-50 text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300">
+								<IconComponent className="h-6 w-6" />
+							</div>
+							<h3 class="font-headline text-xl font-bold text-slate-900 mb-2">
+								{offer.title}
+							</h3>
+							<p class="text-slate-600 text-sm leading-relaxed">
+								{offer.description}
+							</p>
+						</div>
+					);
+				})}
+			</div>
+		</section>
+
+		{/* Affiliate Ranges Section */}
+		<section class="space-y-8 pt-4">
+			<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+				<div>
+					<div class="inline-flex items-center gap-1.5 text-primary-600 text-xs font-bold uppercase tracking-widest mb-2">
+						<MapPin className="h-4 w-4" />
+						Facilities & Partners
+					</div>
+					<h2 class="font-headline text-3xl font-bold text-slate-900">
+						Our Affiliate Ranges
+					</h2>
+				</div>
+				<p class="text-slate-600 text-sm max-w-md">
+					Discover our network of trusted shooting ranges, training facilities, and partner locations across Fairfax and Northern Virginia.
+				</p>
+			</div>
+
+			<PartnersCard />
+		</section>
 	</div>
 </BaseLayout>
+

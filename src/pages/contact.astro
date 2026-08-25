@@ -11,7 +11,7 @@ import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
 // Fetch contact page data from Keystatic
 const reader = getKeystaticReader();
 const contact = await reader.singletons.contact.read();
-const pagetitle = contact?.pageTitle || "Contact Us";
+const pagetitle = contact?.pageTitle || "Contact Live Fire Instruction | Firearms Training Fairfax & Ashburn VA";
 const pageDescription = contact?.pageDescription || "Get in touch with Live Fire Instruction for premier firearms training and CCW classes in Fairfax and Ashburn, VA. Call 571-210-5651 or message us today!";
 const formInfoTitle =
 	contact?.formInfoTitle || "Customer Feedback Is The Lifeblood Of Our Business.";
@@ -55,8 +55,8 @@ const schemaData = {
 	schemaType="contact"
 	schemaData={schemaData}
 >
-	<PageHeader title="">
-		<div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
+	<PageHeader title="Contact Live Fire Instruction | Firearms Training in Virginia">
+		<div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3 mt-8">
 			<a href="/firearm-training-fairfax-va/">
 				<div
 					class="bg-blue-dark border-base-200 flex flex-col items-center rounded-xl border p-3 shadow-sm md:p-6"
@@ -244,11 +244,9 @@ const schemaData = {
 
 		<!-- Elfsight Google Reviews | Untitled Google Reviews -->
 
-		<div class="elfsight-app-1e4e082e-3632-46e6-b288-fb9dca905949" data-elfsight-app-lazy></div>
 		<div class="site-container mt-20">
 			<h2 class="mb-8 text-center text-3xl font-bold">What Our Students Say</h2>
 			<TestimonialSlider />
 		</div>
 	</section>
 </BaseLayout>
-<script src="https://elfsightcdn.com/platform.js" async is:inline></script>

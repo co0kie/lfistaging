@@ -21,10 +21,12 @@ import {
 	Calendar,
 	Clock3,
 	Crosshair,
+	ExternalLink,
 	MapPin,
 	Shield,
 	Target,
 	Users,
+	X,
 } from "lucide-react";
 import GoogleReviewCard from "@/components/GoogleReviews/GoogleReviewCard.astro";
 import GoogleReviews from "@/components/GoogleReviews/GoogleReviews.astro";
@@ -394,23 +396,29 @@ const schemaData = {
 				</div>
 
 				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-					<a
-						href="/firearm-training-fairfax-va"
-						class="transition duration-300 hover:-translate-y-1"
+					<button
+						type="button"
+						id="location-map-trigger"
+						class="w-full text-left transition duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-orange/50 rounded-[1.75rem] cursor-pointer group"
 					>
-					<div class="bg-blue-dark rounded-[1.75rem] p-6 text-white shadow-sm">
-						<div class="mb-4 flex items-center gap-3">
-							<div class="bg-orange/20 text-orange rounded-xl p-3">
-								<MapPin className="h-5 w-5" />
+						<div class="bg-blue-dark rounded-[1.75rem] p-6 text-white shadow-sm relative overflow-hidden">
+							<div class="mb-4 flex items-center justify-between">
+								<div class="flex items-center gap-3">
+									<div class="bg-orange/20 text-orange rounded-xl p-3 group-hover:bg-orange group-hover:text-blue-dark transition-colors">
+										<MapPin className="h-5 w-5" />
+									</div>
+									<p class="text-sm font-semibold tracking-[0.2em] text-slate-300 uppercase">
+										{locationLabel}
+									</p>
+								</div>
+								<span class="text-xs bg-orange/15 text-orange px-3 py-1 rounded-full font-medium flex items-center gap-1 group-hover:bg-orange group-hover:text-blue-dark transition-colors">
+									View Map <ExternalLink className="h-3 w-3 inline" />
+								</span>
 							</div>
-							<p class="text-sm font-semibold tracking-[0.2em] text-slate-300 uppercase">
-								{locationLabel}
-							</p>
+							<h3 class="font-headline text-2xl text-white">{locationTitle}</h3>
+							<p class="mt-3 text-slate-300">{locationDescription}</p>
 						</div>
-						<h3 class="font-headline text-2xl text-white">{locationTitle}</h3>
-						<p class="mt-3 text-slate-300">{locationDescription}</p>
-					</div>
-					</a>
+					</button>
 
 					<a
 						href="/ccw-courses-northern-va"
@@ -593,7 +601,7 @@ const schemaData = {
 							href="/partners"
 							class="text-primary inline-flex items-center gap-1 font-semibold hover:underline"
 						>
-							Learn About Our Partners <span>&rarr;</span>
+							Learn About Our Affiliate Ranges <span>&rarr;</span>
 						</a>
 					</div>
 				</div>
@@ -625,4 +633,136 @@ const schemaData = {
 		ctaLink={ctaSectionCtaUrl}
 	/>
 	<GoogleReviews />
+
+	<!-- Location Google Map Modal -->
+	<div
+		id="location-map-modal"
+		class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300 hidden"
+		aria-labelledby="map-modal-title"
+		role="dialog"
+		aria-modal="true"
+	>
+		<!-- Backdrop -->
+		<div
+			id="location-map-backdrop"
+			class="fixed inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity"
+		></div>
+
+		<!-- Modal Dialog -->
+		<div
+			class="location-modal-content relative z-10 w-full max-w-3xl transform rounded-3xl bg-white shadow-2xl transition-all scale-95 border border-slate-100 overflow-hidden"
+		>
+			<!-- Modal Header -->
+			<div class="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/80">
+				<div class="flex items-center gap-3">
+					<div class="bg-orange/20 text-orange rounded-xl p-2.5">
+						<MapPin className="h-5 w-5" />
+					</div>
+					<div>
+						<h3 id="map-modal-title" class="font-headline text-xl font-bold text-slate-900">
+							Training Location
+						</h3>
+						<p class="text-xs text-slate-500 font-medium">
+							11250 Waples Mill Rd, Fairfax, VA 22030
+						</p>
+					</div>
+				</div>
+				<button
+					type="button"
+					id="location-map-close"
+					class="rounded-full p-2 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-orange/50 cursor-pointer"
+					aria-label="Close modal"
+				>
+					<X className="h-5 w-5" />
+				</button>
+			</div>
+
+			<!-- Modal Body: Google Map iFrame -->
+			<div class="relative w-full aspect-video bg-slate-100 min-h-[350px]">
+				<iframe
+					src="https://maps.google.com/maps?q=11250+Waples+Mill+Rd,+Fairfax,+VA+22030&t=&z=15&ie=UTF8&iwloc=&output=embed"
+					width="100%"
+					height="100%"
+					style="border:0;"
+					allowfullscreen=""
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+					title="Training Location Google Map"
+					class="w-full h-full min-h-[350px]"
+				></iframe>
+			</div>
+
+			<!-- Modal Footer -->
+			<div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100 px-6 py-4 bg-slate-50/80">
+				<a
+					href="/firearm-training-fairfax-va"
+					class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors hover:underline"
+				>
+					View Fairfax Location Details &rarr;
+				</a>
+				<a
+					href="https://maps.app.goo.gl/pSXvpaSZ7HDZbgj4A"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-orange px-5 py-2.5 text-sm font-bold text-blue-dark shadow-sm hover:bg-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-orange/50"
+				>
+					Open in Google Maps
+					<ExternalLink className="h-4 w-4" />
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const triggerBtn = document.getElementById("location-map-trigger");
+			const modal = document.getElementById("location-map-modal");
+			const closeBtn = document.getElementById("location-map-close");
+			const backdrop = document.getElementById("location-map-backdrop");
+
+			function openModal() {
+				if (!modal) return;
+				modal.classList.remove("hidden");
+				requestAnimationFrame(() => {
+					modal.classList.remove("opacity-0", "pointer-events-none");
+					modal.classList.add("opacity-100", "pointer-events-auto");
+					const content = modal.querySelector(".location-modal-content");
+					if (content) {
+						content.classList.remove("scale-95");
+						content.classList.add("scale-100");
+					}
+				});
+				document.body.style.overflow = "hidden";
+			}
+
+			function closeModal() {
+				if (!modal) return;
+				modal.classList.remove("opacity-100", "pointer-events-auto");
+				modal.classList.add("opacity-0", "pointer-events-none");
+				const content = modal.querySelector(".location-modal-content");
+				if (content) {
+					content.classList.remove("scale-100");
+					content.classList.add("scale-95");
+				}
+				setTimeout(() => {
+					modal.classList.add("hidden");
+					document.body.style.overflow = "";
+				}, 300);
+			}
+
+			triggerBtn?.addEventListener("click", (e) => {
+				e.preventDefault();
+				openModal();
+			});
+
+			closeBtn?.addEventListener("click", closeModal);
+			backdrop?.addEventListener("click", closeModal);
+
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) {
+					closeModal();
+				}
+			});
+		});
+	</script>
 </BaseLayout>
