@@ -7,7 +7,23 @@ const isCalendarPage =
 	Astro.url.pathname === "/ccw-courses-northern-va" ||
 	Astro.url.pathname === "/ccw-courses-northern-va/" ||
 	Astro.url.pathname === "/ccw-classes-fairfax-va";
-const { category, defaultTab, onlyTab } = Astro.props;
+interface Props {
+	category?: string;
+	defaultTab?: string;
+	onlyTab?: string;
+	title?: string | null;
+	description?: string | null;
+	hideHeader?: boolean;
+}
+
+const {
+	category,
+	defaultTab,
+	onlyTab,
+	title = "Get Your Virginia Concealed Carry Permit",
+	description = "Gain hands-on, NRA-certified training for all experience levels at the NRA Range in Fairfax, VA.",
+	hideHeader = false,
+} = Astro.props;
 ---
 
 <section
@@ -17,58 +33,60 @@ const { category, defaultTab, onlyTab } = Astro.props;
 	data-default-tab={defaultTab}
 	data-only-tab={onlyTab}
 >
-	<div class="site-container mx-auto relative z-10">
-		<div class="mb-12 text-center">
-			<h2 class="font-headline text-blue mb-4 text-3xl font-bold md:text-4xl">
-				Get Your Virginia Concealed Carry Permit
-			</h2>
-			<p class="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed">
-				Gain hands-on, NRA-certified training for all experience levels at the NRA Range in Fairfax, VA.
-			</p>
-			{
-				// If not on calendar page, show link to schedule
-				!isCalendarPage && (
-					<a
-						href={`${siteUrl}/ccw-courses-northern-va`}
-						class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
-					>
-						View Full Calendar Site
-						<ArrowRight size={20} />
-					</a>
-				)
-			}
-		</div>
+	<div class="site-container relative z-10 mx-auto">
+		{
+			!hideHeader && (title || description) && (
+				<div class="mb-12 text-center">
+					{title && (
+						<h2 class="font-headline text-blue mb-4 text-3xl font-bold md:text-4xl">
+							{title}
+						</h2>
+					)}
+					{description && (
+						<p class="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed">
+							{description}
+						</p>
+					)}
+					{!isCalendarPage && (
+						<a
+							href={`${siteUrl}/ccw-courses-northern-va`}
+							class="text-primary mt-4 inline-flex items-center gap-2 font-semibold hover:underline md:text-lg"
+						>
+							View Full Calendar Site
+							<ArrowRight size={20} />
+						</a>
+					)}
+				</div>
+			)
+		}
 
 		{/* Category Navigation Tabs */}
-		<div id="schedule-tabs" class="mb-10 hidden flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+		<div
+			id="schedule-tabs"
+			class="mb-10 hidden flex-wrap items-center justify-center gap-2.5 sm:gap-3"
+		>
 			<button
 				type="button"
 				data-tab="all"
-				class="schedule-tab-btn active-tab flex items-center gap-2.5 rounded-xl px-5 py-3 text-sm font-bold transition-all cursor-pointer bg-blue text-white shadow-md shadow-blue/20 ring-2 ring-blue/30 active:scale-95"
+				class="schedule-tab-btn active-tab bg-blue shadow-blue/20 ring-blue/30 flex cursor-pointer items-center gap-2.5 rounded-xl px-5 py-3 text-sm font-bold text-white shadow-md ring-2 transition-all active:scale-95"
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
 				<span>All Classes</span>
-				<span class="tab-count rounded-full bg-white/20 px-2 py-0.5 text-xs font-black text-white ml-0.5">0</span>
 			</button>
 
 			<button
 				type="button"
 				data-tab="first-steps"
-				class="schedule-tab-btn flex items-center gap-2.5 rounded-xl px-5 py-3 text-sm font-semibold transition-all cursor-pointer border border-gray-200 bg-white text-gray-700 hover:border-blue/40 hover:bg-blue/5 hover:text-blue active:scale-95"
+				class="schedule-tab-btn hover:border-blue/40 hover:bg-blue/5 hover:text-blue flex cursor-pointer items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-all active:scale-95"
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 				<span>First Steps Express & CCW</span>
-				<span class="tab-count rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600 ml-0.5">0</span>
 			</button>
 
 			<button
 				type="button"
 				data-tab="basic-pistol"
-				class="schedule-tab-btn flex items-center gap-2.5 rounded-xl px-5 py-3 text-sm font-semibold transition-all cursor-pointer border border-gray-200 bg-white text-gray-700 hover:border-blue/40 hover:bg-blue/5 hover:text-blue active:scale-95"
+				class="schedule-tab-btn hover:border-blue/40 hover:bg-blue/5 hover:text-blue flex cursor-pointer items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-all active:scale-95"
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
 				<span>Basic Pistol & CCW</span>
-				<span class="tab-count rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600 ml-0.5">0</span>
 			</button>
 		</div>
 
@@ -156,10 +174,21 @@ const { category, defaultTab, onlyTab } = Astro.props;
 		const toCourseSlug = (name: string) => {
 			if (!name) return "";
 			const lower = name.toLowerCase();
-			if (lower.includes("basic pistol") || lower.includes("basics of pistol")) return "nra-basic-pistol-ccw-fairfax-va";
+			if (lower.includes("basic pistol") || lower.includes("basics of pistol"))
+				return "nra-basic-pistol-ccw-fairfax-va";
 			if (lower.includes("first step")) return "nra-first-steps-ccw-fairfax-va";
-			if (lower.includes("one-on-one") || lower.includes("one on one") || lower.includes("personal training")) return "one-on-one-training";
-			if (lower.includes("defensive pistol") || lower.includes("advanced pistol") || (lower.includes("nra") && lower.includes("ccw") && lower.includes("course"))) return "nra-ccw-advanced";
+			if (
+				lower.includes("one-on-one") ||
+				lower.includes("one on one") ||
+				lower.includes("personal training")
+			)
+				return "one-on-one-training";
+			if (
+				lower.includes("defensive pistol") ||
+				lower.includes("advanced pistol") ||
+				(lower.includes("nra") && lower.includes("ccw") && lower.includes("course"))
+			)
+				return "nra-ccw-advanced";
 			if (lower.includes("refuse to be a victim")) return "refuse-to-be-a-victim";
 			if (lower.includes("chief range safety officer")) return "nra-crso-course";
 			if (lower.includes("range safety officer")) return "nra-rso-course";
@@ -174,7 +203,12 @@ const { category, defaultTab, onlyTab } = Astro.props;
 			const slug = (courseSlug || "").toLowerCase();
 
 			if (slug.includes("first-step") || lower.includes("first step")) return "first-steps";
-			if (slug.includes("basic-pistol") || lower.includes("basic pistol") || lower.includes("basics of pistol")) return "basic-pistol";
+			if (
+				slug.includes("basic-pistol") ||
+				lower.includes("basic pistol") ||
+				lower.includes("basics of pistol")
+			)
+				return "basic-pistol";
 			return "basic-pistol";
 		};
 
@@ -182,7 +216,9 @@ const { category, defaultTab, onlyTab } = Astro.props;
 			if (!dateStr) return "";
 			const d = new Date(dateStr);
 			if (isNaN(d.getTime())) return "";
-			const month = d.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" }).toLowerCase();
+			const month = d
+				.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" })
+				.toLowerCase();
 			const day = d.toLocaleDateString("en-US", { day: "numeric", timeZone: "America/New_York" });
 			const year = d.toLocaleDateString("en-US", { year: "numeric", timeZone: "America/New_York" });
 			return `${month}-${day}-${year}`;
@@ -197,12 +233,21 @@ const { category, defaultTab, onlyTab } = Astro.props;
 				shortTitle = "Basic Pistol Course & VA Concealed Carry Permit (An NRA Program)";
 				badges = ["NRA Certified", "VA Permit Eligible"];
 			} else if (lower.includes("first step")) {
-				shortTitle = "First Steps Shooting Course & VA Concealed Carry Permit / Express Course (An NRA Program)";
+				shortTitle =
+					"First Steps Shooting Course & VA Concealed Carry Permit / Express Course (An NRA Program)";
 				badges = ["NRA Certified", "VA Permit Eligible", "Express"];
-			} else if (lower.includes("one-on-one") || lower.includes("one on one") || lower.includes("personal training")) {
+			} else if (
+				lower.includes("one-on-one") ||
+				lower.includes("one on one") ||
+				lower.includes("personal training")
+			) {
 				shortTitle = "1-on-1 Firearm Instruction";
 				badges = ["Private Training", "Custom Pace"];
-			} else if (lower.includes("defensive pistol") || lower.includes("advanced pistol") || (lower.includes("nra") && lower.includes("ccw"))) {
+			} else if (
+				lower.includes("defensive pistol") ||
+				lower.includes("advanced pistol") ||
+				(lower.includes("nra") && lower.includes("ccw"))
+			) {
 				shortTitle = "NRA Advanced Defensive Pistol";
 				badges = ["NRA Certified", "Advanced Level"];
 			} else if (lower.includes("refuse to be a victim")) {
@@ -241,7 +286,7 @@ const { category, defaultTab, onlyTab } = Astro.props;
 					dayNum: "--",
 					timeShort: "",
 					formattedSummary: "Date TBA",
-					available_seats: availableSeats
+					available_seats: availableSeats,
 				};
 			}
 			const d = new Date(dateStr);
@@ -251,20 +296,40 @@ const { category, defaultTab, onlyTab } = Astro.props;
 					dayNum: "--",
 					timeShort: "",
 					formattedSummary: "Date TBA",
-					available_seats: availableSeats
+					available_seats: availableSeats,
 				};
 			}
 
-			const weekday = d.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/New_York" }).toUpperCase();
-			const month = d.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" }).toUpperCase();
+			const weekday = d
+				.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/New_York" })
+				.toUpperCase();
+			const month = d
+				.toLocaleDateString("en-US", { month: "short", timeZone: "America/New_York" })
+				.toUpperCase();
 			const weekdayMonth = `${weekday}, ${month}`;
-			const dayNum = d.toLocaleDateString("en-US", { day: "numeric", timeZone: "America/New_York" });
-			const timeShort = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
+			const dayNum = d.toLocaleDateString("en-US", {
+				day: "numeric",
+				timeZone: "America/New_York",
+			});
+			const timeShort = d.toLocaleTimeString("en-US", {
+				hour: "numeric",
+				minute: "2-digit",
+				hour12: true,
+				timeZone: "America/New_York",
+			});
 
-			const datePart = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
-			const seatsStatus = availableSeats <= 0 
-				? "(Sold Out)" 
-				: (availableSeats === 1 ? "(1 seat left)" : `(${availableSeats} seats left)`);
+			const datePart = d.toLocaleDateString("en-US", {
+				weekday: "short",
+				month: "short",
+				day: "numeric",
+				timeZone: "America/New_York",
+			});
+			const seatsStatus =
+				availableSeats <= 0
+					? "(Sold Out)"
+					: availableSeats === 1
+						? "(1 seat left)"
+						: `(${availableSeats} seats left)`;
 
 			const formattedSummary = `${datePart} · ${timeShort} ${seatsStatus}`;
 
@@ -273,7 +338,7 @@ const { category, defaultTab, onlyTab } = Astro.props;
 				dayNum,
 				timeShort,
 				formattedSummary,
-				available_seats: availableSeats
+				available_seats: availableSeats,
 			};
 		};
 
@@ -286,19 +351,23 @@ const { category, defaultTab, onlyTab } = Astro.props;
 
 				const dateSlug = formatDateSlug(event.start_date);
 				const url = dateSlug ? `/class/${courseSlug}/${dateSlug}` : `/class/${courseSlug}`;
-				const seats = typeof event.available_seats === 'number' ? event.available_seats : 12;
+				const seats = typeof event.available_seats === "number" ? event.available_seats : 12;
 				const dateInfo = formatSessionDate(event.start_date, seats);
 
 				const session = {
 					id: event.id,
 					start_date: event.start_date,
 					url,
-					...dateInfo
+					...dateInfo,
 				};
 
 				if (!map.has(courseSlug)) {
 					const { shortTitle, badges } = getCourseMeta(event.name || "");
-					const courseCategory = getCourseCategory(event.name || "", courseSlug, event.category_name || event.category);
+					const courseCategory = getCourseCategory(
+						event.name || "",
+						courseSlug,
+						event.category_name || event.category,
+					);
 					map.set(courseSlug, {
 						courseSlug,
 						category: courseCategory,
@@ -309,7 +378,7 @@ const { category, defaultTab, onlyTab } = Astro.props;
 						background: event.background || "",
 						price: event.ticket_items?.price?.[0] || "0",
 						address: event.address || "NRA Range, 11250 Waples Mill Road, Fairfax, VA",
-						sessions: [session]
+						sessions: [session],
 					});
 				} else {
 					map.get(courseSlug).sessions.push(session);
@@ -343,7 +412,7 @@ const { category, defaultTab, onlyTab } = Astro.props;
 
 					<div class="flex flex-1 flex-col p-6">
 						<div class="mb-2.5 flex flex-wrap items-center gap-1.5">
-							${course.badges.map((b: string) => `<span class="rounded-full bg-blue/10 px-2.5 py-0.5 text-sm font-semibold text-blue-800">${b}</span>`).join('')}
+							${course.badges.map((b: string) => `<span class="rounded-full bg-blue/10 px-2.5 py-0.5 text-sm font-semibold text-blue-800">${b}</span>`).join("")}
 						</div>
 
 						<h3 class="text-blue mb-2 text-2xl font-bold leading-tight">
@@ -364,53 +433,57 @@ const { category, defaultTab, onlyTab } = Astro.props;
 										Select Class Date:
 									</span>
 									<span class="date-selected-summary text-sm font-semibold text-blue">
-										${firstSession ? firstSession.formattedSummary : 'Select Date'}
+										${firstSession ? firstSession.formattedSummary : "Select Date"}
 									</span>
 								</div>
 
 								<div class="flex flex-col gap-2.5" style="min-height: 15.5rem;">
-									${course.sessions.map((s: any, idx: number) => {
-										const parts = (s.weekdayMonth || "").split(', ');
-										const dayName = parts[0] || "";
-										const monthName = parts[1] || "";
-										const isHidden = idx >= 4;
-										return `
+									${course.sessions
+										.map((s: any, idx: number) => {
+											const parts = (s.weekdayMonth || "").split(", ");
+											const dayName = parts[0] || "";
+											const monthName = parts[1] || "";
+											const isHidden = idx >= 4;
+											return `
 											<button
 												type="button"
 												data-url="${s.url}"
 												data-summary="${s.formattedSummary}"
-												class="date-pill-btn group/btn flex items-center justify-between rounded-xl border p-2.5 text-left transition-all cursor-pointer w-full ${isHidden ? 'extra-session-pill hidden' : ''} ${
+												class="date-pill-btn group/btn flex items-center justify-between rounded-xl border p-2.5 text-left transition-all cursor-pointer w-full ${isHidden ? "extra-session-pill hidden" : ""} ${
 													idx === 0
-														? 'active-date bg-blue border-blue text-white shadow-sm font-bold ring-2 ring-blue/20'
-														: 'border-gray-200 bg-gray-50/80 text-gray-800'
+														? "active-date bg-blue border-blue text-white shadow-sm font-bold ring-2 ring-blue/20"
+														: "border-gray-200 bg-gray-50/80 text-gray-800"
 												}"
 											>
 												<div class="flex items-center gap-3">
 													<div class="inner-date-badge flex h-11 w-11 flex-col items-center justify-center rounded-lg border border-gray-200 bg-white transition-all">
-														<span class="date-month text-[10px] font-extrabold uppercase tracking-wider ${idx === 0 ? 'text-white/80' : 'text-gray-500'}">${monthName}</span>
-														<span class="date-day text-base font-black leading-none ${idx === 0 ? 'text-white' : 'text-gray-900'}">${s.dayNum}</span>
+														<span class="date-month text-[10px] font-extrabold uppercase tracking-wider ${idx === 0 ? "text-white/80" : "text-gray-500"}">${monthName}</span>
+														<span class="date-day text-base font-black leading-none ${idx === 0 ? "text-white" : "text-gray-900"}">${s.dayNum}</span>
 													</div>
 													
 													<div class="flex flex-col">
-														<span class="date-weekday text-[10px] font-extrabold uppercase tracking-widest ${idx === 0 ? 'text-white/80' : 'text-gray-400'}">${dayName}</span>
-														<span class="date-time text-sm font-semibold ${idx === 0 ? 'text-white/90' : 'text-gray-700'}">${s.timeShort}</span>
+														<span class="date-weekday text-[10px] font-extrabold uppercase tracking-widest ${idx === 0 ? "text-white/80" : "text-gray-400"}">${dayName}</span>
+														<span class="date-time text-sm font-semibold ${idx === 0 ? "text-white/90" : "text-gray-700"}">${s.timeShort}</span>
 													</div>
 												</div>
 												<div class="availability-badge rounded-full px-2.5 py-1 text-xs font-bold transition-all ${
-													s.available_seats <= 0 
-														? 'bg-red-50 text-red-600 border border-red-100' 
-														: (s.available_seats <= 3 
-															? 'bg-amber-50 text-amber-700 border border-amber-100' 
-															: 'bg-emerald-50 text-emerald-700 border border-emerald-100')
+													s.available_seats <= 0
+														? "bg-red-50 text-red-600 border border-red-100"
+														: s.available_seats <= 3
+															? "bg-amber-50 text-amber-700 border border-amber-100"
+															: "bg-emerald-50 text-emerald-700 border border-emerald-100"
 												}">
-													${s.available_seats <= 0 ? 'Sold Out' : `${s.available_seats} Left`}
+													${s.available_seats <= 0 ? "Sold Out" : `${s.available_seats} Left`}
 												</div>
 											</button>
 										`;
-									}).join('')}
+										})
+										.join("")}
 								</div>
 
-								${hasMoreDates ? `
+								${
+									hasMoreDates
+										? `
 									<button
 										type="button"
 										class="load-more-dates-btn mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-blue/30 bg-blue/5 py-2.5 text-xs font-bold text-blue transition-all hover:bg-blue hover:text-white hover:border-blue cursor-pointer shadow-xs active:scale-[0.98]"
@@ -418,7 +491,9 @@ const { category, defaultTab, onlyTab } = Astro.props;
 										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="m6 9 6 6 6-6"/></svg>
 										<span class="load-more-label">Load More Available Dates (${remainingCount} remaining)</span>
 									</button>
-								` : ''}
+								`
+										: ""
+								}
 							</div>
 						</div>
 
@@ -444,22 +519,45 @@ const { category, defaultTab, onlyTab } = Astro.props;
 
 			tabBtns.forEach((btn) => {
 				const btnTab = (btn as HTMLElement).dataset.tab;
-				const countSpan = btn.querySelector(".tab-count");
 
 				if (btnTab === tabId) {
-					btn.classList.add("active-tab", "bg-blue", "text-white", "shadow-md", "shadow-blue/20", "ring-2", "ring-blue/30");
-					btn.classList.remove("border", "border-gray-200", "bg-white", "text-gray-700", "hover:border-blue/40", "hover:bg-blue/5", "hover:text-blue");
-					if (countSpan) {
-						countSpan.classList.add("bg-white/20", "text-white");
-						countSpan.classList.remove("bg-gray-100", "text-gray-600");
-					}
+					btn.classList.add(
+						"active-tab",
+						"bg-blue",
+						"text-white",
+						"shadow-md",
+						"shadow-blue/20",
+						"ring-2",
+						"ring-blue/30",
+					);
+					btn.classList.remove(
+						"border",
+						"border-gray-200",
+						"bg-white",
+						"text-gray-700",
+						"hover:border-blue/40",
+						"hover:bg-blue/5",
+						"hover:text-blue",
+					);
 				} else {
-					btn.classList.remove("active-tab", "bg-blue", "text-white", "shadow-md", "shadow-blue/20", "ring-2", "ring-blue/30");
-					btn.classList.add("border", "border-gray-200", "bg-white", "text-gray-700", "hover:border-blue/40", "hover:bg-blue/5", "hover:text-blue");
-					if (countSpan) {
-						countSpan.classList.remove("bg-white/20", "text-white");
-						countSpan.classList.add("bg-gray-100", "text-gray-600");
-					}
+					btn.classList.remove(
+						"active-tab",
+						"bg-blue",
+						"text-white",
+						"shadow-md",
+						"shadow-blue/20",
+						"ring-2",
+						"ring-blue/30",
+					);
+					btn.classList.add(
+						"border",
+						"border-gray-200",
+						"bg-white",
+						"text-gray-700",
+						"hover:border-blue/40",
+						"hover:bg-blue/5",
+						"hover:text-blue",
+					);
 				}
 			});
 
@@ -478,28 +576,6 @@ const { category, defaultTab, onlyTab } = Astro.props;
 			} else {
 				emptyEl?.classList.add("hidden");
 			}
-		}
-
-		function updateTabCounts(masterCourses: any[]) {
-			const counts: Record<string, number> = {
-				all: masterCourses.length,
-				"first-steps": 0,
-				"basic-pistol": 0,
-			};
-
-			masterCourses.forEach((c) => {
-				if (c.category && counts[c.category] !== undefined) {
-					counts[c.category]++;
-				}
-			});
-
-			document.querySelectorAll(".schedule-tab-btn").forEach((btn) => {
-				const tab = (btn as HTMLElement).dataset.tab;
-				const countSpan = btn.querySelector(".tab-count");
-				if (tab && countSpan && counts[tab] !== undefined) {
-					countSpan.textContent = counts[tab].toString();
-				}
-			});
 		}
 
 		let lastPage = 1;
@@ -546,8 +622,6 @@ const { category, defaultTab, onlyTab } = Astro.props;
 				eventsGrid.innerHTML = masterCourses.map(renderMasterCard).join("");
 			}
 
-			updateTabCounts(masterCourses);
-
 			const tabsContainer = document.getElementById("schedule-tabs");
 			tabsContainer?.classList.remove("hidden");
 			tabsContainer?.classList.add("flex");
@@ -587,21 +661,44 @@ const { category, defaultTab, onlyTab } = Astro.props;
 
 				document.querySelectorAll(".schedule-tab-btn").forEach((btn) => {
 					const btnTab = (btn as HTMLElement).dataset.tab;
-					const countSpan = btn.querySelector(".tab-count");
 					if (btnTab === tab) {
-						btn.classList.add("active-tab", "bg-blue", "text-white", "shadow-md", "shadow-blue/20", "ring-2", "ring-blue/30");
-						btn.classList.remove("border", "border-gray-200", "bg-white", "text-gray-700", "hover:border-blue/40", "hover:bg-blue/5", "hover:text-blue");
-						if (countSpan) {
-							countSpan.classList.add("bg-white/20", "text-white");
-							countSpan.classList.remove("bg-gray-100", "text-gray-600");
-						}
+						btn.classList.add(
+							"active-tab",
+							"bg-blue",
+							"text-white",
+							"shadow-md",
+							"shadow-blue/20",
+							"ring-2",
+							"ring-blue/30",
+						);
+						btn.classList.remove(
+							"border",
+							"border-gray-200",
+							"bg-white",
+							"text-gray-700",
+							"hover:border-blue/40",
+							"hover:bg-blue/5",
+							"hover:text-blue",
+						);
 					} else {
-						btn.classList.remove("active-tab", "bg-blue", "text-white", "shadow-md", "shadow-blue/20", "ring-2", "ring-blue/30");
-						btn.classList.add("border", "border-gray-200", "bg-white", "text-gray-700", "hover:border-blue/40", "hover:bg-blue/5", "hover:text-blue");
-						if (countSpan) {
-							countSpan.classList.remove("bg-white/20", "text-white");
-							countSpan.classList.add("bg-gray-100", "text-gray-600");
-						}
+						btn.classList.remove(
+							"active-tab",
+							"bg-blue",
+							"text-white",
+							"shadow-md",
+							"shadow-blue/20",
+							"ring-2",
+							"ring-blue/30",
+						);
+						btn.classList.add(
+							"border",
+							"border-gray-200",
+							"bg-white",
+							"text-gray-700",
+							"hover:border-blue/40",
+							"hover:bg-blue/5",
+							"hover:text-blue",
+						);
 					}
 				});
 
@@ -656,7 +753,16 @@ const { category, defaultTab, onlyTab } = Astro.props;
 				const summary = dateBtn.dataset.summary || "";
 
 				card.querySelectorAll(".date-pill-btn").forEach((b) => {
-					b.classList.remove("active-date", "bg-blue", "border-blue", "text-white", "shadow-md", "font-bold", "ring-2", "ring-blue/20");
+					b.classList.remove(
+						"active-date",
+						"bg-blue",
+						"border-blue",
+						"text-white",
+						"shadow-md",
+						"font-bold",
+						"ring-2",
+						"ring-blue/20",
+					);
 					b.classList.add("border-gray-200", "bg-gray-50/80", "text-gray-800");
 
 					const monthSpan = b.querySelector(".date-month");
@@ -676,7 +782,16 @@ const { category, defaultTab, onlyTab } = Astro.props;
 					}
 				});
 
-				dateBtn.classList.add("active-date", "bg-blue", "border-blue", "text-white", "shadow-md", "font-bold", "ring-2", "ring-blue/20");
+				dateBtn.classList.add(
+					"active-date",
+					"bg-blue",
+					"border-blue",
+					"text-white",
+					"shadow-md",
+					"font-bold",
+					"ring-2",
+					"ring-blue/20",
+				);
 				dateBtn.classList.remove("border-gray-200", "bg-gray-50/80", "text-gray-800");
 
 				const monthSpan = dateBtn.querySelector(".date-month");
@@ -739,8 +854,12 @@ const { category, defaultTab, onlyTab } = Astro.props;
 		animation: book-spin 0.75s linear infinite;
 	}
 	@keyframes book-spin {
-		from { transform: rotate(0deg); }
-		to   { transform: rotate(360deg); }
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 	.line-clamp-2 {
 		display: -webkit-box;

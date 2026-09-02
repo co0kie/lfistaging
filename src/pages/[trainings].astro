@@ -241,70 +241,73 @@ const schemaType = isNRADefensivePistol ? "faqpage" : "course";
 			</div>				
 			}
 		</section>
-			{item.data.hasMap.value &&
-			<section class="bg-surface border-y border-gray-200 py-20">
-				<div class="mx-auto max-w-6xl px-4">
-					<div
-						class="grid grid-cols-1 gap-8 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl md:grid-cols-2"
-				>
-					<!-- Info -->
-					<div class="flex flex-col justify-center p-8 md:p-12">
-						<div class="mb-6">
-							<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>Class Location & Facility Details</span>
-							<h3 class="mt-2 text-3xl font-bold text-gray-900">{item.data.hasMap.value.mapTitle}</h3>
-						</div>
 
-						<div class="space-y-6">
-							<div class="flex items-start gap-4">
-								<div class:list={["rounded-lg p-3", isInstructor ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-primary"]}>
-									<MapPin className="mt-0.5 h-5 w-5 flex-shrink-0" />
-								</div>
-								<div>
-									{item.data.hasMap.value.address && item.data.hasMap.value.address.map((address, index) => (
-										<>
-										{index === 0 ? <p class="font-semibold text-gray-900">{address}</p> : <p class="text-gray-600">{address}</p>}
-										</>
-									))}
-								</div>
-								
-							</div>
-<em class="text-gray-600">{item.data.hasMap.value.mapQuotes}</em>
-
-						</div>
-					</div>
-
-					<!-- Map -->
-					<div class="relative h-64 min-h-[300px] bg-gray-100 md:h-auto">
-
-						<iframe
-							class="absolute inset-0 h-full w-full opacity-80 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
-							loading="lazy"
-							src={item.data.hasMap?.value.mapLink}
-							title={item.data.hasMap?.value.mapTitle}
-							aria-label={item.data.hasMap?.value.mapTitle}
-						>
-						</iframe>
-					</div>
-				</div>
-			</div>
-		</section>
-		}
-	</div>
-
-	<!-- Bottom Sticky CTA for Mobile or Footer CTA -->
-	<div id="register" class="border-t border-gray-200 bg-gray-50 py-12 register">
-		<div class="site-container mx-auto px-4 prose max-w-6xl text-left">
-			<Content />
-		</div>
-		<div id="iframe" class="relative mt-12">
+		{/* Live Booking Schedule */}
+		<div id="iframe" class="relative border-y border-gray-200 bg-gray-50 py-12">
 			<div class="bg-dots"></div>
-			
+			<div class="site-container mx-auto px-4">
 				<LiveSchedule
 					category={item.id === "first-step-pistol-orientation-fairfax-va" ? "607" : (item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "133" : undefined}
 					defaultTab={(item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "basic-pistol" : item.id === "first-step-pistol-orientation-fairfax-va" ? "first-steps" : "all"}
 					onlyTab={(item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "basic-pistol" : item.id === "first-step-pistol-orientation-fairfax-va" ? "first-steps" : undefined}
 				/>
+			</div>
 		</div>
+
+		{/* Detailed Course Content & Laws */}
+		<div id="register" class="py-12 register">
+			<div class="site-container mx-auto max-w-6xl px-4 text-left prose">
+				<Content />
+			</div>
+		</div>
+
+		{/* Location & Facility Details */}
+		{item.data.hasMap.value &&
+			<section class="bg-surface border-t border-gray-200 py-20">
+				<div class="mx-auto max-w-6xl px-4">
+					<div
+						class="grid grid-cols-1 gap-8 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl md:grid-cols-2"
+					>
+						<!-- Info -->
+						<div class="flex flex-col justify-center p-8 md:p-12">
+							<div class="mb-6">
+								<span class:list={["text-sm font-bold tracking-wider uppercase", isInstructor ? "text-blue-600" : "text-primary"]}>Class Location & Facility Details</span>
+								<h3 class="mt-2 text-3xl font-bold text-gray-900">{item.data.hasMap.value.mapTitle}</h3>
+							</div>
+
+							<div class="space-y-6">
+								<div class="flex items-start gap-4">
+									<div class:list={["rounded-lg p-3", isInstructor ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-primary"]}>
+										<MapPin className="mt-0.5 h-5 w-5 flex-shrink-0" />
+									</div>
+									<div>
+										{item.data.hasMap.value.address && item.data.hasMap.value.address.map((address, index) => (
+											<>
+											{index === 0 ? <p class="font-semibold text-gray-900">{address}</p> : <p class="text-gray-600">{address}</p>}
+											</>
+										))}
+									</div>
+									
+								</div>
+								<em class="text-gray-600">{item.data.hasMap.value.mapQuotes}</em>
+							</div>
+						</div>
+
+						<!-- Map -->
+						<div class="relative h-64 min-h-[300px] bg-gray-100 md:h-auto">
+							<iframe
+								class="absolute inset-0 h-full w-full opacity-80 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
+								loading="lazy"
+								src={item.data.hasMap?.value.mapLink}
+								title={item.data.hasMap?.value.mapTitle}
+								aria-label={item.data.hasMap?.value.mapTitle}
+							>
+							</iframe>
+						</div>
+					</div>
+				</div>
+			</section>
+		}
 	</div>
 </BaseLayout>
 

@@ -24,9 +24,12 @@ const schemaData = schemaGenerators.calendar({
 >
 	<PageHeader title="CCW Permit Class Schedule – Fairfax Concealed Carry Course Dates">
 		<hr class="bg-primary-600/50 mx-auto mt-4 max-w-[30%] rounded-full border-none pt-1" />
+		<h2 class="text-white mx-auto mt-4 max-w-4xl text-xl leading-relaxed">
+			Gain hands-on, NRA-certified training for all experience levels at the NRA Range in Fairfax, VA.
+		</h2>
 	</PageHeader>
 	<section class="site-container px-4">
-		<LiveSchedule />
+		<LiveSchedule hideHeader={true} />
 		<GoogleReviews />
 	</section>
 </BaseLayout>
