@@ -28,7 +28,7 @@ const {
 
 <section
 	id="live-schedule"
-	class="bg-background/10 py-16 transition-opacity duration-500 md:py-24"
+	class="bg-background/10 py-16 transition-opacity duration-500"
 	data-category={category}
 	data-default-tab={defaultTab}
 	data-only-tab={onlyTab}
@@ -841,6 +841,16 @@ const {
 </script>
 
 <style>
+	#live-schedule .site-container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	@media (min-width: 1024px) {
+		#live-schedule .site-container {
+			padding-left: 1.5rem;
+			padding-right: 1.5rem;
+		}
+	}
 	.site-container {
 		width: 100%;
 		max-width: 1280px;

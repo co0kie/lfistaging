@@ -243,9 +243,9 @@ const schemaType = isNRADefensivePistol ? "faqpage" : "course";
 		</section>
 
 		{/* Live Booking Schedule */}
-		<div id="iframe" class="relative border-y border-gray-200 bg-gray-50 py-12">
+		<div id="iframe" class="relative border-y border-gray-200 bg-gray-50">
 			<div class="bg-dots"></div>
-			<div class="site-container mx-auto px-4">
+			<div class="site-container mx-auto">
 				<LiveSchedule
 					category={item.id === "first-step-pistol-orientation-fairfax-va" ? "607" : (item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "133" : undefined}
 					defaultTab={(item.id === "nra-basic-pistol-shooting-course" || item.id === "nra-basic-pistol-course-fairfax-va") ? "basic-pistol" : item.id === "first-step-pistol-orientation-fairfax-va" ? "first-steps" : "all"}
